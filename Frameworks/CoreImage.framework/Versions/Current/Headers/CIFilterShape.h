@@ -5,11 +5,6 @@
    All rights reserved. 
 */
 
-#ifndef CIFILTERSHAPE_H
-#define CIFILTERSHAPE_H
-
-#ifdef __OBJC__
-
 #import <Foundation/Foundation.h>
 #import <CoreImage/CoreImageDefines.h>
 
@@ -63,7 +58,3 @@ NS_CLASS_AVAILABLE(10_4, 9_0)
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* __OBJC__ */
-
-#endif /* CIFILTERSHAPE_H */

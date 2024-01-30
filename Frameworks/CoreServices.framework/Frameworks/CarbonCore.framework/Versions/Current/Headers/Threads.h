@@ -24,7 +24,6 @@
 
 
 #include <Availability.h>
-#include <os/availability.h>
 
 #if PRAGMA_ONCE
 #pragma once
@@ -53,7 +52,7 @@ enum {
   kReadyThreadState             = 0,
   kStoppedThreadState           = 1,
   kRunningThreadState           = 2
-} API_DEPRECATED( "Deprecated", macos(10.0,10.3));
+};
 
 /* Error codes have been moved to Errors.(pah)*/
 
@@ -64,7 +63,7 @@ typedef UInt32 ThreadStyle;
 enum {
   kCooperativeThread            = 1L << 0,
   kPreemptiveThread             = 1L << 1
-} API_DEPRECATED( "Deprecated", macos(10.0,10.3));
+};
 
 /* Thread identifiers*/
 typedef unsigned long                   ThreadID;
@@ -72,7 +71,7 @@ enum {
   kNoThreadID                   = 0,
   kCurrentThreadID              = 1,
   kApplicationThreadID          = 2
-} API_DEPRECATED( "Deprecated", macos(10.0,10.3));
+};
 
 /* Options when creating a thread*/
 typedef UInt32 ThreadOptions;
@@ -82,7 +81,7 @@ enum {
   kCreateIfNeeded               = (1 << 2),
   kFPUNotNeeded                 = (1 << 3),
   kExactMatchThread             = (1 << 4)
-} API_DEPRECATED( "Deprecated", macos(10.0,10.3));
+};
 
 /* Information supplied to the custom scheduler*/
 struct SchedulerInfoRec {

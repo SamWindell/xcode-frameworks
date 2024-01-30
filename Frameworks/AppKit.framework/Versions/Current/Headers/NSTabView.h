@@ -1,7 +1,7 @@
 /*
         NSTabView.h
         Application Kit
-        Copyright (c) 2000-2023, Apple Inc.
+        Copyright (c) 2000-2019, Apple Inc.
         All rights reserved.
 */
 
@@ -12,7 +12,7 @@
 #import <AppKit/NSApplication.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSFont, NSTabViewItem;
@@ -109,11 +109,11 @@ typedef NS_ENUM(NSUInteger, NSTabViewBorderType) {
 
 @protocol NSTabViewDelegate <NSObject>
 @optional
-- (BOOL)tabView:(NSTabView *)tabView shouldSelectTabViewItem:(nullable NSTabViewItem *)tabViewItem NS_SWIFT_UI_ACTOR;
-- (void)tabView:(NSTabView *)tabView willSelectTabViewItem:(nullable NSTabViewItem *)tabViewItem NS_SWIFT_UI_ACTOR;
-- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(nullable NSTabViewItem *)tabViewItem NS_SWIFT_UI_ACTOR;
-- (void)tabViewDidChangeNumberOfTabViewItems:(NSTabView *)tabView NS_SWIFT_UI_ACTOR;
+- (BOOL)tabView:(NSTabView *)tabView shouldSelectTabViewItem:(nullable NSTabViewItem *)tabViewItem;
+- (void)tabView:(NSTabView *)tabView willSelectTabViewItem:(nullable NSTabViewItem *)tabViewItem;
+- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(nullable NSTabViewItem *)tabViewItem;
+- (void)tabViewDidChangeNumberOfTabViewItems:(NSTabView *)tabView;
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

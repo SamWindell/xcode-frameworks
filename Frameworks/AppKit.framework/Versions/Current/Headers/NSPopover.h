@@ -1,7 +1,7 @@
 /*
     NSPopover.h
     Application Kit
-    Copyright (c) 2010-2023, Apple Inc.
+    Copyright (c) 2010-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -13,10 +13,10 @@
 #import <AppKit/NSAppearance.h>
 #import <AppKit/NSResponder.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
-@class NSView, NSViewController, NSWindow, NSNotification, NSString, NSToolbarItem;
+@class NSView, NSViewController, NSWindow, NSNotification, NSString;
 
 #pragma mark -
 #pragma mark Popovers
@@ -136,51 +136,12 @@ API_AVAILABLE(macos(10.7))
  */
 @property NSRect positioningRect;
 
-/* If `YES`, the `contentViewController`'s view will extend into the chevron region of the popover. That view's `safeAreaInsets` will be adjusted accordingly such that anchoring any subviews to its `safeAreaLayoutGuide` will result in constraining to the unclipped content area of the popover. The default value for this property is `NO`.
- 
-   The full size content will extend to the containing window's frame, along all edges. Anything outside the popover will be clipped.
-  
-   *-------------------------*  *-------------------------*  *-------------------------*  *-------------------------*
-   |           /\            |  |                         |  |                         |  |                         |
-   |  /--------  ---------\  |  |  /-------------------\  |  |  /-------------------\  |  |  /-------------------\  |
-   |  |                   |  |  |  |                   |  |  |  |                   |  |  |  |                   |  |
-   |  |                   |  |  |  |                   |  |  |  |                   |  |  |  |                   |  |
-   |  |                   |  |  |  |                   |  |  |  |                   |  |  |  |                   |  |
-   |  |                   |  |  |  |                   |  |  |  |                    > |  | <                    |  |
-   |  |                   |  |  |  |                   |  |  |  |                   |  |  |  |                   |  |
-   |  |                   |  |  |  |                   |  |  |  |                   |  |  |  |                   |  |
-   |  |                   |  |  |  |                   |  |  |  |                   |  |  |  |                   |  |
-   |  |                   |  |  |  |                   |  |  |  |                   |  |  |  |                   |  |
-   |  \-------------------/  |  |  \--------  ---------/  |  |  \-------------------/  |  |  \-------------------/  |
-   |                         |  |           \/            |  |                         |  |                         |
-   *-------------------------*  *-------------------------*  *-------------------------*  *-------------------------*
-
- */
-@property BOOL hasFullSizeContent API_AVAILABLE(macos(14.0));
-
 #pragma mark -
 #pragma mark Show and Close
 
-/// Shows the popover anchored to the specified view.
-///
-/// The popover will animate onscreen and eventually animate offscreen when it is closed (unless the property `animates` is set to `NO`).
-///
-/// - Parameters:
-///   - positioningRect: The rectangle within `positioningView` relative to which the popover should be positioned. Normally set to the bounds of `positioningView`. May be an empty rectangle, which will default to the bounds of `positioningView`.
-///   - positioningView: The view relative to which the popover should be positioned. Causes the method to raise `NSInvalidArgumentException` if `nil`.
-///   - preferredEdge: The edge of `positioningView` the popover should prefer to be anchored to (respects to the `-isFlipped` state of `positioningView`). The current (but not guaranteed) behavior is that AppKit will place the anchor towards the `preferredEdge` of the `positioningRect` unless such a placement would cause the popover not to fit on the screen of `positioningView`. If the anchor cannot be placed towards the `preferredEdge`, AppKit will (in the current implementation) attempt to place the anchor on the opposite side of the `positioningRect`. If that cannot be done, AppKit will attempt to place the anchor on a remaining side of the popover, and failing that will center the popover on the screen, causing it to (at least temporarily) lose its anchor.
-///
-/// - Note: This method will throw a `NSInvalidArgumentException` if view is `nil` or if `view` is not in a window, or if the popover’s behavior is `NSPopoverBehaviorSemitransient` and the popover’s `positioningView` is in a popover or child window. It will throw a `NSInternalInconsistencyException` if the popover’s  content view controller (or the view controller’s view) is `nil`. If the popover is already being shown, this method will update to be associated with the new `view` and `positioningRect` passed.
-///
-/// - Note: If the positioning view isn’t visible (its window isn’t visible, or the positioning rect is outside of its visible rect), this method does nothing.
-- (void)showRelativeToRect:(NSRect)positioningRect ofView:(NSView *)positioningView preferredEdge:(NSRectEdge)preferredEdge;
-
-/**
- Shows the popover positioned relative to \c toolbarItem . When the item is in the overflow menu, the popover will be presented from another appropriate affordance in the window. See the comments in \c -showRelativeToRect:ofView:preferredEdge: for the popover behavior.
- 
- This method will throw an \c NSInvalidArgumentException if it cannot locate the toolbar item. This could happen because the item is not in a toolbar, or because the toolbar is not in a window.
+/*  Shows the popover positioned relative to positioningRect of positioningView (see the description of positioningRect above).  The common case is to pass [positioningView bounds] for positioningRect, in which case the popover will be placed adjacent to the positioningView and there is no need to update positioningRect (AppKit will detect the the bounds of the positioning view was specified and automatically update the positioningView).  preferredEdge is a hint to AppKit about the desired placement of the anchor of the popover towards the positioningRect, and is with respect to the -isFlipped state of the positioningView. Also, if positioningRect is an empty rect, the [view bounds] will automatically be used. The current (but not guaranteed) behavior is that AppKit will place the anchor towards the preferredEdge of the positioningRect unless such a placement would cause the popover not to fit on the screen of positioningView.  If the anchor cannot be placed towards the preferredEdge, AppKit will (in the current implementation) attempt to place the anchor on the opposite side of the positioningRect.  If that cannot be done, AppKit will attempt to place the anchor on a remaining sides of the popover, and failing that will center the popover on the screen, causing it to (at least temporarily) lose its anchor. The popover will animate onscreen and eventually animate offscreen when it is closed (unless the property animates is set to NO). This method will throw a NSInvalidArgumentException if view is nil or if view is not in a window, or if the popover's behavior is NSPopoverBehaviorSemitransient and the popover's positioningView is in a popover or child window. It will throw a NSInternalInconsistencyException if the popover's  content view controller (or the view controller's view) is nil. If the popover is already being shown, this method will update to be associated with the new view and positioningRect passed. If the positioning view is not visible, this method does nothing. 
  */
-- (void)showRelativeToToolbarItem:(NSToolbarItem *)toolbarItem NS_SWIFT_NAME(show(relativeTo:)) API_AVAILABLE(macos(14.0));
+- (void)showRelativeToRect:(NSRect)positioningRect ofView:(NSView *)positioningView preferredEdge:(NSRectEdge)preferredEdge;
 
 /*  Attempts to close the popover.  The popover will not be closed if it has a delegate and the delegate returns NO to -popoverShouldClose: (or if the popover's class implements -popoverShouldClose: to return NO). The operation will fail if it is displaying a nested popover, or if it has a child window.  A window will attempt to close its popovers when it receives a -performClose: message.  The popover will animate out when closed (unless the animates property is set to NO).
  */
@@ -233,7 +194,7 @@ APPKIT_EXTERN NSNotificationName const NSPopoverDidCloseNotification API_AVAILAB
  * If the delegate does not implement this method, \c -popoverShouldClose: will also be invoked on the popover to allow the popover to veto the close.
  * \return Return YES if the popover should close, NO otherwise.
  */
-- (BOOL)popoverShouldClose:(NSPopover *)popover NS_SWIFT_UI_ACTOR;
+- (BOOL)popoverShouldClose:(NSPopover *)popover;
 
 /*!
  * Return \c YES to allow the popover to detach from its positioning view. Return \c NO if it should not. If this method is not implemented, the default behavior is \c NO.
@@ -242,13 +203,13 @@ APPKIT_EXTERN NSNotificationName const NSPopoverDidCloseNotification API_AVAILAB
  * \param popover The popover that may be detached
  * \return YES if the popover should detach, whether to a custom window or the implicitly detached window. NO if not.
  */
-- (BOOL)popoverShouldDetach:(NSPopover *)popover NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.10));
+- (BOOL)popoverShouldDetach:(NSPopover *)popover API_AVAILABLE(macos(10.10));
 
 /*!
  * This is called when the popover has been released in an implicitly detached state, i.e. not when detached to a custom window returned from \c -detachableWindowForPopover:.
  * \param popover The popover that detached from its anchor view and is not closing.
  */
-- (void)popoverDidDetach:(NSPopover *)popover NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.10));
+- (void)popoverDidDetach:(NSPopover *)popover API_AVAILABLE(macos(10.10));
 
 /*!
  * Return a custom window to which the popover should be detached. This should be used when the content of the detached window is wanted to be different from the content of the popover. If the same content should be used in the detached window, only \c -popoverShouldDetach: needs to be implemented.
@@ -258,29 +219,29 @@ APPKIT_EXTERN NSNotificationName const NSPopoverDidCloseNotification API_AVAILAB
  * \param popover The popover that is being detached
  * \return The custom window to detach to.
  */
-- (nullable NSWindow *)detachableWindowForPopover:(NSPopover *)popover NS_SWIFT_UI_ACTOR;
+- (nullable NSWindow *)detachableWindowForPopover:(NSPopover *)popover;
 
 /*!
  * Invoked on the delegate when the NSPopoverWillShowNotification notification is sent.  This method will also be invoked on the popover.
  */
-- (void)popoverWillShow:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
+- (void)popoverWillShow:(NSNotification *)notification;
 
 /*!
  * Invoked on the delegate when the NSPopoverDidShowNotification notification is sent.  This method will also be invoked on the popover.
  */
-- (void)popoverDidShow:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
+- (void)popoverDidShow:(NSNotification *)notification;
 
 /*!
  * Invoked on the delegate when the NSPopoverWillCloseNotification notification is sent.  This method will also be invoked on the popover.
  */
-- (void)popoverWillClose:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
+- (void)popoverWillClose:(NSNotification *)notification;
 
 /*!
  * Invoked on the delegate when the NSPopoverDidCloseNotification notification is sent.  This method will also be invoked on the popover.
  */
-- (void)popoverDidClose:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
+- (void)popoverDidClose:(NSNotification *)notification;
 
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

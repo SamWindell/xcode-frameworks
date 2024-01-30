@@ -33,7 +33,6 @@
 
 
 #include <Availability.h>
-#include <os/availability.h>
 
 #if PRAGMA_ONCE
 #pragma once
@@ -50,7 +49,7 @@ enum {
   sortsBefore                   = -1,   /*first string < second string*/
   sortsEqual                    = 0,    /*first string = second string*/
   sortsAfter                    = 1     /*first string > second string*/
-} API_DEPRECATED( "Deprecated", macos(10.0,10.4));
+};
 
 enum {
   dummyType                     = 0,
@@ -62,7 +61,7 @@ enum {
   sIQType                       = 6,
   dtQType                       = 7,
   nmType                        = 8
-} API_DEPRECATED( "Deprecated", macos(10.0,10.7));
+};
 
 typedef SignedByte                      QTypes;
 struct QElem {
@@ -451,7 +450,7 @@ enum {
   useAsync                      = 2,
   useExtClk                     = 3,    /*Externally clocked*/
   useMIDI                       = 4
-} API_DEPRECATED( "Deprecated", macos(10.0,10.4));
+};
 
 enum {
   false32b                      = 0,    /*24 bit addressing error*/
@@ -720,7 +719,7 @@ WriteLocation(const MachineLocation * loc)                    __OSX_AVAILABLE_BU
 /* Environs Equates */
 enum {
   curSysEnvVers                 = 2     /*Updated to equal latest SysEnvirons version*/
-} API_DEPRECATED( "Deprecated", macos(10.0,10.4));
+};
 
 struct SysEnvRec {
   short               environsVersion;
@@ -749,7 +748,7 @@ enum {
   envPortable                   = 8,
   envMacIIci                    = 9,
   envMacIIfx                    = 11
-} API_DEPRECATED( "Deprecated", macos(10.0,10.4));
+};
 
 enum {
                                         /* CPU types */
@@ -759,7 +758,7 @@ enum {
   env68020                      = 3,
   env68030                      = 4,
   env68040                      = 5
-} API_DEPRECATED( "Deprecated", macos(10.0,10.4));
+};
 
 enum {
                                         /* Keyboard types */
@@ -773,7 +772,7 @@ enum {
   envPrtblISOKbd                = 7,
   envStdISOADBKbd               = 8,
   envExtISOADBKbd               = 9
-} API_DEPRECATED( "Deprecated", macos(10.0,10.4));
+};
 
 #endif  /* ALLOW_OBSOLETE_CARBON_OSUTILS */
 

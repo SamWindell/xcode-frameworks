@@ -7,7 +7,7 @@
 
 @class NSLocale, NSDate, NSCalendar, NSTimeZone, NSError, NSArray<ObjectType>, NSMutableDictionary, NSString;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 #if !defined(NS_CALENDAR_ENUM_DEPRECATED)
 #if 1 || NS_ENABLE_CALENDAR_DEPRECATIONS
@@ -21,7 +21,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 #endif
 #endif
 
-NS_SWIFT_SENDABLE // All mutable state protected by locks, subclasses must be thread-safe
+
 @interface NSDateFormatter : NSFormatter {
 @private
     NSMutableDictionary *_attributes;
@@ -124,4 +124,4 @@ typedef NS_ENUM(NSUInteger, NSDateFormatterBehavior) {
 @end
 #endif
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

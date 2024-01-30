@@ -19,11 +19,8 @@
 #include <TargetConditionals.h>
 #include <Availability.h>
 #include <AvailabilityMacros.h>
-#include <stdint.h>
 
-#if TARGET_OS_WIN32
-#pragma warning (disable: 4068)		// ignore unknown pragmas
-#endif
+
 
 
 
@@ -35,11 +32,9 @@ extern "C" {
 #define COREVIDEO_TRUE (1 && 1)
 #define COREVIDEO_FALSE (0 && 1)
 
-#if TARGET_OS_WIN32
-	#define COREVIDEO_SUPPORTS_DIRECT3D 	COREVIDEO_TRUE
-#else
+
 	#define COREVIDEO_SUPPORTS_DIRECT3D 	COREVIDEO_FALSE
-#endif
+
 
 #if TARGET_OS_MACCATALYST
 #define COREVIDEO_SUPPORTS_OPENGL 		COREVIDEO_TRUE
@@ -58,18 +53,17 @@ extern "C" {
 #endif
 #endif
 
-#if ((TARGET_OS_MAC && ! TARGET_OS_IPHONE) || (TARGET_OS_WIN32) || (TARGET_OS_LINUX))
+#if ((TARGET_OS_MAC && ! TARGET_OS_IPHONE) || (0))
 	#define COREVIDEO_SUPPORTS_COLORSPACE 	COREVIDEO_TRUE
 #else
 	#define COREVIDEO_SUPPORTS_COLORSPACE 	COREVIDEO_FALSE
 #endif
 
-#if (TARGET_OS_MAC && (! TARGET_OS_IPHONE || TARGET_OS_MACCATALYST))
+#if (TARGET_OS_MAC && ! TARGET_OS_IPHONE)
 	#define COREVIDEO_SUPPORTS_DISPLAYLINK 	COREVIDEO_TRUE
 #else
 	#define COREVIDEO_SUPPORTS_DISPLAYLINK 	COREVIDEO_FALSE
 #endif
-
 
 #if TARGET_OS_MAC
 	#define COREVIDEO_SUPPORTS_IOSURFACE COREVIDEO_TRUE
@@ -80,7 +74,7 @@ extern "C" {
 #if TARGET_OS_EMBEDDED && (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80300)
 	#define COREVIDEO_SUPPORTS_PREFETCH    COREVIDEO_TRUE
 #elif TARGET_OS_OSX
-	#define COREVIDEO_SUPPORTS_PREFETCH    COREVIDEO_TRUE
+	#define COREVIDEO_SUPPORTS_PREFETCH    COREVIDEO_TRUE	
 #else
 	#define COREVIDEO_SUPPORTS_PREFETCH    COREVIDEO_FALSE
 #endif
@@ -88,7 +82,7 @@ extern "C" {
 #if TARGET_OS_EMBEDDED && (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80300)
 	#define COREVIDEO_SUPPORTS_IOSURFACE_PREFETCH    COREVIDEO_TRUE
 #elif TARGET_OS_OSX && (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101500)
-	#define COREVIDEO_SUPPORTS_IOSURFACE_PREFETCH    COREVIDEO_TRUE
+	#define COREVIDEO_SUPPORTS_IOSURFACE_PREFETCH    COREVIDEO_TRUE	
 #else
 	#define COREVIDEO_SUPPORTS_IOSURFACE_PREFETCH    COREVIDEO_FALSE
 #endif
@@ -131,12 +125,6 @@ extern "C" {
 	#define COREVIDEO_DECLARE_NULLABILITY COREVIDEO_FALSE
 #endif
 
-#if (TARGET_OS_IPHONE || TARGET_OS_MAC) && defined(__has_feature) && __has_feature(attribute_cf_returns_retained)
-    #define CV_RETURNS_RETAINED CF_RETURNS_RETAINED
-#else
-    #define CV_RETURNS_RETAINED 
-#endif
-
 #if (TARGET_OS_IPHONE || TARGET_OS_MAC) && defined(__has_feature) && __has_feature(attribute_cf_returns_on_parameters)
 #define CV_RETURNS_RETAINED_PARAMETER		CF_RETURNS_RETAINED
 #else
@@ -166,17 +154,9 @@ extern "C" {
 	
 #define CV_INTERNAL __attribute__((visibility("hidden")))
 
-#if TARGET_OS_WIN32 && defined(CV_BUILDING_CV) && defined(__cplusplus)
-#define CV_EXPORT extern "C" __declspec(dllexport) 
-#elif TARGET_OS_WIN32 && defined(CV_BUILDING_CV) && !defined(__cplusplus)
-#define CV_EXPORT extern __declspec(dllexport) 
-#elif TARGET_OS_WIN32 && defined(__cplusplus)
-#define CV_EXPORT extern "C" __declspec(dllimport) 
-#elif TARGET_OS_WIN32
-#define CV_EXPORT extern __declspec(dllimport) 
-#else
+
 #define CV_EXPORT __attribute__((visibility("default"))) CF_EXPORT 
-#endif
+
 
 #define CV_INLINE CF_INLINE
 
@@ -354,17 +334,6 @@ typedef CF_OPTIONS(uint64_t, CVTimeStampFlags)
 
 CV_EXPORT const CVTime kCVZeroTime;
 CV_EXPORT const CVTime kCVIndefiniteTime;
-
-// These defines are copied over from CFNSObjCRuntime.h
-#if __SWIFT_ATTR_SUPPORTS_SENDABLE_DECLS
-    // The typedef or struct should be imported as 'Sendable' in Swift
-    #define CV_SWIFT_SENDABLE __attribute__((swift_attr("@Sendable")))
-    // The struct should *not* be imported as 'Sendable' in Swift even if it normally would be
-    #define CV_SWIFT_NONSENDABLE __attribute__((swift_attr("@_nonSendable")))
-#else
-    #define CV_SWIFT_SENDABLE
-    #define CV_SWIFT_NONSENDABLE
-#endif // __SWIFT_ATTR_SUPPORTS_SENDABLE_DECLS
 
 #if defined(__cplusplus)
 }

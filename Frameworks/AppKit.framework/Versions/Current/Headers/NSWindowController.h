@@ -1,7 +1,7 @@
 /*
     NSWindowController.h
     Application Kit
-    Copyright (c) 1997-2023, Apple Inc.
+    Copyright (c) 1997-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -11,9 +11,8 @@
 #import <AppKit/NSStoryboardSegue.h>
 #import <AppKit/NSWindow.h>
 #import <AppKit/AppKitDefines.h>
-#import <AppKit/NSPreviewRepresentingActivityItem.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSArray, NSDocument, NSStoryboard, NSViewController, NSWindow;
@@ -51,14 +50,10 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 */
 @property(copy) NSWindowFrameAutosaveName windowFrameAutosaveName;
 
-/* If this is set to YES then new windows will be cascaded based on the original frame of the window.
+/* If this is set to YES then new windows loaded from nibs (only windows from nibs) will be cascaded based on the original frame of the window from the nib.
 */
 @property BOOL shouldCascadeWindows;
 
-/* Preview representable activity items, used for sharing and collaboration.
-   If set to nil, NSWindowController shall return the previewRepresentableActivityItems of its associated NSDocument (if any)
-*/
-@property (nullable, copy) NSArray<id<NSPreviewRepresentableActivityItem>> *previewRepresentableActivityItems API_AVAILABLE(macos(13.2)) API_UNAVAILABLE(ios);
 
 // -----------------------------------------------------------------------------
 // Dealing with the document
@@ -143,6 +138,6 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 
 

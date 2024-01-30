@@ -3,11 +3,6 @@
    Copyright (c) 2014 Apple, Inc.
    All rights reserved. */
 
-#ifndef CIKERNEL_H
-#define CIKERNEL_H
-
-#ifdef __OBJC__
-
 #import <CoreImage/CoreImageDefines.h>
 #import <CoreImage/CIImage.h>
 #import <Foundation/Foundation.h>
@@ -58,15 +53,6 @@ NS_CLASS_AVAILABLE(10_4, 8_0)
  * On iOS, the array will contain instances of CIKernel, CIColorKernel or CIWarpKernel classes.
  */
 + (nullable NSArray<CIKernel *> *)kernelsWithString:(NSString *)string  CIKL_DEPRECATED(10_4,10_14, 8_0,12_0);
-
-/* The string argument should contain a program in the Metal Language.
- * CIKernel objects will be returned for each valid Metal function.
- * To be valid, the Metal function must be stitchable (i.e. attributed using [[stitchable]]) and
- * conform to the expected calling conventions for a CIKernel, CIColorKernel, CIBlendKernel, or CIWarpKernel.
- * The array will contain instances of CIKernel, CIColorKernel or CIWarpKernel classes.
- * The kernels will only be usable on Metal-backed CIContext on a device that 'supportsDynamicLibraries'
- */
-+ (nullable NSArray<CIKernel *> *)kernelsWithMetalString:(NSString *)source error:(NSError **)error NS_AVAILABLE(12_0, 15_0);
 
 /* The string argument should contain a program with one kernel.
  * On OSX 10.10 and before, this returns a CIKernel object.
@@ -336,7 +322,3 @@ NS_CLASS_AVAILABLE(10_13, 11_0)
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* __OBJC__ */
-
-#endif /* CIKERNEL_H */

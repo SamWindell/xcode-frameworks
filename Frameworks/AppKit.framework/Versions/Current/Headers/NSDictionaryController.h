@@ -1,7 +1,7 @@
 /*
 	NSDictionaryController.h
 	Application Kit
-	Copyright (c) 2002-2023, Apple Inc.
+	Copyright (c) 2002-2019, Apple Inc.
 	All rights reserved.
  */
 
@@ -10,7 +10,7 @@
 #import <AppKit/AppKitDefines.h>
 #import <AppKit/NSArrayController.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 // NSDictionaryController transforms a dictionary into an array of key-value pairs that is displayed like any other array in an NSArrayController. For each key-value pair, the controller distinguishes between the actual "key" and the "localizedKey" (a user readable version of the key - see setLocalizedKeyDictionary:/-localizedKeyDictionary). If no localizedKeyDictionary is specified, the localized keys default to the keys.
@@ -50,5 +50,5 @@ API_AVAILABLE(macos(10.5))
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 

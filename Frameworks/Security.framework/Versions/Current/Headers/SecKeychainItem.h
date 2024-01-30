@@ -148,9 +148,7 @@ typedef UInt8	SecPublicKeyHash[20];
 	@abstract Returns the type identifier of SecKeychainItem instances.
 	@result The CFTypeID of SecKeychainItem instances.
 */
-CFTypeID SecKeychainItemGetTypeID(void)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+CFTypeID SecKeychainItemGetTypeID(void);
 
 /*!
 	@function SecKeychainItemModifyAttributesAndData
@@ -162,9 +160,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
     @result A result code. See "Security Error Codes" (SecBase.h).
 	@discussion The keychain item is written to the keychain's permanent data store. If the keychain item has not previously been added to a keychain, a call to the SecKeychainItemModifyContent function does nothing and returns errSecSuccess.
 */
-OSStatus SecKeychainItemModifyAttributesAndData(SecKeychainItemRef itemRef, const SecKeychainAttributeList * __nullable attrList, UInt32 length, const void * __nullable data)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemModifyAttributesAndData(SecKeychainItemRef itemRef, const SecKeychainAttributeList * __nullable attrList, UInt32 length, const void * __nullable data) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecKeychainItemCreateFromContent
@@ -180,9 +176,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 */
 OSStatus SecKeychainItemCreateFromContent(SecItemClass itemClass, SecKeychainAttributeList *attrList,
 		UInt32 length, const void * __nullable data, SecKeychainRef __nullable keychainRef,
-		SecAccessRef __nullable initialAccess, SecKeychainItemRef * __nullable CF_RETURNS_RETAINED itemRef)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+		SecAccessRef __nullable initialAccess, SecKeychainItemRef * __nullable CF_RETURNS_RETAINED itemRef) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecKeychainItemModifyContent
@@ -193,9 +187,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 	@param data A pointer to a buffer containing the data to store. Pass NULL if you don't need to modify the data.
     @result A result code.  See "Security Error Codes" (SecBase.h).
 */
-OSStatus SecKeychainItemModifyContent(SecKeychainItemRef itemRef, const SecKeychainAttributeList * __nullable attrList, UInt32 length, const void * __nullable data)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemModifyContent(SecKeychainItemRef itemRef, const SecKeychainAttributeList * __nullable attrList, UInt32 length, const void * __nullable data) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecKeychainItemCopyContent
@@ -207,9 +199,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 	@param outData On return, a pointer to a buffer containing the data in this item. Pass NULL if you don't need to retrieve the data. You must call SecKeychainItemFreeContent when you no longer need the data.
     @result A result code. See "Security Error Codes" (SecBase.h). In addition, errSecParam (-50) may be returned if not enough valid parameters are supplied.
 */
-OSStatus SecKeychainItemCopyContent(SecKeychainItemRef itemRef, SecItemClass * __nullable itemClass, SecKeychainAttributeList * __nullable attrList, UInt32 * __nullable length, void * __nullable * __nullable outData)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemCopyContent(SecKeychainItemRef itemRef, SecItemClass * __nullable itemClass, SecKeychainAttributeList * __nullable attrList, UInt32 * __nullable length, void * __nullable * __nullable outData) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecKeychainItemFreeContent
@@ -217,9 +207,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 	@param attrList A pointer to the attribute list to release. Pass NULL to ignore this parameter.
     @param data A pointer to the data buffer to release. Pass NULL to ignore this parameter.
 */
-OSStatus SecKeychainItemFreeContent(SecKeychainAttributeList * __nullable attrList, void * __nullable data)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemFreeContent(SecKeychainAttributeList * __nullable attrList, void * __nullable data) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecKeychainItemCopyAttributesAndData
@@ -232,9 +220,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 	@param outData On return, a pointer to a buffer containing the data in this item. Pass NULL if you don't need to retrieve the data. You must call SecKeychainItemFreeAttributesAndData when you no longer need the data.
     @result A result code. See "Security Error Codes" (SecBase.h). In addition, errSecParam (-50) may be returned if not enough valid parameters are supplied.
 */
-OSStatus SecKeychainItemCopyAttributesAndData(SecKeychainItemRef itemRef, SecKeychainAttributeInfo * __nullable info, SecItemClass * __nullable itemClass, SecKeychainAttributeList * __nullable * __nullable attrList, UInt32 * __nullable length, void * __nullable * __nullable outData)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemCopyAttributesAndData(SecKeychainItemRef itemRef, SecKeychainAttributeInfo * __nullable info, SecItemClass * __nullable itemClass, SecKeychainAttributeList * __nullable * __nullable attrList, UInt32 * __nullable length, void * __nullable * __nullable outData) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecKeychainItemFreeAttributesAndData
@@ -243,9 +229,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
     @param data A pointer to the data buffer to release. Pass NULL to ignore this parameter.
     @result A result code. See "Security Error Codes" (SecBase.h).
 */
-OSStatus SecKeychainItemFreeAttributesAndData(SecKeychainAttributeList * __nullable attrList, void * __nullable data)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemFreeAttributesAndData(SecKeychainAttributeList * __nullable attrList, void * __nullable data) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecKeychainItemDelete
@@ -254,9 +238,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
     @result A result code. See "Security Error Codes" (SecBase.h).
 	@discussion If itemRef has not previously been added to the keychain, SecKeychainItemDelete does nothing and returns errSecSuccess. IMPORTANT: SecKeychainItemDelete does not dispose the memory occupied by the item reference itself; use the CFRelease function when you are completely finished with an item.
 */
-OSStatus SecKeychainItemDelete(SecKeychainItemRef itemRef)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemDelete(SecKeychainItemRef itemRef) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecKeychainItemCopyKeychain
@@ -265,9 +247,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 	@param keychainRef On return, the keychain reference for the specified item. Release this reference by calling the CFRelease function.
     @result A result code. See "Security Error Codes" (SecBase.h).
 */
-OSStatus SecKeychainItemCopyKeychain(SecKeychainItemRef itemRef, SecKeychainRef * __nonnull CF_RETURNS_RETAINED keychainRef)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemCopyKeychain(SecKeychainItemRef itemRef, SecKeychainRef * __nonnull CF_RETURNS_RETAINED keychainRef) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecKeychainItemCreateCopy
@@ -279,9 +259,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
     @result A result code. See "Security Error Codes" (SecBase.h).
 */
 OSStatus SecKeychainItemCreateCopy(SecKeychainItemRef itemRef, SecKeychainRef __nullable destKeychainRef,
-	SecAccessRef __nullable initialAccess, SecKeychainItemRef * __nonnull CF_RETURNS_RETAINED itemCopy)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+	SecAccessRef __nullable initialAccess, SecKeychainItemRef * __nonnull CF_RETURNS_RETAINED itemCopy) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
     @function SecKeychainItemCreatePersistentReference
@@ -290,9 +268,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
     @param persistentItemRef On return, a CFDataRef containing a persistent reference. You must release this data reference by calling the CFRelease function.
     @result A result code. See "Security Error Codes" (SecBase.h).
 */
-OSStatus SecKeychainItemCreatePersistentReference(SecKeychainItemRef itemRef, CFDataRef * __nonnull CF_RETURNS_RETAINED persistentItemRef)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemCreatePersistentReference(SecKeychainItemRef itemRef, CFDataRef * __nonnull CF_RETURNS_RETAINED persistentItemRef) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 
 /*!
@@ -302,9 +278,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
     @param itemRef On return, a SecKeychainItemRef for the keychain item described by the persistent reference. You must release this item reference by calling the CFRelease function.
     @result A result code. See "Security Error Codes" (SecBase.h).
 */
-OSStatus SecKeychainItemCopyFromPersistentReference(CFDataRef persistentItemRef, SecKeychainItemRef * __nonnull CF_RETURNS_RETAINED itemRef)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemCopyFromPersistentReference(CFDataRef persistentItemRef, SecKeychainItemRef * __nonnull CF_RETURNS_RETAINED itemRef) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 
 #pragma mark ---- CSSM Bridge Functions ----
@@ -338,9 +312,7 @@ OSStatus SecKeychainItemGetUniqueRecordID(SecKeychainItemRef itemRef, const CSSM
     @param access On return, a reference to the keychain item's access.
     @result A result code. See "Security Error Codes" (SecBase.h).
 */
-OSStatus SecKeychainItemCopyAccess(SecKeychainItemRef itemRef, SecAccessRef * __nonnull CF_RETURNS_RETAINED access)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemCopyAccess(SecKeychainItemRef itemRef, SecAccessRef * __nonnull CF_RETURNS_RETAINED access) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecKeychainItemSetAccess
@@ -349,9 +321,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
     @param access A reference to an access to replace the keychain item's current access.
     @result A result code. See "Security Error Codes" (SecBase.h).
 */
-OSStatus SecKeychainItemSetAccess(SecKeychainItemRef itemRef, SecAccessRef access)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecKeychainItemSetAccess(SecKeychainItemRef itemRef, SecAccessRef access) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 CF_ASSUME_NONNULL_END
 

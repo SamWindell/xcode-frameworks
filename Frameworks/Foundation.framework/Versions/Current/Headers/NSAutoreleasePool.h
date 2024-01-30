@@ -4,7 +4,7 @@
 
 #import <Foundation/NSObject.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 NS_AUTOMATED_REFCOUNT_UNAVAILABLE
 @interface NSAutoreleasePool : NSObject {
@@ -23,4 +23,4 @@ NS_AUTOMATED_REFCOUNT_UNAVAILABLE
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

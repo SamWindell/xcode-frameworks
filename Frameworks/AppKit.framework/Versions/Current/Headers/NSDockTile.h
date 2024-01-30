@@ -1,7 +1,7 @@
 /*
 	NSDockTile.h
 	Application Kit
-	Copyright (c) 2006-2023, Apple Inc.
+	Copyright (c) 2006-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -11,7 +11,7 @@
 #import <AppKit/NSApplication.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 static const NSAppKitVersion NSAppKitVersionNumberWithDockTilePlugInSupport = 1001.0;
@@ -58,11 +58,9 @@ API_AVAILABLE(macos(10.5))
 - (void)setDockTile:(nullable NSDockTile*)dockTile;
 
 @optional
-/* The plugin should return a menu whose contents will be inserted in front of the standard Dock tile contents. Note that the plugin must ensure that the menu remains valid until the user is done interacting with the menu, which generally requires that the menu be stored in a property with strong ownership. Specifically, the menu should not be autoreleased; that would allow the menu to be deallocated before the user can interact with it, and will cause menu item selections to be ignored.
- */
 - (nullable NSMenu*)dockMenu;
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 

@@ -3,7 +3,7 @@
  
      Contains:   Internet Config interfaces
  
-     Copyright:  Â© 1999-2012 by Apple Computer, Inc., all rights reserved.
+     Copyright:  © 1999-2012 by Apple Computer, Inc., all rights reserved.
  
      Bugs?:      For bug reports, consult the following page on
                  the World Wide Web:
@@ -397,15 +397,15 @@ typedef ICServicesPtr *                 ICServicesHandle;
 /*
     ICAppSpec -- helpers for URL schemes   
 */
-#define kICHelper                       "\pHelper\xA5"
+#define kICHelper                       "\pHelper¥"
 /*
     PString -- description for URL scheme   
 */
-#define kICHelperDesc                   "\pHelperDesc\xA5"
+#define kICHelperDesc                   "\pHelperDesc¥"
 /*
     ICAppSpecList -- list of common helpers for URL schemes   
 */
-#define kICHelperList                   "\pHelperList\xA5"
+#define kICHelperList                   "\pHelperList¥"
 /*
     PString -- host.domain, Internet Relay Chat server   
 */
@@ -593,7 +593,7 @@ typedef ICServicesPtr *                 ICServicesHandle;
 /*
     RGBColor -- colour for read links   
 */
-#define kICWebReadColor                 "\p646F6777\xA5WebReadColor"
+#define kICWebReadColor                 "\p646F6777¥WebReadColor"
 /*
     PString -- URL, users default search page   
 */
@@ -605,11 +605,11 @@ typedef ICServicesPtr *                 ICServicesHandle;
 /*
     Boolean -- whether to underline links   
 */
-#define kICWebUnderlineLinks            "\p646F6777\xA5WebUnderlineLinks"
+#define kICWebUnderlineLinks            "\p646F6777¥WebUnderlineLinks"
 /*
     RGBColor -- colour for unread links   
 */
-#define kICWebUnreadColor               "\p646F6777\xA5WebUnreadColor"
+#define kICWebUnreadColor               "\p646F6777¥WebUnreadColor"
 /*
     PString -- host.domain, default whois server   
 */
@@ -1146,7 +1146,7 @@ ICLaunchURL(
    * selStart and selEnd should be passed in as the current selection of
    * the text. This selection is given in the same manner as TextEdit,
    * ie if selStart = selEnd then there is no selection only an insertion
-   * point. Also selStart â‰¤ selEnd and 0 â‰¤ selStart â‰¤ len and 0 â‰¤ selEnd â‰¤ len.
+   * point. Also selStart ² selEnd and 0 ² selStart ² len and 0 ² selEnd ² len.
    * selStart and selEnd are returned as the bounds of the URL. If the
    * routine returns an error then these new boundaries may be
    * invalid but they will be close.
@@ -1185,7 +1185,7 @@ ICParseURL(
    * selStart and selEnd should be passed in as the current selection of
    * the text. This selection is given in the same manner as TextEdit,
    * ie if selStart = selEnd then there is no selection only an insertion
-   * point. Also selStart â‰¤ selEnd and 0 â‰¤ selStart â‰¤ len and 0 â‰¤ selEnd â‰¤ len.
+   * point. Also selStart ² selEnd and 0 ² selStart ² len and 0 ² selEnd ² len.
    * selStart and selEnd are returned as the bounds of the URL. If the
    * routine returns an error then these new boundaries may be
    * invalid but they will be close.

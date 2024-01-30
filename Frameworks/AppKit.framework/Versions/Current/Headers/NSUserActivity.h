@@ -1,7 +1,7 @@
 /*
     NSUserActivity.h
     Application Kit
-    Copyright (c) 2014-2023, Apple Inc.
+    Copyright (c) 2014-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -16,12 +16,12 @@
 
 #if NS_USER_ACTIVITY_SUPPORTED
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @protocol NSUserActivityRestoring <NSObject>
 /* This method exists to be overridden and will be called from the main thread. It will be called on any objects passed to the restorationHandler given to application:continueUserActivity:restorationHandler: below. You should use the state in the userInfo to restore the object. On OS X, activities managed by NSDocument can be restored automatically, if NO is returned from application:continueActivity:restorationHandler: (or it is unimplemented). In this situation, the document will be opened via -[NSDocumentController openDocumentWithContentsOfURL:display:completionHandler:], and will have restoreUserActivityState: called on it. */
-- (void)restoreUserActivityState:(NSUserActivity *)userActivity NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.10));
+- (void)restoreUserActivityState:(NSUserActivity *)userActivity API_AVAILABLE(macos(10.10));
 @end
 
 @interface NSResponder (NSUserActivity) <NSUserActivityRestoring>
@@ -66,6 +66,6 @@ APPKIT_EXTERN NSString * const NSUserActivityDocumentURLKey API_AVAILABLE(macos(
 #endif
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 
 #endif

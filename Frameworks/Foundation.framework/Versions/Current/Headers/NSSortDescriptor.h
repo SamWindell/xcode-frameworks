@@ -8,7 +8,7 @@
 #import <Foundation/NSSet.h>
 #import <Foundation/NSOrderedSet.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 @interface NSSortDescriptor : NSObject <NSSecureCoding, NSCopying> {
 @private
@@ -75,4 +75,4 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

@@ -1,7 +1,7 @@
 /*
     NSSliderAccessory.h
     Application Kit
-    Copyright (c) 2016-2023, Apple Inc.
+    Copyright (c) 2016-2019, Apple Inc.
     All rights reserved.
  */
 
@@ -12,11 +12,11 @@
 @class UIImage;
 #endif
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 @class NSSlider, NSSliderAccessoryBehavior, NSImage;
 
-API_AVAILABLE(macos(10.12), ios(13.0)) NS_SWIFT_UI_ACTOR
+API_AVAILABLE(macos(10.12), ios(13.0))
 @interface NSSliderAccessory : NSObject <NSCoding>
 
 /// Creates an image-based accessory
@@ -39,7 +39,7 @@ API_AVAILABLE(macos(10.12), ios(13.0)) NS_SWIFT_UI_ACTOR
 @end
 #endif
 
-API_AVAILABLE(macos(10.12), ios(13.0)) NS_SWIFT_UI_ACTOR
+API_AVAILABLE(macos(10.12), ios(13.0))
 @interface NSSliderAccessoryBehavior : NSObject <NSCoding, NSCopying>
 
 /// The behavior is automatically picked to be the system standard for the slider's current context, e.g. NSTouchBarItems have `.valueStep` behavior.
@@ -62,4 +62,4 @@ API_AVAILABLE(macos(10.12), ios(13.0)) NS_SWIFT_UI_ACTOR
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

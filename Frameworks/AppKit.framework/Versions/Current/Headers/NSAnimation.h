@@ -1,7 +1,7 @@
 /*
     NSAnimation.h
     Application Kit
-    Copyright (c) 2004-2023, Apple Inc.
+    Copyright (c) 2004-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSGraphicsContext, NSString;
@@ -73,11 +73,11 @@ APPKIT_EXTERN NSString * NSAnimationProgressMark; // NSNumber(float) with NSAnim
 
 @protocol NSAnimationDelegate <NSObject>
 @optional
-- (BOOL)animationShouldStart:(NSAnimation *)animation NS_SWIFT_NONISOLATED;
-- (void)animationDidStop:(NSAnimation *)animation NS_SWIFT_NONISOLATED;
-- (void)animationDidEnd:(NSAnimation *)animation NS_SWIFT_NONISOLATED;
-- (float)animation:(NSAnimation *)animation valueForProgress:(NSAnimationProgress)progress NS_SWIFT_NONISOLATED;
-- (void)animation:(NSAnimation *)animation didReachProgressMark:(NSAnimationProgress)progress NS_SWIFT_NONISOLATED;
+- (BOOL)animationShouldStart:(NSAnimation *)animation;
+- (void)animationDidStop:(NSAnimation *)animation;
+- (void)animationDidEnd:(NSAnimation *)animation;
+- (float)animation:(NSAnimation *)animation valueForProgress:(NSAnimationProgress)progress;
+- (void)animation:(NSAnimation *)animation didReachProgressMark:(NSAnimationProgress)progress;
 @end
 
 /*-----------------------------------------------------------------------------------------*/
@@ -147,6 +147,6 @@ APPKIT_EXTERN NSAnimatablePropertyKey NSAnimationTriggerOrderIn API_AVAILABLE(ma
 APPKIT_EXTERN NSAnimatablePropertyKey NSAnimationTriggerOrderOut API_AVAILABLE(macos(10.5));
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 
 

@@ -1,14 +1,14 @@
 /*
 	NSFontPanel.h
 	Application Kit
-	Copyright (c) 1994-2023, Apple Inc.
+	Copyright (c) 1994-2019, Apple Inc.
 	All rights reserved.
 */
 
 #import <AppKit/NSPanel.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSFontPanel, NSMutableDictionary, NSFontManager, NSMutableArray, NSTableView, NSFontDescriptor, NSFont;
@@ -33,8 +33,8 @@ typedef NS_OPTIONS(NSUInteger, NSFontPanelModeMask) {
 
 /* This is the message that's propagated up the responder chain.
  */
-- (void)changeFont:(nullable NSFontManager *)sender NS_SWIFT_UI_ACTOR;
-- (NSFontPanelModeMask)validModesForFontPanel:(NSFontPanel *)fontPanel NS_SWIFT_UI_ACTOR;
+- (void)changeFont:(nullable NSFontManager *)sender;
+- (NSFontPanelModeMask)validModesForFontPanel:(NSFontPanel *)fontPanel;
 @end
 
 #if __swift__ < 40200
@@ -90,4 +90,4 @@ enum {
 } API_DEPRECATED("", macos(10.0,10.0));
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

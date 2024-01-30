@@ -1,13 +1,13 @@
 /*
      NSAccessibilityCustomAction.h
      Application Kit
-     Copyright (c) 2017-2023, Apple Inc. All rights reserved.
+     Copyright (c) 2017-2019, Apple Inc. All rights reserved.
 */
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 API_AVAILABLE(macos(10.13)) @interface NSAccessibilityCustomAction : NSObject
@@ -43,4 +43,4 @@ API_AVAILABLE(macos(10.13)) @interface NSAccessibilityCustomAction : NSObject
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

@@ -6,16 +6,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#import <CloudKit/CKAsset.h>
-#import <CloudKit/CKDefines.h>
-#import <CloudKit/CKReference.h>
-
 #import <CoreLocation/CLLocation.h>
+#import <CloudKit/CKAsset.h>
+#import <CloudKit/CKReference.h>
+#import <CloudKit/CKDefines.h>
 
 @class CKRecordID, CKRecordZoneID;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NSString *CKRecordType;
 typedef NSString *CKRecordFieldKey;
@@ -23,30 +21,14 @@ typedef NSString *CKRecordFieldKey;
 /*! Use this constant for the recordType parameter when fetching User Records. */
 CK_EXTERN CKRecordType const CKRecordTypeUserRecord API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0));
 
-/*! For use in queries to match on record properties.  Matches `record.recordID`.  Value is a `CKRecordID` */
-CK_EXTERN CKRecordFieldKey const CKRecordRecordIDKey API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0)) NS_REFINED_FOR_SWIFT;
-
-/*! For use in queries to match on record properties.  Matches `record.creatorUserRecordID`.  Value is a `CKRecordID` */
-CK_EXTERN CKRecordFieldKey const CKRecordCreatorUserRecordIDKey API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0)) NS_REFINED_FOR_SWIFT;
-/*! For use in queries to match on record properties.  Matches `record.creationDate`.  Value is a `NSDate` */
-CK_EXTERN CKRecordFieldKey const CKRecordCreationDateKey API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0)) NS_REFINED_FOR_SWIFT;
-
-/*! For use in queries to match on record properties.  Matches `record.lastModifiedUserRecordID`.  Value is a `CKRecordID` */
-CK_EXTERN CKRecordFieldKey const CKRecordLastModifiedUserRecordIDKey API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0)) NS_REFINED_FOR_SWIFT;
-/*! For use in queries to match on record properties.  Matches `record.modificationDate`.  Value is a `NSDate` */
-CK_EXTERN CKRecordFieldKey const CKRecordModificationDateKey API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0)) NS_REFINED_FOR_SWIFT;
-
-/*! For use in queries to match on record properties.  Matches `record.parent` */
+/*! Use these keys in queries to match on the record's parent or share reference */
 CK_EXTERN CKRecordFieldKey const CKRecordParentKey API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
-/*! For use in queries to match on record properties.  Matches `record.share` */
 CK_EXTERN CKRecordFieldKey const CKRecordShareKey API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 @protocol CKRecordValue <NSObject>
 @end
 
 API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
-// This class should not be subclassed. If it is, Sendable may no longer apply.
-// NS_SWIFT_SENDABLE on macos(14.0), ios(17.0), tvos(17.0), watchos(10.0)
 @interface CKRecord : NSObject <NSSecureCoding, NSCopying>
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -58,19 +40,19 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
 - (instancetype)initWithRecordType:(CKRecordType)recordType recordID:(CKRecordID *)recordID;
 - (instancetype)initWithRecordType:(CKRecordType)recordType zoneID:(CKRecordZoneID *)zoneID;
 
-@property (readonly, copy) CKRecordType recordType;
-@property (readonly, copy) CKRecordID *recordID;
+@property (nonatomic, readonly, copy) CKRecordType recordType;
+@property (nonatomic, readonly, copy) CKRecordID *recordID;
 
 /*! Change tags are updated by the server to a unique value every time a record is modified.  A different change tag necessarily means that the contents of the record are different. */
-@property (nullable, readonly, copy) NSString *recordChangeTag;
+@property (nonatomic, readonly, copy, nullable) NSString *recordChangeTag;
 
 /*! This is a User Record recordID, identifying the user that created this record. */
-@property (nullable, readonly, copy) CKRecordID *creatorUserRecordID;
-@property (nullable, readonly, copy) NSDate *creationDate;
+@property (nonatomic, readonly, copy, nullable) CKRecordID *creatorUserRecordID;
+@property (nonatomic, readonly, copy, nullable) NSDate *creationDate;
 
 /*! This is a User Record recordID, identifying the user that last modified this record. */
-@property (nullable, readonly, copy) CKRecordID *lastModifiedUserRecordID;
-@property (nullable, readonly, copy) NSDate *modificationDate;
+@property (nonatomic, readonly, copy, nullable) CKRecordID *lastModifiedUserRecordID;
+@property (nonatomic, readonly, copy, nullable) NSDate *modificationDate;
 
 /*! @discussion In addition to @c objectForKey: and @c setObject:forKey:, dictionary-style subscripting (@c record[key] and @code record[key] = value @endcode) can be used to get and set values.
  *  Acceptable value object classes are:
@@ -84,8 +66,6 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
  *  - NSArray containing objects of any of the types above
  *
  *  Any other classes will result in an exception with name @c NSInvalidArgumentException.
- *
- *  Whenever possible, value objects will be copied when set on a record.
  *
  *  Field keys starting with '_' are reserved. Attempting to set a key prefixed with a '_' will result in an error.
  *
@@ -148,7 +128,7 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
  *
  *  Whenever possible, it is suggested that you construct your parent hierarchies such that you will only need to share the topmost record of that hierarchy.
  */
-@property (nullable, readonly, copy) CKReference *share API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+@property (nonatomic, readonly, copy, nullable) CKReference *share API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 /*! @abstract Use a parent reference to teach CloudKit about the hierarchy of your records.
  *
@@ -161,7 +141,7 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
  *  You are encouraged to set up the @c parent relationships as part of normal record saves, even if you're not planning on sharing records at this time.
  *  This allows you to share and unshare a hierarchy of records at a later date by only modifying the "top level" record, setting or clearing its @c share reference.
  */
-@property (nullable, copy) CKReference *parent API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+@property (nonatomic, copy, nullable) CKReference *parent API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 /*! Convenience wrappers around creating a @c CKReference to a parent record. The resulting @c CKReference will have @code referenceAction = CKReferenceActionNone @endcode */
 - (void)setParentReferenceFromRecord:(nullable CKRecord *)parentRecord API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
@@ -205,14 +185,7 @@ API_AVAILABLE(macos(10.11), ios(9.0), watchos(3.0))
 @end
 
 API_AVAILABLE(macos(10.11), ios(9.0), watchos(3.0))
-@interface CKRecord (CKRecordKeyValueSettingConformance) <CKRecordKeyValueSetting>
-
-/*! Any values set here will be locally encrypted before being saved to the server and locally decrypted when fetched from the server. Encryption and decryption is handled by the CloudKit framework.
- * Key material necessary for decryption are available to the owner of the record, as well as any users that can access this record via a CKShare.
- * All CKRecordValue types can be set here except CKAsset and CKReference.
- */
-@property (readonly, copy) NS_SWIFT_SENDABLE id<CKRecordKeyValueSetting> encryptedValues API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0));
-                                                                                                     
+@interface CKRecord(CKRecordKeyValueSettingConformance) <CKRecordKeyValueSetting>
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

@@ -1,15 +1,13 @@
 /*
     NSEntityDescription.h
     Core Data
-    Copyright (c) 2004-2023, Apple Inc.
+    Copyright (c) 2004-2020, Apple Inc.
     All rights reserved.
 */
 
 #import <Foundation/NSArray.h>
 #import <Foundation/NSDictionary.h>
 #import <Foundation/NSRange.h>
-
-#import <CoreData/CoreDataDefines.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

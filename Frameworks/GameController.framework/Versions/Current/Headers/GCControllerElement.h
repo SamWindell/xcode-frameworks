@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <GameController/GCExtern.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,7 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
  @see GCControllerElement.boundToSystemGesture
  @see GCControllerElement.preferredSystemGestureState
  */
-API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0))
 typedef NS_ENUM(NSInteger, GCSystemGestureState) {
     /** System gesture recognizers will run before input is sent to app, this is the default state */
     GCSystemGestureStateEnabled = 0,
@@ -64,7 +62,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), tvos(7.0))
  @see preferredSystemGestureState
  @see GCSystemGestureState
  */
-@property (nonatomic, readonly, getter = isBoundToSystemGesture) BOOL boundToSystemGesture API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
+@property (nonatomic, readonly, getter = isBoundToSystemGesture) BOOL boundToSystemGesture;
 
 /**
  The preferred system gesture state for this element.
@@ -75,35 +73,35 @@ API_AVAILABLE(macos(10.9), ios(7.0), tvos(7.0))
  streaming apps) where it is preferrable to disable system gestures.
  @see boundToSystemGesture
  */
-@property (nonatomic, readwrite) GCSystemGestureState preferredSystemGestureState API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
+@property (nonatomic, readwrite) GCSystemGestureState preferredSystemGestureState;
 
 /**
  The element's SF Symbols name, taking input remapping into account.
  
  @note In almost all instances, you should use this over unmappedSfSymbolsName in your UI.
  */
-@property (nonatomic, strong, nullable) NSString *sfSymbolsName API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
+@property (nonatomic, strong, nullable) NSString *sfSymbolsName;
 
 /**
  The element's localized name, taking input remapping into account.
  
  @note In almost all instances, you should use this over unmappedLocalizedName in your UI.
  */
-@property (nonatomic, strong, nullable) NSString *localizedName API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
+@property (nonatomic, strong, nullable) NSString *localizedName;
 
 /**
  The element's SF Symbols name, not taking any input remapping into account.
  
  @note Use this in your games own remapping UI, or when you need to prompt a user that a given button has no mapping (sfSymbolsName is nil).
  */
-@property (nonatomic, strong, nullable) NSString *unmappedSfSymbolsName API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
+@property (nonatomic, strong, nullable) NSString *unmappedSfSymbolsName;
 
 /**
  The element's localized name, not taking any input remapping into account.
  
  @note Use this in your games own remapping UI, or when you need to prompt a user that a given button has no mapping (localizedName is nil).
  */
-@property (nonatomic, strong, nullable) NSString *unmappedLocalizedName API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
+@property (nonatomic, strong, nullable) NSString *unmappedLocalizedName;
 
 /**
  A set of aliases that can be used to access this element with keyed subscript notation.

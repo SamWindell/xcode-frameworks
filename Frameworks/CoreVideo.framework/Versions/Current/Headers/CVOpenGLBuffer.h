@@ -31,7 +31,7 @@ CV_EXPORT const CFStringRef CV_NONNULL kCVOpenGLBufferTarget COREVIDEO_GL_DEPREC
 CV_EXPORT const CFStringRef CV_NONNULL kCVOpenGLBufferInternalFormat COREVIDEO_GL_DEPRECATED(macosx, 10.4, 10.14) API_UNAVAILABLE(macCatalyst);
 CV_EXPORT const CFStringRef CV_NONNULL kCVOpenGLBufferMaximumMipmapLevel COREVIDEO_GL_DEPRECATED(macosx, 10.4, 10.14) API_UNAVAILABLE(macCatalyst);
 
-typedef CVImageBufferRef CVOpenGLBufferRef CV_SWIFT_NONSENDABLE;
+typedef CVImageBufferRef CVOpenGLBufferRef;
 
 CV_EXPORT CFTypeID CVOpenGLBufferGetTypeID(void) COREVIDEO_GL_DEPRECATED(macosx, 10.4, 10.14) API_UNAVAILABLE(macCatalyst);
 

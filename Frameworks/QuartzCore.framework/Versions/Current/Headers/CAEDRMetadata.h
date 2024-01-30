@@ -1,20 +1,15 @@
 /* CoreAnimation - CAEDRMetadata.h
 
- Copyright (c) 2018-2022, Apple Inc.
+ Copyright (c) 2018, Apple Inc.
  All rights reserved. */
 
 #ifndef CAEDRMetadata_h
 #define CAEDRMetadata_h
 
-
-#ifdef __OBJC__
-
-#include <Foundation/NSObject.h>
-
 NS_ASSUME_NONNULL_BEGIN
 
-API_AVAILABLE(macos(10.15), ios(16.0))
-@interface CAEDRMetadata : NSObject<NSCopying, NSSecureCoding>
+API_AVAILABLE(macos(10.15))
+@interface CAEDRMetadata : NSObject
 {
 @private
   struct _CAEDRMetadataPrivate *_priv;
@@ -81,21 +76,6 @@ API_AVAILABLE(macos(10.15), ios(16.0))
                                     maxLuminance:(float)maxNits
                               opticalOutputScale:(float)scale NS_SWIFT_NAME(hdr10(minLuminance:maxLuminance:opticalOutputScale:));
 
-/*
- * Initialize with SEI Ambient Viewing Environmnent as defined in ISO/IEC 23002-7:2021
- *
- * `data'
- * The value is 8 bytes containing a big-endian structure as defined in D.3.39
- *
- * The default metadata attached to Apple captures will typically have
- * ambient_illuminance = 314,0000 with a D65 background chromaticity
- * (ambient_light_x = 15,635, ambient_light_y = 16,450) but may change.
- * As such it should be queried from the movies FormatDescription using the
- * kCMFormatDescriptionExtension_AmbientViewingEnvironment key.
- */
-
-+ (CAEDRMetadata *)HLGMetadataWithAmbientViewingEnvironment:(nonnull NSData *)data NS_SWIFT_NAME(hlg(ambientViewingEnvironment:)) API_AVAILABLE(macos(14.0), ios(17.0));
-
 /* Content is scene referred and originally encoded with the ITU-R BT.2100-2
  * Hybrid Log Gamma (HLG) opto-electrical transfer function (OETF). The system
  * will apply the opto-optical transfer function (OOTF) based on peak display
@@ -105,13 +85,9 @@ API_AVAILABLE(macos(10.15), ios(16.0))
 
 @property (class, readonly, retain) CAEDRMetadata *HLGMetadata;
 
-@property (class, readonly, getter=isAvailable) BOOL available API_AVAILABLE(macos(13.0), ios(16.0));
-
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* __OBJC__ */
 
 
 #endif /* CAEDRMetadata_h */

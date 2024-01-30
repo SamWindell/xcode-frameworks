@@ -2,7 +2,7 @@
 /*
 	NSTextAlternatives.h
 	Application Kit
-	Copyright (c) 2011-2023, Apple Inc.
+	Copyright (c) 2011-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -11,7 +11,7 @@
 #import <Foundation/NSNotification.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 #if !TARGET_OS_IPHONE
 
 @class NSString;
@@ -33,7 +33,7 @@ APPKIT_EXTERN NSNotificationName NSTextAlternativesSelectedAlternativeStringNoti
 
 
 #endif // !TARGET_OS_IPHONE
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 #else
 #import <UIFoundation/NSTextAlternatives.h>
 #endif

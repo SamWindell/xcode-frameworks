@@ -9,7 +9,7 @@
 
 @class NSData;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 enum {
     NSOpenStepUnicodeReservedBase = 0xF400
@@ -84,4 +84,4 @@ enum {
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

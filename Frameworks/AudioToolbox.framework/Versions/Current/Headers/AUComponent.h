@@ -66,9 +66,7 @@
 
 CF_ASSUME_NONNULL_BEGIN
 
-
-  #define AU_SUPPORT_INTERAPP_AUDIO 1
-
+#define AU_SUPPORT_INTERAPP_AUDIO 1
 
 #define INTERAPP_AUDIO_DEPRECATED API_DEPRECATED("Inter-App Audio API is deprecated in favor of Audio Units", ios(7.0, 13.0), watchos(2.0, 6.0), tvos(9.0, 13.0), macCatalyst(14.0, 14.0))
 
@@ -186,8 +184,6 @@ typedef AudioComponentInstance AudioUnit;
 	@constant		kAudioUnitType_MIDIProcessor
 		Plugins of this type process MIDI input and produce MIDI output. They do not produce audio.
 
-	@constant       kAudioUnitType_SpeechSynthesizer
-		An offline audio unit that produces synthesized speech audio output.
 */
 CF_ENUM(UInt32) {
 	kAudioUnitType_Output					= 'auou',
@@ -199,8 +195,7 @@ CF_ENUM(UInt32) {
 	kAudioUnitType_Panner					= 'aupn',
 	kAudioUnitType_Generator				= 'augn',
 	kAudioUnitType_OfflineEffect			= 'auol',
-	kAudioUnitType_MIDIProcessor			= 'aumi',
-	kAudioUnitType_SpeechSynthesizer API_AVAILABLE(ios(16.0), macos(13.0), watchos(9.0), tvos(16.0))  = 'ausp'
+	kAudioUnitType_MIDIProcessor			= 'aumi'
 };
 
 #if AU_SUPPORT_INTERAPP_AUDIO
@@ -370,8 +365,8 @@ CF_ENUM(UInt32) {
 					merges the two inputs to the single output
 
 	@constant		kAudioUnitSubType_NewTimePitch
-					An audio unit that provides good quality time stretching and pitch shifting.
-					It is computationally less expensive than kAudioUnitSubType_TimePitch.
+					An audio unit that provides good quality time stretching and pitch shifting 
+					while still being very fast.
 
 	@constant		kAudioUnitSubType_AUiPodTimeOther
 					An audio unit that provides time domain time stretching.
@@ -389,19 +384,20 @@ CF_ENUM(UInt32) {
 	kAudioUnitSubType_RoundTripAAC			= 'raac',
 };
 
-#if !TARGET_OS_WATCH
+#if !TARGET_OS_IPHONE
 /*!
-	@enum			Apple converter audio unit sub types (macOS and iOS only)
+	@enum			Apple converter audio unit sub types (macOS only)
 	@constant		kAudioUnitSubType_TimePitch
-					An audio unit that provides high quality time stretching and pitch shifting.
+					An audio unit that can be used to have independent control of both playback
+					rate and pitch. It provides a generic view, so can be used in both a UI and 
+					programmatic context. It also comes in an Offline version so can be used to 
+					process audio files.
 					
 */
 CF_ENUM(UInt32) {
 	kAudioUnitSubType_TimePitch				= 'tmpt'
 };
-#endif //!TARGET_OS_WATCH
-
-#if TARGET_OS_IPHONE && !TARGET_OS_MACCATALYST
+#elif !TARGET_OS_MACCATALYST
 /*!
 	@enum			Apple converter audio unit sub types (iOS only)
 	@constant		kAudioUnitSubType_AUiPodTime
@@ -458,9 +454,7 @@ CF_ENUM(UInt32) {
 
     @constant       kAudioUnitSubType_Reverb2
                     A lite reverb that can be used to simulate various and different spaces
- 
-	@constant       kAudioUnitSubType_AUSoundIsolation
-					An audio unit that can be used to isolate a specified sound type
+
 */
 CF_ENUM(UInt32) {
 	kAudioUnitSubType_PeakLimiter			= 'lmtr',
@@ -475,8 +469,7 @@ CF_ENUM(UInt32) {
 	kAudioUnitSubType_Delay					= 'dely',
 	kAudioUnitSubType_SampleDelay			= 'sdly',
 	kAudioUnitSubType_NBandEQ				= 'nbeq',
-    kAudioUnitSubType_Reverb2               = 'rvb2',
-	kAudioUnitSubType_AUSoundIsolation API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) = 'vois',
+    kAudioUnitSubType_Reverb2               = 'rvb2'
 };
 
 #if !TARGET_OS_IPHONE
@@ -791,41 +784,35 @@ typedef CF_OPTIONS(UInt32, AudioUnitRenderActionFlags)
  					invalid characters.
  	@constant		kAudioUnitErr_MissingKey
  					A required key is missing from a dictionary object.
-	@constant		kAudioUnitErr_ComponentManagerNotSupported
-					The operation can not be performed for a component instance instantiated using the
-					deprecated Component Manager. A host application should use the API functions
-					AudioComponentInstantiate or AudioComponentInstanceNew when rebuilding
-					against the macOS 11 or later SDK.
 */
 CF_ENUM(OSStatus) {
-	kAudioUnitErr_InvalidProperty					= -10879,
-	kAudioUnitErr_InvalidParameter					= -10878,
-	kAudioUnitErr_InvalidElement					= -10877,
-	kAudioUnitErr_NoConnection						= -10876,
-	kAudioUnitErr_FailedInitialization				= -10875,
-	kAudioUnitErr_TooManyFramesToProcess			= -10874,
-	kAudioUnitErr_InvalidFile						= -10871,
-	kAudioUnitErr_UnknownFileType					= -10870,
-	kAudioUnitErr_FileNotSpecified					= -10869,
-	kAudioUnitErr_FormatNotSupported				= -10868,
-	kAudioUnitErr_Uninitialized						= -10867,
-	kAudioUnitErr_InvalidScope						= -10866,
-	kAudioUnitErr_PropertyNotWritable				= -10865,
-	kAudioUnitErr_CannotDoInCurrentContext			= -10863,
-	kAudioUnitErr_InvalidPropertyValue				= -10851,
-	kAudioUnitErr_PropertyNotInUse					= -10850,
-	kAudioUnitErr_Initialized						= -10849,
-	kAudioUnitErr_InvalidOfflineRender				= -10848,
-	kAudioUnitErr_Unauthorized						= -10847,
-	kAudioUnitErr_MIDIOutputBufferFull				= -66753,
-	kAudioComponentErr_InstanceTimedOut				= -66754,
-	kAudioComponentErr_InstanceInvalidated			= -66749,
-	kAudioUnitErr_RenderTimeout						= -66745,
-	kAudioUnitErr_ExtensionNotFound					= -66744,
-	kAudioUnitErr_InvalidParameterValue				= -66743,
-	kAudioUnitErr_InvalidFilePath					= -66742,
-	kAudioUnitErr_MissingKey						= -66741,
-	kAudioUnitErr_ComponentManagerNotSupported		= -66740
+	kAudioUnitErr_InvalidProperty			= -10879,
+	kAudioUnitErr_InvalidParameter			= -10878,
+	kAudioUnitErr_InvalidElement			= -10877,
+	kAudioUnitErr_NoConnection				= -10876,
+	kAudioUnitErr_FailedInitialization		= -10875,
+	kAudioUnitErr_TooManyFramesToProcess	= -10874,
+	kAudioUnitErr_InvalidFile				= -10871,
+	kAudioUnitErr_UnknownFileType			= -10870,
+	kAudioUnitErr_FileNotSpecified			= -10869,
+	kAudioUnitErr_FormatNotSupported		= -10868,
+	kAudioUnitErr_Uninitialized				= -10867,
+	kAudioUnitErr_InvalidScope				= -10866,
+	kAudioUnitErr_PropertyNotWritable		= -10865,
+	kAudioUnitErr_CannotDoInCurrentContext	= -10863,
+	kAudioUnitErr_InvalidPropertyValue		= -10851,
+	kAudioUnitErr_PropertyNotInUse			= -10850,
+	kAudioUnitErr_Initialized				= -10849,
+	kAudioUnitErr_InvalidOfflineRender		= -10848,
+	kAudioUnitErr_Unauthorized				= -10847,
+	kAudioUnitErr_MIDIOutputBufferFull		= -66753,
+	kAudioComponentErr_InstanceTimedOut		= -66754,
+	kAudioComponentErr_InstanceInvalidated	= -66749,
+	kAudioUnitErr_RenderTimeout				= -66745,
+	kAudioUnitErr_ExtensionNotFound			= -66744,
+	kAudioUnitErr_InvalidParameterValue		= -66743,
+	kAudioUnitErr_InvalidFilePath			= -66742,
+	kAudioUnitErr_MissingKey				= -66741
 };
 
 
@@ -1116,43 +1103,23 @@ extern const CFStringRef kAudioComponentRegistrationsChangedNotification
 
 /*!
 	@constant kAudioComponentInstanceInvalidationNotification
-	@abstract Notification generated when the connection to an audio unit extension process
-			  is invalidated.
+	@abstract Notification generated when an audio unit extension process exits abnormally.
 	@discussion
 		Register for this notification name with `[NSNotificationCenter defaultCenter]` or
-		`CFNotificationCenterGetLocalCenter()`. The "object" refers to an AUAudioUnit instance
-		to be observed, or can be nil to observe all instances.
-
-		This notification can happen for several reasons, for instance the connection being
-		invalidated or the process abnormally ending. There can be multiple notifications for
-		the same event (i.e. a terminated process will also invalidate the connection).
-
-		The notification's userInfo dictionary may contain the following keys, depending on
-		the reason for the invalidation and the platform in which it's running:
-
-		@"audioUnit", a NSValue whose pointerValue is the AudioUnit or
-		AudioComponentInstance which is wrapping the AUAudioUnit communicating with
-		the extension process. (This may be null if there is no such component instance.).
-		For example:
+		`CFNotificationCenterGetLocalCenter()`. The "object" refers to an AUAudioUnit instance to
+		be observed, or can be nil to observe all instances. The notification's userInfo
+		dictionary contains a key, "audioUnit", an NSValue whose pointerValue is the
+		AudioUnit or AudioComponentInstance which is wrapping the AUAudioUnit communicating with the
+		extension process. (This may be null if there is no such component instance.) For example:
 
 	```
-	[[NSNotificationCenter defaultCenter]
-			addObserverForName:(NSString *)kAudioComponentInstanceInvalidationNotification
-				 	    object:nil queue:nil usingBlock:^(NSNotification *note) {
+	[[NSNotificationCenter defaultCenter] addObserverForName:(NSString *)kAudioComponentInstanceInvalidationNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
 		AUAudioUnit *auAudioUnit = (AUAudioUnit *)note.object;
 		NSValue *val = note.userInfo[@"audioUnit"];
 		AudioUnit audioUnit = (AudioUnit)val.pointerValue;
-		NSLog(@"Received kAudioComponentInstanceInvalidationNotification: auAudioUnit %@, audioUnit %p",
-			auAudioUnit, audioUnit);
+		NSLog(@"Received kAudioComponentInstanceInvalidationNotification: auAudioUnit %@, audioUnit %p", auAudioUnit, audioUnit);
 	}];
 	```
-
-		@"Service PID", a NSNumber with the process ID for the service.
-		@"Host PID", a NSNumber with the process ID for the host.
-		@"Executable Path", a NSString with the path for the executable that may be responsible
-		for the abnormal exit.
-		@"Descriptions" a NSArray of NSValues representing byte encoded
-		AudioComponentDescriptions that may be responsible for the abnormal exit.
 */
 extern const CFStringRef kAudioComponentInstanceInvalidationNotification
 												API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
@@ -1662,7 +1629,7 @@ AudioComponentGetLastActiveTime(AudioComponent comp)
                                                 API_UNAVAILABLE(macos) INTERAPP_AUDIO_DEPRECATED;
 #endif // AU_SUPPORT_INTERAPP_AUDIO
 
-#if defined(__OBJC__) && !(0 && 0)
+#if defined(__OBJC__)
 #if TARGET_OS_IPHONE
 /*!
 	@function       AudioComponentCopyIcon
@@ -1705,7 +1672,7 @@ AudioComponentCopyIcon(AudioComponent comp) __attribute((ns_returns_retained))
 #endif
 #endif
 
-#if (defined(__LP64__) || TARGET_OS_IPHONE) && !(0 && 0)
+#if defined(__LP64__) || TARGET_OS_IPHONE
 /*!
 	@function		AudioUnitExtensionSetComponentList
 	@abstract		Allows the implementor of an audio unit extension to dynamically modify the

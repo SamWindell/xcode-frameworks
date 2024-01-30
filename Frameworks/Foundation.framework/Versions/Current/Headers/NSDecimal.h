@@ -7,7 +7,7 @@
 
 @class NSDictionary;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /***************	Type definitions		***********/
 
@@ -39,7 +39,7 @@ typedef NS_ENUM(NSUInteger, NSCalculationError) {
 
 #define NSDecimalNoScale SHRT_MAX
 
-typedef struct NS_SWIFT_SENDABLE {
+typedef struct {
     signed   int _exponent:8;
     unsigned int _length:4;     // length == 0 && isNegative -> NaN
     unsigned int _isNegative:1;
@@ -86,4 +86,4 @@ FOUNDATION_EXPORT NSCalculationError NSDecimalMultiplyByPowerOf10(NSDecimal *res
 
 FOUNDATION_EXPORT NSString *NSDecimalString(const NSDecimal *dcm, id _Nullable locale);
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

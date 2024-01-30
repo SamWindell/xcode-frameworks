@@ -1,12 +1,9 @@
 /* CoreAnimation - CADisplayLink.h
 
-   Copyright (c) 2009-2022, Apple Inc.
+   Copyright (c) 2009-2018, Apple Inc.
    All rights reserved. */
 
-#ifdef __OBJC__
-
 #import <QuartzCore/CABase.h>
-#import <QuartzCore/CAFrameRateRange.h>
 #import <Foundation/NSObject.h>
 
 @class NSString, NSRunLoop;
@@ -14,10 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /** Class representing a timer bound to the display vsync. **/
-API_AVAILABLE(ios(3.1), watchos(2.0), tvos(9.0))
 
-API_AVAILABLE(macos(14.0))
-
+API_AVAILABLE(ios(3.1), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos)
 @interface CADisplayLink : NSObject
 {
 @private
@@ -26,11 +21,9 @@ API_AVAILABLE(macos(14.0))
 
 /* Create a new display link object for the main display. It will
  * invoke the method called 'sel' on 'target', the method has the
- * signature '(void)selector:(CADisplayLink *)sender'.
- * For macOS, see NSView/NSWindow/NSScreen.displayLink(withTarget:selector:). */
+ * signature '(void)selector:(CADisplayLink *)sender'. */
 
-+ (CADisplayLink *)displayLinkWithTarget:(id)target selector:(SEL)sel
-    API_UNAVAILABLE(macos);
++ (CADisplayLink *)displayLinkWithTarget:(id)target selector:(SEL)sel;
 
 /* Adds the receiver to the given run-loop and mode. Unless paused, it
  * will fire every vsync until removed. Each object may only be added
@@ -76,9 +69,8 @@ API_AVAILABLE(macos(14.0))
  * DEPRECATED - use preferredFramesPerSecond. */
 
 @property(nonatomic) NSInteger frameInterval
-  API_DEPRECATED("preferredFramesPerSecond", ios(3.1, 10.0),
-                 watchos(2.0, 3.0), tvos(9.0, 10.0))
-  API_UNAVAILABLE(macos);
+  API_DEPRECATED("preferredFramesPerSecond", ios(3.1, 10.0), 
+                 watchos(2.0, 3.0), tvos(9.0, 10.0));
 
 /* Defines the desired callback rate in frames-per-second for this display
  * link. If set to zero, the default value, the display link will fire at the
@@ -86,23 +78,8 @@ API_AVAILABLE(macos(14.0))
  * best-effort attempt at issuing callbacks at the requested rate. */
 
 @property(nonatomic) NSInteger preferredFramesPerSecond
-  API_DEPRECATED_WITH_REPLACEMENT ("preferredFrameRateRange",
-                                   ios(10.0, API_TO_BE_DEPRECATED),
-                                   watchos(3.0, API_TO_BE_DEPRECATED),
-                                   tvos(10.0, API_TO_BE_DEPRECATED))
-  API_UNAVAILABLE(macos);
-
-/* Defines the range of desired callback rate in frames-per-second for this
-   display link. If the range contains the same minimum and maximum frame rate,
-   this property is identical as preferredFramesPerSecond. Otherwise, the actual
-   callback rate will be dynamically adjusted to better align with other
-   animation sources. */
-
-@property(nonatomic) CAFrameRateRange preferredFrameRateRange
-    API_AVAILABLE(ios(15.0), watchos(8.0), tvos(15.0));
+    API_AVAILABLE(ios(10.0), watchos(3.0), tvos(10.0));
 
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif

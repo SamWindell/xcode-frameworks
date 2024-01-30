@@ -1,7 +1,7 @@
 /*
  NSStackView.h
  Application Kit
- Copyright (c) 2012-2023, Apple Inc.
+ Copyright (c) 2012-2019, Apple Inc.
  All rights reserved.
  */
 
@@ -11,7 +11,7 @@
 #import <AppKit/NSView.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSView;
@@ -215,8 +215,8 @@ API_AVAILABLE(macos(10.9))
  These are called when the StackView detaches or readds a view (or multiple views) after it was detached.
  This is not called when a view is explicitly added or removed from the StackView
  */
-- (void)stackView:(NSStackView *)stackView willDetachViews:(NSArray<NSView *> *)views NS_SWIFT_UI_ACTOR;
-- (void)stackView:(NSStackView *)stackView didReattachViews:(NSArray<NSView *> *)views NS_SWIFT_UI_ACTOR;
+- (void)stackView:(NSStackView *)stackView willDetachViews:(NSArray<NSView *> *)views;
+- (void)stackView:(NSStackView *)stackView didReattachViews:(NSArray<NSView *> *)views;
 
 @end
 
@@ -268,4 +268,4 @@ API_AVAILABLE(macos(10.9))
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

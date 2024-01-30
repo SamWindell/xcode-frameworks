@@ -1,23 +1,22 @@
 /*
 	NSScreen.h
 	Application Kit
-	Copyright (c) 1994-2023, Apple Inc.
+	Copyright (c) 1994-2019, Apple Inc.
 	All rights reserved.
 */
 
 #import <Foundation/NSObject.h>
 #import <Foundation/NSArray.h>
-#import <Foundation/NSDate.h>
 #import <Foundation/NSDictionary.h>
 #import <Foundation/NSGeometry.h>
 #import <Foundation/NSNotification.h>
 #import <AppKit/NSGraphics.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
-@class CADisplayLink, NSColorSpace;
+@class NSColorSpace;
 
 @interface NSScreen : NSObject
 
@@ -41,7 +40,7 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
  */
 - (BOOL)canRepresentDisplayGamut:(NSDisplayGamut)displayGamut API_AVAILABLE(macos(10.12));
 
-/* Convert to/from the device pixel aligned coordinates system of a display
+/* Convert to/from the device pixel aligned coordinates sytem of a display 
  */
 - (NSRect)convertRectToBacking:(NSRect)rect API_AVAILABLE(macos(10.7));
 - (NSRect)convertRectFromBacking:(NSRect)rect API_AVAILABLE(macos(10.7));
@@ -55,13 +54,6 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 @property (readonly) CGFloat backingScaleFactor API_AVAILABLE(macos(10.7)); 
 
 @property (readonly, copy) NSString *localizedName API_AVAILABLE(macos(10.15));
-
-/* Indicates the obscured distance from each edge of the screen */
-@property (readonly) NSEdgeInsets safeAreaInsets API_AVAILABLE(macos(12.0));
-
-/* The following two rects are at the top of the screen, outside the rectangle defined by safeAreaInsets, but also unobscured.  These rects are empty if there are no additional unobscured areas */
-@property (readonly) NSRect auxiliaryTopLeftArea API_AVAILABLE(macos(12.0));
-@property (readonly) NSRect auxiliaryTopRightArea API_AVAILABLE(macos(12.0));
 
 @end
 
@@ -88,46 +80,6 @@ APPKIT_EXTERN NSNotificationName const NSScreenColorSpaceDidChangeNotification A
 @end
 
 
-// Variable Rate Refresh
-@interface NSScreen ()
-
-/** The maximum frames per second this screen supports.
-*/
-@property (readonly) NSInteger maximumFramesPerSecond API_AVAILABLE(macos(12.0));
-
-/** The minimum refresh interval this screen supports, in seconds.
-
-    This is the shortest amount of time a frame will be present on screen.
-    minimumRefreshInterval and maximumRefreshInterval will be the same for displays that do not support variable refresh rates.
-*/
-@property (readonly) NSTimeInterval minimumRefreshInterval API_AVAILABLE(macos(12.0));
-
-/** The maximum refresh interval this screen supports, in seconds.
-
-    minimumRefreshInterval and maximumRefreshInterval will be the same for displays that do not support variable refresh rates.
-*/
-@property (readonly) NSTimeInterval maximumRefreshInterval API_AVAILABLE(macos(12.0));
-
-/** The update granularity of the screen's current mode, in seconds.
-
-    The display will update at the next boundary defined by the granularity, after the minimum refresh interval has been reached. When 0, the display can update at any time between the minimum and maximum refresh rate intervals of the screen. Fixed refresh rate screen modes will return the refresh interval as the update granularity (e.g. 16.66ms for 60Hz refresh rates), meaning updates only occur at refresh rate boundaries.
-*/
-@property (readonly) NSTimeInterval displayUpdateGranularity API_AVAILABLE(macos(12.0));
-
-/** The time at which the last framebuffer update occurred on the display, in seconds since startup that the system has been awake.
-*/
-@property (readonly) NSTimeInterval lastDisplayUpdateTimestamp API_AVAILABLE(macos(12.0));
-
-@end
-
-API_AVAILABLE(macos(14.0))
-@interface NSScreen (NSDisplayLink)
-/*
-    Returns a new display link whose callback will be invoked in-sync with the display the screen is on. Note that views and windows can move between screens and you may want to get a display link directly from NSView or NSWindow which will track those changes automatically.
-*/
-- (CADisplayLink *)displayLinkWithTarget:(id)target selector:(SEL)selector NS_SWIFT_NAME(displayLink(target:selector:));
-@end
-
 @interface NSScreen (NSDeprecated)
 
 /*  This method is deprecated and should not be used by applications targeting Mac OS X 10.7 or later.
@@ -138,4 +90,4 @@ API_AVAILABLE(macos(14.0))
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

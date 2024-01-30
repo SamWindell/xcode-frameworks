@@ -1,11 +1,5 @@
-#ifndef CIFILTERBUILTINS_H
-#define CIFILTERBUILTINS_H
 
-#ifdef __OBJC__
-
-#import <TargetConditionals.h>
-
-#if TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
+#if TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_TV
 
 #import <CoreImage/CIFilter.h>
 @class CIVector;
@@ -332,7 +326,6 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic, retain, nullable) CIImage *inputImage;
   @property (nonatomic) float cubeDimension;
   @property (nonatomic, retain) NSData *cubeData;
-  @property (nonatomic) bool extrapolate NS_AVAILABLE(13_0, 16_0);
 @end
 @protocol CIColorCubesMixedWithMask <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
@@ -341,14 +334,12 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic, retain) NSData *cube0Data;
   @property (nonatomic, retain) NSData *cube1Data;
   @property (nonatomic, nullable) CGColorSpaceRef colorSpace;
-  @property (nonatomic) bool extrapolate NS_AVAILABLE(13_0, 16_0);
 @end
 @protocol CIColorCubeWithColorSpace <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
   @property (nonatomic) float cubeDimension;
   @property (nonatomic, retain) NSData *cubeData;
   @property (nonatomic, nullable) CGColorSpaceRef colorSpace;
-  @property (nonatomic) bool extrapolate NS_AVAILABLE(13_0, 16_0);
 @end
 @protocol CIColorCurves <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
@@ -371,10 +362,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol CIColorPosterize <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
   @property (nonatomic) float levels;
-@end
-@protocol CIConvertLab <CIFilter>
-  @property (nonatomic, retain, nullable) CIImage *inputImage;
-  @property (nonatomic) bool normalize;
 @end
 @protocol CIDither <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
@@ -414,7 +401,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 @protocol CIPhotoEffect <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
-  @property (nonatomic) bool extrapolate NS_AVAILABLE(14_0, 17_0);
 @end
 @protocol CISepiaTone <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
@@ -651,7 +637,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol CIAttributedTextImageGenerator <CIFilter>
   @property (nonatomic, retain) NSAttributedString *text;
   @property (nonatomic) float scaleFactor;
-  @property (nonatomic) float padding  NS_AVAILABLE(13_0, 16_0);
 @end
 @protocol CIAztecCodeGenerator <CIFilter>
   @property (nonatomic, retain) NSData *message;
@@ -661,11 +646,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 @protocol CIBarcodeGenerator <CIFilter>
   @property (nonatomic, retain) CIBarcodeDescriptor *barcodeDescriptor;
-@end
-@protocol CIBlurredRectangleGenerator <CIFilter>
-  @property (nonatomic) CGRect extent;
-  @property (nonatomic) float sigma;
-  @property (nonatomic, retain) CIColor *color;
 @end
 @protocol CICheckerboardGenerator <CIFilter>
   @property (nonatomic) CGPoint center;
@@ -719,12 +699,6 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic) float radius;
   @property (nonatomic, retain) CIColor *color;
 @end
-@protocol CIRoundedRectangleStrokeGenerator <CIFilter>
-  @property (nonatomic) CGRect extent;
-  @property (nonatomic) float radius;
-  @property (nonatomic) float width;
-  @property (nonatomic, retain) CIColor *color;
-@end
 @protocol CIStarShineGenerator <CIFilter>
   @property (nonatomic) CGPoint center;
   @property (nonatomic, retain) CIColor *color;
@@ -756,7 +730,6 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic, retain) NSString *fontName;
   @property (nonatomic) float fontSize;
   @property (nonatomic) float scaleFactor;
-  @property (nonatomic) float padding  NS_AVAILABLE(13_0, 16_0);
 @end
 
 // CICategoryStylize
@@ -769,14 +742,6 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic, retain, nullable) CIImage *inputImage;
   @property (nonatomic) float radius;
   @property (nonatomic) float intensity;
-@end
-@protocol CICannyEdgeDetector <CIFilter>
-  @property (nonatomic, retain, nullable) CIImage *inputImage;
-  @property (nonatomic) float gaussianSigma;
-  @property (nonatomic) bool perceptual;
-  @property (nonatomic) float thresholdHigh;
-  @property (nonatomic) float thresholdLow;
-  @property (nonatomic) NSInteger hysteresisPasses;
 @end
 @protocol CIComicEffect <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
@@ -850,10 +815,6 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic, retain, nullable) CIImage *backgroundImage;
   @property (nonatomic) float amount;
 @end
-@protocol CIPersonSegmentation <CIFilter>
-  @property (nonatomic, retain, nullable) CIImage *inputImage;
-  @property (nonatomic) NSUInteger qualityLevel;
-@end
 @protocol CIPixellate <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
   @property (nonatomic) CGPoint center;
@@ -871,9 +832,6 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic, retain, nullable) CIImage *inputImage;
   @property (nonatomic, retain, nullable) CIImage *shadingImage;
   @property (nonatomic) float scale;
-@end
-@protocol CISobelGradients <CIFilter>
-  @property (nonatomic, retain, nullable) CIImage *inputImage;
 @end
 @protocol CISpotColor <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
@@ -976,12 +934,6 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic) float scale;
   @property (nonatomic) NSInteger count;
 @end
-@protocol CIAreaLogarithmicHistogram <CIAreaReductionFilter>
-  @property (nonatomic) float scale;
-  @property (nonatomic) NSInteger count;
-  @property (nonatomic) float minimumStop;
-  @property (nonatomic) float maximumStop;
-@end
 @protocol CIAreaMaximum <CIAreaReductionFilter>
 @end
 @protocol CIAreaMaximumAlpha <CIAreaReductionFilter>
@@ -1073,7 +1025,6 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CICompositeOperation>*) lightenBlendModeFilter;
 + (CIFilter<CICompositeOperation>*) linearBurnBlendModeFilter;
 + (CIFilter<CICompositeOperation>*) linearDodgeBlendModeFilter;
-+ (CIFilter<CICompositeOperation>*) linearLightBlendModeFilter NS_AVAILABLE(12_0, 15_0);
 + (CIFilter<CICompositeOperation>*) luminosityBlendModeFilter;
 + (CIFilter<CICompositeOperation>*) maximumCompositingFilter;
 + (CIFilter<CICompositeOperation>*) minimumCompositingFilter;
@@ -1089,7 +1040,6 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CICompositeOperation>*) sourceOutCompositingFilter;
 + (CIFilter<CICompositeOperation>*) sourceOverCompositingFilter;
 + (CIFilter<CICompositeOperation>*) subtractBlendModeFilter;
-+ (CIFilter<CICompositeOperation>*) vividLightBlendModeFilter NS_AVAILABLE(12_0, 15_0);
 
 // CICategoryColorAdjustment
 + (CIFilter<CIColorAbsoluteDifference>*) colorAbsoluteDifferenceFilter NS_AVAILABLE(11_0, 14_0);
@@ -1121,8 +1071,6 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CIColorMap>*) colorMapFilter;
 + (CIFilter<CIColorMonochrome>*) colorMonochromeFilter;
 + (CIFilter<CIColorPosterize>*) colorPosterizeFilter;
-+ (CIFilter<CIConvertLab>*) convertLabToRGBFilter NS_AVAILABLE(13_0, 16_0);
-+ (CIFilter<CIConvertLab>*) convertRGBtoLabFilter NS_AVAILABLE(13_0, 16_0);
 + (CIFilter<CIDither>*) ditherFilter;
 + (CIFilter<CIDocumentEnhancer>*) documentEnhancerFilter;
 + (CIFilter<CIFalseColor>*) falseColorFilter;
@@ -1187,7 +1135,6 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CIAttributedTextImageGenerator>*) attributedTextImageGeneratorFilter;
 + (CIFilter<CIAztecCodeGenerator>*) aztecCodeGeneratorFilter;
 + (CIFilter<CIBarcodeGenerator>*) barcodeGeneratorFilter;
-+ (CIFilter<CIBlurredRectangleGenerator>*) blurredRectangleGeneratorFilter NS_AVAILABLE(14_0, 17_0);
 + (CIFilter<CICheckerboardGenerator>*) checkerboardGeneratorFilter;
 + (CIFilter<CICode128BarcodeGenerator>*) code128BarcodeGeneratorFilter;
 + (CIFilter<CILenticularHaloGenerator>*) lenticularHaloGeneratorFilter;
@@ -1196,7 +1143,6 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CIQRCodeGenerator>*) QRCodeGenerator;
 + (CIFilter<CIRandomGenerator>*) randomGeneratorFilter;
 + (CIFilter<CIRoundedRectangleGenerator>*) roundedRectangleGeneratorFilter;
-+ (CIFilter<CIRoundedRectangleStrokeGenerator>*) roundedRectangleStrokeGeneratorFilter NS_AVAILABLE(14_0, 17_0);
 + (CIFilter<CIStarShineGenerator>*) starShineGeneratorFilter;
 + (CIFilter<CIStripesGenerator>*) stripesGeneratorFilter;
 + (CIFilter<CISunbeamsGenerator>*) sunbeamsGeneratorFilter;
@@ -1208,18 +1154,12 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CIBlendWithMask>*) blendWithMaskFilter;
 + (CIFilter<CIBlendWithMask>*) blendWithRedMaskFilter;
 + (CIFilter<CIBloom>*) bloomFilter;
-+ (CIFilter<CICannyEdgeDetector>*) cannyEdgeDetectorFilter NS_AVAILABLE(14_0, 17_0);
 + (CIFilter<CIComicEffect>*) comicEffectFilter;
 + (CIFilter<CIConvolution>*) convolution3X3Filter;
 + (CIFilter<CIConvolution>*) convolution5X5Filter;
 + (CIFilter<CIConvolution>*) convolution7X7Filter;
 + (CIFilter<CIConvolution>*) convolution9HorizontalFilter;
 + (CIFilter<CIConvolution>*) convolution9VerticalFilter;
-+ (CIFilter<CIConvolution>*) convolutionRGB3X3Filter NS_AVAILABLE(12_0, 15_0);
-+ (CIFilter<CIConvolution>*) convolutionRGB5X5Filter NS_AVAILABLE(12_0, 15_0);
-+ (CIFilter<CIConvolution>*) convolutionRGB7X7Filter NS_AVAILABLE(12_0, 15_0);
-+ (CIFilter<CIConvolution>*) convolutionRGB9HorizontalFilter NS_AVAILABLE(12_0, 15_0);
-+ (CIFilter<CIConvolution>*) convolutionRGB9VerticalFilter NS_AVAILABLE(12_0, 15_0);
 + (CIFilter<CICoreMLModel>*) coreMLModelFilter;
 + (CIFilter<CICrystallize>*) crystallizeFilter;
 + (CIFilter<CIDepthOfField>*) depthOfFieldFilter;
@@ -1232,12 +1172,10 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CIHighlightShadowAdjust>*) highlightShadowAdjustFilter;
 + (CIFilter<CILineOverlay>*) lineOverlayFilter;
 + (CIFilter<CIMix>*) mixFilter;
-+ (CIFilter<CIPersonSegmentation>*) personSegmentationFilter NS_AVAILABLE(12_0, 15_0);
 + (CIFilter<CIPixellate>*) pixellateFilter;
 + (CIFilter<CIPointillize>*) pointillizeFilter;
 + (CIFilter<CISaliencyMap>*) saliencyMapFilter;
 + (CIFilter<CIShadedMaterial>*) shadedMaterialFilter;
-+ (CIFilter<CISobelGradients>*) sobelGradientsFilter NS_AVAILABLE(14_0, 17_0);
 + (CIFilter<CISpotColor>*) spotColorFilter;
 + (CIFilter<CISpotLight>*) spotLightFilter;
 
@@ -1260,7 +1198,6 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 // CICategoryReduction
 + (CIFilter<CIAreaAverage>*) areaAverageFilter NS_AVAILABLE(11_0, 14_0);
 + (CIFilter<CIAreaHistogram>*) areaHistogramFilter NS_AVAILABLE(11_0, 14_0);
-+ (CIFilter<CIAreaLogarithmicHistogram>*) areaLogarithmicHistogramFilter NS_AVAILABLE(13_0, 16_0);
 + (CIFilter<CIAreaMaximum>*) areaMaximumFilter NS_AVAILABLE(11_0, 14_0);
 + (CIFilter<CIAreaMaximumAlpha>*) areaMaximumAlphaFilter NS_AVAILABLE(11_0, 14_0);
 + (CIFilter<CIAreaMinimum>*) areaMinimumFilter NS_AVAILABLE(11_0, 14_0);
@@ -1277,7 +1214,3 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 NS_ASSUME_NONNULL_END
 
 #endif // TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_TV
-
-#endif /* __OBJC__ */
-
-#endif /* CIFILTERBUILTINS_H */

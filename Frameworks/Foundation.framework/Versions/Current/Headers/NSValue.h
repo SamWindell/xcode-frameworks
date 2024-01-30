@@ -6,7 +6,7 @@
 
 @class NSString, NSDictionary;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 @interface NSValue : NSObject <NSCopying, NSSecureCoding>
 
@@ -38,7 +38,6 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @end
 
-NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 @interface NSNumber : NSValue
 
 - (nullable instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
@@ -110,4 +109,4 @@ NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 - (void)getValue:(void *)value API_DEPRECATED_WITH_REPLACEMENT("getValue:size:", macos(10.0, API_TO_BE_DEPRECATED), ios(2.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED));
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

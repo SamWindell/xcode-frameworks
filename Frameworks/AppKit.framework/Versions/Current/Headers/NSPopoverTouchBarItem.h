@@ -1,7 +1,7 @@
 /*
  NSPopoverTouchBarItem.h
  Application Kit
- Copyright (c) 2015-2023, Apple Inc.
+ Copyright (c) 2015-2019, Apple Inc.
  All rights reserved.
 */
 
@@ -11,7 +11,7 @@
 @class UIImage;
 #endif
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 API_AVAILABLE(macos(10.12.2), ios(13.0))
 @interface NSPopoverTouchBarItem : NSTouchBarItem
@@ -73,4 +73,4 @@ API_AVAILABLE(macos(10.12.2), ios(13.0))
 - (NSGestureRecognizer *)makeStandardActivatePopoverGestureRecognizer API_UNAVAILABLE(ios);
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

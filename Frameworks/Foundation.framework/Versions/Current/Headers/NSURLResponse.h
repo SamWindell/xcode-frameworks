@@ -14,7 +14,7 @@
 @class NSURLRequest;
 @class NSURLResponseInternal;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 #define NSURLResponseUnknownLength ((long long)-1)
 
@@ -30,7 +30,6 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
     NSURLConnection and NSURLConnectionDelegate for more information
     about receiving the content data for a URL load.
 */
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 @interface NSURLResponse : NSObject <NSSecureCoding, NSCopying>
 {
@@ -101,7 +100,7 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
     this method checks the last path component of the URL. If no valid filename can be
     obtained using the last path component, this method uses the URL's host as the filename.
     If the URL's host can't be converted to a valid filename, the filename "unknown" is used.
-    In most cases, this method appends the proper file extension based on the MIME type.
+    In mose cases, this method appends the proper file extension based on the MIME type.
     This method always returns a valid filename.
     @result A suggested filename to use if saving the resource to disk.
 */
@@ -121,7 +120,6 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
     provides conveniences for accessing information specific to HTTP
     protocol responses.
 */
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 @interface NSHTTPURLResponse : NSURLResponse 
 {
@@ -182,4 +180,4 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

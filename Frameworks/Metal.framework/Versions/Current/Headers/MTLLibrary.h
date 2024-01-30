@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol MTLArgumentEncoder;
 
-typedef __autoreleasing MTLArgument *__nullable MTLAutoreleasedArgument API_DEPRECATED("Use MTLBinding and cast to specific Binding (MTLTextureBinding, MTLBufferBinding, .etc) instead", macos(10.11, 13.0), ios(8.0, 16.0));
+typedef __autoreleasing MTLArgument *__nullable MTLAutoreleasedArgument;
 
 typedef NS_ENUM(NSUInteger, MTLPatchType) {
     MTLPatchTypeNone = 0,
@@ -77,8 +77,6 @@ typedef NS_ENUM(NSUInteger, MTLFunctionType) {
     MTLFunctionTypeKernel = 3,
     MTLFunctionTypeVisible API_AVAILABLE(macos(11.0), ios(14.0)) = 5,
     MTLFunctionTypeIntersection API_AVAILABLE(macos(11.0), ios(14.0)) = 6,
-    MTLFunctionTypeMesh API_AVAILABLE(macos(13.0), ios(16.0)) = 7,
-    MTLFunctionTypeObject API_AVAILABLE(macos(13.0), ios(16.0)) = 8,
 } API_AVAILABLE(macos(10.11), ios(8.0));
 
 
@@ -167,7 +165,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  * @abstract Creates an argument encoder which will encode arguments matching the layout of the argument buffer at the given bind point index.
  */
 - (id <MTLArgumentEncoder>)newArgumentEncoderWithBufferIndex:(NSUInteger)bufferIndex
-                                                  reflection:(MTLAutoreleasedArgument * __nullable)reflection API_DEPRECATED("Use MTLDevice's newArgumentEncoderWithBufferBinding: instead", macos(10.13, 13.0), ios(11.0, 16.0));
+                                                                  reflection:(MTLAutoreleasedArgument * __nullable)reflection API_AVAILABLE(macos(10.13), ios(11.0));
 
 
 
@@ -181,47 +179,20 @@ API_AVAILABLE(macos(10.11), ios(8.0))
 @end
 
 typedef NS_ENUM(NSUInteger, MTLLanguageVersion) {
-    MTLLanguageVersion1_0 API_DEPRECATED("Use a newer language standard", ios(9.0, 16.0)) API_UNAVAILABLE(macos, macCatalyst) = (1 << 16),
+    MTLLanguageVersion1_0 API_AVAILABLE(ios(9.0)) API_UNAVAILABLE(macos, macCatalyst) = (1 << 16),
     MTLLanguageVersion1_1 API_AVAILABLE(macos(10.11), ios(9.0)) = (1 << 16) + 1,
     MTLLanguageVersion1_2 API_AVAILABLE(macos(10.12), ios(10.0)) = (1 << 16) + 2,
     MTLLanguageVersion2_0 API_AVAILABLE(macos(10.13), ios(11.0)) = (2 << 16),
     MTLLanguageVersion2_1 API_AVAILABLE(macos(10.14), ios(12.0)) = (2 << 16) + 1,
     MTLLanguageVersion2_2 API_AVAILABLE(macos(10.15), ios(13.0)) = (2 << 16) + 2,
     MTLLanguageVersion2_3 API_AVAILABLE(macos(11.0), ios(14.0)) = (2 << 16) + 3,
-    MTLLanguageVersion2_4 API_AVAILABLE(macos(12.0), ios(15.0)) = (2 << 16) + 4,
-    MTLLanguageVersion3_0 API_AVAILABLE(macos(13.0), ios(16.0)) =
-    (3 << 16) + 0,
-    MTLLanguageVersion3_1 API_AVAILABLE(macos(14.0), ios(17.0)) = 
-    (3 << 16) + 1,
+
 } API_AVAILABLE(macos(10.11), ios(9.0));
 
 typedef NS_ENUM(NSInteger, MTLLibraryType) {
     MTLLibraryTypeExecutable = 0,
     MTLLibraryTypeDynamic = 1,
 } API_AVAILABLE(macos(11.0), ios(14.0));
-
-/*!
- @enum MTLLibraryOptimizationLevel
- @abstract Optimization level for the Metal compiler.
- 
- @constant MTLLibraryOptimizationLevelDefault
- Optimize for program performance.
- 
- @constant MTLLibraryOptimizationLevelSize
- Like default, with extra optimizations to reduce code size.
- */
-typedef NS_ENUM(NSInteger, MTLLibraryOptimizationLevel)
-{
-    MTLLibraryOptimizationLevelDefault = 0,
-    MTLLibraryOptimizationLevelSize = 1,
-} API_AVAILABLE(macos(13.0), ios(16.0));
-
-
-typedef NS_ENUM(NSInteger, MTLCompileSymbolVisibility)
-{
-    MTLCompileSymbolVisibilityDefault = 0,
-    MTLCompileSymbolVisibilityHidden = 1,
-} API_AVAILABLE(macos(13.3), ios(16.4));
 
 MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
 @interface MTLCompileOptions : NSObject <NSCopying>
@@ -266,8 +237,8 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
  This property should be set such that the dynamic library can be found in the file system at the time a pipeline state is created.
  Specify one of:
  - an absolute path to a file from which the dynamic library can be loaded, or
- - a path relative to \@executable_path, where \@executable_path is substituted with the directory name from which the MTLLibrary containing the MTLFunction entrypoint used to create the pipeline state is loaded, or
- - a path relative to \@loader_path, where \@loader_path is substituted with the directory name from which the MTLLibrary with the reference to this installName embedded is loaded.
+ - a path relative to @executable_path, where @executable_path is substituted with the directory name from which the MTLLibrary containing the MTLFunction entrypoint used to create the pipeline state is loaded, or
+ - a path relative to @loader_path, where @loader_path is substituted with the directory name from which the MTLLibrary with the reference to this installName embedded is loaded.
  The first is appropriate for MTLDynamicLibrary written to the file-system using its serializeToURL:error: method on the current device.
  The others are appropriate when the MTLDynamicLibrary is installed as part of a bundle or app, where the absolute path is not known.
  This property is ignored when the type property is not set to MTLLibraryTypeDynamic.
@@ -280,7 +251,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
  @abstract A set of MTLDynamicLibrary instances to link against.
  The installName of the provided MTLDynamicLibrary is embedded into the compilation result.
  When a function from the resulting MTLLibrary is used (either as an MTLFunction, or as an to create a pipeline state, the embedded install names are used to automatically load the MTLDynamicLibrary instances.
- This property can be null if no libraries should be automatically loaded, either because the MTLLibrary has no external dependencies, or because you will use preloadedLibraries to specify the libraries to use at pipeline creation time.
+ This property can be null if no libraries should be automatically loaded, either because the MTLLibrary has no external dependencies, or because you will use insertLibraries to specify the libraries to use at pipeline creation time.
 */
 @property (readwrite, nullable, copy, nonatomic) NSArray<id<MTLDynamicLibrary>> *libraries API_AVAILABLE(macos(11.0), ios(14.0));
 
@@ -289,32 +260,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
  @property preserveInvariance
  @abstract If YES,  set the compiler to compile shaders to preserve invariance.  The default is false.
  */
-@property (readwrite, nonatomic) BOOL preserveInvariance API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(14.0));
-
-/*!
- @property optimizationLevel
- @abstract Sets the compiler optimization level.
- */
-@property (readwrite, nonatomic) MTLLibraryOptimizationLevel optimizationLevel API_AVAILABLE(macos(13.0), ios(16.0));
-
-/*!
-@property
-@abstract Adds a compiler command to force the default visibility of symbols to be hidden
-*/
-@property (readwrite, nonatomic) MTLCompileSymbolVisibility compileSymbolVisibility API_AVAILABLE(macos(13.3), ios(16.4));
-
-/*!
-@property allowReferencingUndefinedSymbols
-@abstract Adds a compiler command to allow the reference of undefined symbols
-*/
-@property (readwrite, nonatomic) BOOL allowReferencingUndefinedSymbols API_AVAILABLE(macos(13.3), ios(16.4));
-
-/*!
-@property maxTotalThreadsPerThreadgroup
-@abstract Adds a compiler command to specify the total threads per threadgroup
-*/
-@property (readwrite, nonatomic) NSUInteger maxTotalThreadsPerThreadgroup API_AVAILABLE(macos(13.3), ios(16.4));
-
+@property (readwrite, nonatomic) BOOL preserveInvariance API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(13.0));
 @end
 
 /*!

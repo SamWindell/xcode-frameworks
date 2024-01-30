@@ -1,9 +1,7 @@
 /* CoreAnimation - CAMediaTiming.h
 
-   Copyright (c) 2006-2022, Apple Inc.
+   Copyright (c) 2006-2018, Apple Inc.
    All rights reserved. */
-
-#ifdef __OBJC__
 
 #import <QuartzCore/CABase.h>
 #import <objc/objc.h>
@@ -92,5 +90,3 @@ CA_EXTERN CAMediaTimingFillMode const kCAFillModeRemoved
     API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
 
 NS_ASSUME_NONNULL_END
-
-#endif

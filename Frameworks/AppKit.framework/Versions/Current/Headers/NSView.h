@@ -1,7 +1,7 @@
 /*
     NSView.h
     Application Kit
-    Copyright (c) 1994-2023, Apple Inc.
+    Copyright (c) 1994-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -23,10 +23,11 @@
 
 @protocol NSDraggingSource;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
-@class CADisplayLink, CALayer, CIFilter, NSAttributedString, NSBitmapImageRep, NSCursor, NSDraggingSession, NSGestureRecognizer, NSGraphicsContext, NSImage, NSLayoutGuide, NSScreen, NSScrollView, NSShadow, NSTextInputContext, NSTrackingArea, NSWindow;
+@class NSBitmapImageRep, NSCursor, NSDraggingSession, NSGestureRecognizer, NSGraphicsContext, NSImage, NSScrollView, NSTextInputContext, NSWindow, NSAttributedString;
+@class CIFilter, CALayer, NSScreen, NSShadow, NSTrackingArea, NSLayoutGuide;
 
 // Bitset options for the autoresizingMask
 typedef NS_OPTIONS(NSUInteger, NSAutoresizingMaskOptions) {
@@ -82,8 +83,8 @@ typedef NSInteger NSToolTipTag;
 - (instancetype)initWithFrame:(NSRect)frameRect NS_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
 
-@property (nullable, readonly, unsafe_unretained) NSWindow *window;
-@property (nullable, readonly, unsafe_unretained) NSView *superview;
+@property (nullable, readonly, assign) NSWindow *window;
+@property (nullable, readonly, assign) NSView *superview;
 @property (copy) NSArray<__kindof NSView *> *subviews;
 - (BOOL)isDescendantOf:(NSView *)view;
 - (nullable NSView *)ancestorSharedWithView:(NSView *)view;
@@ -189,10 +190,6 @@ typedef NSInteger NSToolTipTag;
 - (BOOL)lockFocusIfCanDraw API_DEPRECATED("To draw, subclass NSView and implement -drawRect:; AppKit's automatic deferred display mechanism will call -drawRect: as necessary to display the view.", macos(10.0,10.14));
 - (BOOL)lockFocusIfCanDrawInContext:(NSGraphicsContext *)context API_DEPRECATED("Use -[NSView displayRectIgnoringOpacity:inContext:] to draw a view subtree into a graphics context.", macos(10.4,10.13));
 @property (class, readonly, nullable, strong) NSView *focusView;
-
-/// The portion of the view that isn’t clipped by its superviews.
-/// @discussion Visibility, as reflected by this property, doesn’t account for whether other view or window objects overlap the current view or whether the current view is installed in a window at all. This value of this property is `NSZeroRect` if the current view is effectively hidden.
-/// @discussion During a printing operation, the visible rectangle is further clipped to the page being imaged.
 @property (readonly) NSRect visibleRect;
 
 - (void)display;
@@ -232,6 +229,14 @@ typedef NSInteger NSToolTipTag;
 /* In some cases, the user may rest a thumb or other touch on the device. By default, these touches are not delivered and are not included in the event's set of touches. Touches may transition in and out of resting at any time. Unless the view wants restingTouches, began / ended events are simlulated as touches transition from resting to active and vice versa.
 */
 @property BOOL wantsRestingTouches API_AVAILABLE(macos(10.6));
+
+- (void)addCursorRect:(NSRect)rect cursor:(NSCursor *)object;
+- (void)removeCursorRect:(NSRect)rect cursor:(NSCursor *)object;
+- (void)discardCursorRects;
+- (void)resetCursorRects;
+
+- (NSTrackingRectTag)addTrackingRect:(NSRect)rect owner:(id)owner userData:(nullable void *)data assumeInside:(BOOL)flag;
+- (void)removeTrackingRect:(NSTrackingRectTag)tag;
 
 - (CALayer *)makeBackingLayer API_AVAILABLE(macos(10.6));
 
@@ -279,9 +284,15 @@ typedef NSInteger NSToolTipTag;
 
 @property (nullable, copy) NSShadow *shadow API_AVAILABLE(macos(10.5));
 
-/* Defaults to NO on macOS 14 and later. Defaults to YES on previous releases. Note some classes (like NSClipView) set their own default values differently than NSView itself.
- */
-@property BOOL clipsToBounds API_AVAILABLE(macos(10.9));
+/* The following methods are meant to be invoked, and probably don't need to be overridden
+*/
+- (void)addTrackingArea:(NSTrackingArea *)trackingArea API_AVAILABLE(macos(10.5));
+- (void)removeTrackingArea:(NSTrackingArea *)trackingArea API_AVAILABLE(macos(10.5));
+@property (readonly, copy) NSArray<NSTrackingArea *> *trackingAreas API_AVAILABLE(macos(10.5));
+
+/* updateTrackingAreas should be overridden to remove out of date tracking areas and add recomputed tracking areas, and should call super.
+*/
+- (void)updateTrackingAreas API_AVAILABLE(macos(10.5));
 
 @property BOOL postsBoundsChangedNotifications;
 
@@ -383,7 +394,7 @@ typedef NSInteger NSToolTipTag;
 
 /* This method can be implemented as an optional CALayer delegate method, for handling resolution changes.  When a window changes its backing resolution, AppKit attempts to automatically update the contentsScale and contents of all CALayers in the window to match the new resolution.  View backing layers are updated automatically.  Any layer whose "contents" property is set to an NSImage will also be updated automatically.  (Based on the NSImage's available representations, AppKit will select an appropriate bitmapped representation, or rasterize a resolution-independent representation at the appropriate scale factor.)  For all other layers, AppKit will check whether the layer has a delegate that implements this method.  If so, AppKit will send this message to the layer's delegate to ask whether it should automatically update the contentsScale for that layer to match the backingScaleFactor of the window.  If you return YES for a given layer, AppKit will set the layer's contentsScale as proposed, and you must ensure that the layer's contents and other properties are configured appropriately for that new contentsScale.  (If you expressed the layer's "contents" as a CGImage, you may need to provide a different CGImage that's appropriate for the new contentsScale.)  Note that this method is only invoked when a window's backingScaleFactor changes.  You are responsible for setting the initial contentsScale of your layers.
 */
-- (BOOL)layer:(CALayer *)layer shouldInheritContentsScale:(CGFloat)newScale fromWindow:(NSWindow *)window NS_SWIFT_NONISOLATED API_AVAILABLE(macos(10.7)); // added in 10.7.3
+- (BOOL)layer:(CALayer *)layer shouldInheritContentsScale:(CGFloat)newScale fromWindow:(NSWindow *)window API_AVAILABLE(macos(10.7)); // added in 10.7.3
 
 @end
 
@@ -394,7 +405,7 @@ typedef NSInteger NSToolTipTag;
 #endif
 
 @protocol NSViewToolTipOwner <NSObject>
-- (NSString *)view:(NSView *)view stringForToolTip:(NSToolTipTag)tag point:(NSPoint)point userData:(nullable void *)data NS_SWIFT_UI_ACTOR;
+- (NSString *)view:(NSView *)view stringForToolTip:(NSToolTipTag)tag point:(NSPoint)point userData:(nullable void *)data;
 @end
 
 #if __swift__ < 40200
@@ -553,36 +564,6 @@ APPKIT_EXTERN NSDefinitionPresentationType const NSDefinitionPresentationTypeDic
 
 @end
 
-@interface NSView(NSTrackingArea)
-/* The following methods are meant to be invoked, and probably don't need to be overridden
-*/
-- (void)addTrackingArea:(NSTrackingArea *)trackingArea API_AVAILABLE(macos(10.5));
-- (void)removeTrackingArea:(NSTrackingArea *)trackingArea API_AVAILABLE(macos(10.5));
-@property (readonly, copy) NSArray<NSTrackingArea *> *trackingAreas API_AVAILABLE(macos(10.5));
-
-/* updateTrackingAreas should be overridden to remove out of date tracking areas and add recomputed tracking areas, and should call super.
-*/
-- (void)updateTrackingAreas API_AVAILABLE(macos(10.5));
-
-/* The following methods are soft deprecated. Use the above NSTrackingArea API instead
-*/
-- (void)addCursorRect:(NSRect)rect cursor:(NSCursor *)object;
-- (void)removeCursorRect:(NSRect)rect cursor:(NSCursor *)object;
-- (void)discardCursorRects;
-- (void)resetCursorRects;
-
-- (NSTrackingRectTag)addTrackingRect:(NSRect)rect owner:(id)owner userData:(nullable void *)data assumeInside:(BOOL)flag;
-- (void)removeTrackingRect:(NSTrackingRectTag)tag;
-@end
-
-API_AVAILABLE(macos(14.0))
-@interface NSView (NSDisplayLink)
-/*
-    Returns a new display link whose callback will be invoked in-sync with the display the view is on. If the view is hidden, or not on any display, the callback will not be invoked.
-*/
-- (CADisplayLink *)displayLinkWithTarget:(id)target selector:(SEL)selector NS_SWIFT_NAME(displayLink(target:selector:));
-@end
-
 @interface NSView(NSDeprecated)
 
 - (void)dragImage:(NSImage *)image at:(NSPoint)viewLocation offset:(NSSize)initialOffset event:(NSEvent *)event pasteboard:(NSPasteboard *)pboard source:(id)sourceObj slideBack:(BOOL)slideFlag API_DEPRECATED("Use -beginDraggingSessionWithItems:event:source: instead", macos(10.0,10.7));
@@ -637,5 +618,5 @@ APPKIT_EXTERN NSNotificationName NSViewDidUpdateTrackingAreasNotification API_AV
 
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 

@@ -1,16 +1,12 @@
 #ifndef __SECURE_DOWNLOAD__
 #define __SECURE_DOWNLOAD__
 
-#include <CoreFoundation/CoreFoundation.h>
-#include <Security/SecBase.h>
-#include <Security/SecTrust.h> /* SecTrustRef */
-
 #if defined(__cplusplus)
 extern "C" {
 #endif
 
 /*
- * Copyright (c) 2006-2021 Apple Inc. All Rights Reserved.
+ * Copyright (c) 2006,2011,2013-2014 Apple Inc. All Rights Reserved.
  * 
  * @APPLE_LICENSE_HEADER_START@
  * 
@@ -57,7 +53,10 @@ extern "C" {
 
 
 
-#define SECUREDOWNLOAD_API_DEPRECATED API_DEPRECATED("SecureDownload is not supported", macos(10.5, 12.0))  API_UNAVAILABLE(ios, watchos, tvos, macCatalyst)
+#include <CoreFoundation/CoreFoundation.h>
+#include <Security/SecBase.h>
+#include <Security/SecTrust.h> /* SecTrustRef */
+
 
 typedef struct OpaqueSecureDownload *SecureDownloadRef;
 
@@ -75,12 +74,12 @@ enum {
 	@constant kSecureDownloadFailEvaluation Indicates that evaluation should fail immediately.
 */
 
-typedef enum _SecureDownloadTrustCallbackResult
+typedef enum _SecureDownloadTrustCallbackResult 
 {
 	kSecureDownloadDoNotEvaluateSigner = 0,
 	kSecureDownloadEvaluateSigner = 1,
 	kSecureDownloadFailEvaluation = 2
-} SecureDownloadTrustCallbackResult SECUREDOWNLOAD_API_DEPRECATED;
+} SecureDownloadTrustCallbackResult;
 
 /*!
 	@typedef SecureDownloadTrustSetupCallback
@@ -92,8 +91,7 @@ typedef enum _SecureDownloadTrustCallbackResult
 */
 
 typedef SecureDownloadTrustCallbackResult(*SecureDownloadTrustSetupCallback)
-			(SecTrustRef trustRef, void* setupContext)
-SECUREDOWNLOAD_API_DEPRECATED;
+			(SecTrustRef trustRef, void* setupContext);
 
 /*!
 	@typedef SecureDownloadTrustEvaluateCallback
@@ -107,8 +105,7 @@ SECUREDOWNLOAD_API_DEPRECATED;
 
 typedef SecTrustResultType(*SecureDownloadTrustEvaluateCallback)
 			(SecTrustRef trustRef, SecTrustResultType result,
-			 void *evaluateContext)
-SECUREDOWNLOAD_API_DEPRECATED;
+			 void *evaluateContext);
 
 /*!
 	@function SecureDownloadCreateWithTicket
@@ -134,8 +131,7 @@ OSStatus SecureDownloadCreateWithTicket (CFDataRef ticket,
 										 void* setupContext,
 										 SecureDownloadTrustEvaluateCallback evaluate,
 										 void* evaluateContext,
-										 SecureDownloadRef* downloadRef)
-SECUREDOWNLOAD_API_DEPRECATED;
+										 SecureDownloadRef* downloadRef);
 
 /*!
 	@function SecureDownloadCopyURLs
@@ -148,8 +144,7 @@ SECUREDOWNLOAD_API_DEPRECATED;
 	@result A result code.  See "Security Error Codes" (SecBase.h).
 */
 
-OSStatus SecureDownloadCopyURLs (SecureDownloadRef downloadRef, CFArrayRef* urls)
-SECUREDOWNLOAD_API_DEPRECATED;
+OSStatus SecureDownloadCopyURLs (SecureDownloadRef downloadRef, CFArrayRef* urls);
 
 /*!
 	@function SecureDownloadCopyName
@@ -159,8 +154,7 @@ SECUREDOWNLOAD_API_DEPRECATED;
 	@result A result code.  See "Security Error Codes" (SecBase.h).
 */
 
-OSStatus SecureDownloadCopyName (SecureDownloadRef downloadRef, CFStringRef* name)
-SECUREDOWNLOAD_API_DEPRECATED;
+OSStatus SecureDownloadCopyName (SecureDownloadRef downloadRef, CFStringRef* name);
 
 /*!
 	@function SecureDownloadCopyCreationDate
@@ -169,8 +163,7 @@ SECUREDOWNLOAD_API_DEPRECATED;
 	@result A result code.
 */
 
-OSStatus SecureDownloadCopyCreationDate (SecureDownloadRef downloadRef, CFDateRef* date)
-SECUREDOWNLOAD_API_DEPRECATED;
+OSStatus SecureDownloadCopyCreationDate (SecureDownloadRef downloadRef, CFDateRef* date);
 
 /*!
 	@function SecureDownloadGetDownloadSize
@@ -180,8 +173,7 @@ SECUREDOWNLOAD_API_DEPRECATED;
 	@result A result code.  See "Security Error Codes" (SecBase.h).
 */
 
-OSStatus SecureDownloadGetDownloadSize (SecureDownloadRef downloadRef, SInt64 *downloadSize)
-SECUREDOWNLOAD_API_DEPRECATED;
+OSStatus SecureDownloadGetDownloadSize (SecureDownloadRef downloadRef, SInt64 *downloadSize);
 
 /*!
 	@function SecureDownloadUpdateWithData
@@ -193,8 +185,7 @@ SECUREDOWNLOAD_API_DEPRECATED;
 			see "Security Error Codes" (SecBase.h).
 */
 
-OSStatus SecureDownloadUpdateWithData (SecureDownloadRef downloadRef, CFDataRef data)
-SECUREDOWNLOAD_API_DEPRECATED;
+OSStatus SecureDownloadUpdateWithData (SecureDownloadRef downloadRef, CFDataRef data);
 
 /*!
 	@function SecureDownloadFinished
@@ -204,8 +195,7 @@ SECUREDOWNLOAD_API_DEPRECATED;
 			see "Security Error Codes" (SecBase.h).
 */
 
-OSStatus SecureDownloadFinished (SecureDownloadRef downloadRef)
-SECUREDOWNLOAD_API_DEPRECATED;
+OSStatus SecureDownloadFinished (SecureDownloadRef downloadRef);
 
 /*!
 	@function SecureDownloadRelease
@@ -214,8 +204,7 @@ SECUREDOWNLOAD_API_DEPRECATED;
 	@result A result code.  See "Security Error Codes" (SecBase.h).
 */
 
-OSStatus SecureDownloadRelease (SecureDownloadRef downloadRef)
-SECUREDOWNLOAD_API_DEPRECATED;
+OSStatus SecureDownloadRelease (SecureDownloadRef downloadRef);
 
 /*!
 	@function SecureDownloadCopyTicketLocation
@@ -225,8 +214,7 @@ SECUREDOWNLOAD_API_DEPRECATED;
 	@result A result code.  See "Security Error Codes" (SecBase.h).
 */
 
-OSStatus SecureDownloadCopyTicketLocation (CFURLRef url, CFURLRef *ticketLocation)
-SECUREDOWNLOAD_API_DEPRECATED;
+OSStatus SecureDownloadCopyTicketLocation (CFURLRef url, CFURLRef *ticketLocation);
 
 #if defined(__cplusplus)
 };

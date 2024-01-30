@@ -1,7 +1,7 @@
 /*
 	NSPrintOperation.h
 	Application Kit
-	Copyright (c) 1994-2023, Apple Inc.
+	Copyright (c) 1994-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -9,7 +9,7 @@
 #import <Foundation/NSRange.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSMutableData, NSGraphicsContext, NSPDFPanel, NSPrintPanel, NSPrintInfo, NSView, NSWindow;
@@ -38,7 +38,6 @@ typedef NS_ENUM(NSInteger, NSPrintRenderingQuality) {
 */
 APPKIT_EXTERN NSExceptionName NSPrintOperationExistsException;
 
-NS_SWIFT_UI_ACTOR
 @interface NSPrintOperation : NSObject {
 }
 
@@ -152,4 +151,4 @@ This can only be invoked once. Create a new NSPrintOperation instance for each o
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

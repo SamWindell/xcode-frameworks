@@ -1,9 +1,11 @@
 /*
-     File:       ATSUI/ATSUnicodeFlattening.h
+     File:       QD/ATSUnicodeFlattening.h
  
      Contains:   Public interfaces for Apple Type Services for Unicode Imaging
  
-     Copyright:  (c) 2002-2022 by Apple Inc. all rights reserved.
+     Version:    Quickdraw-291~1
+ 
+     Copyright:  © 2002-2008 by Apple Inc. all rights reserved.
  
      Bugs?:      For bug reports, consult the following page on
                  the World Wide Web:

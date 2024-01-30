@@ -5,7 +5,10 @@
 //  Copyright (c) 2012 Apple Inc. All rights reserved.
 //
 
-#import <GameController/GCControllerElement.h>
+
+#import <GameController/GameController.h>
+#import <GameController/GCExtern.h>
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

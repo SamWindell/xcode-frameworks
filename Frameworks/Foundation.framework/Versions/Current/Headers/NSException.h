@@ -5,13 +5,11 @@
 #import <Foundation/NSObject.h>
 #import <Foundation/NSString.h>
 #import <stdarg.h>
-#if !0
 #import <setjmp.h>
-#endif
 
 @class NSString, NSDictionary, NSArray<ObjectType>, NSNumber;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /***************	Generic Exception names		***************/
 
@@ -41,7 +39,6 @@ FOUNDATION_EXPORT NSExceptionName const NSInconsistentArchiveException;
 #if __OBJC2__
 __attribute__((__objc_exception__))
 #endif
-
 @interface NSException : NSObject <NSCopying, NSSecureCoding> {
     @private
     NSString		*name;
@@ -287,7 +284,10 @@ FOUNDATION_EXPORT void NSSetUncaughtExceptionHandler(NSUncaughtExceptionHandler 
 
 FOUNDATION_EXPORT NSString * const NSAssertionHandlerKey API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
 
-@interface NSAssertionHandler : NSObject
+@interface NSAssertionHandler : NSObject {
+    @private
+    void *_reserved;
+}
 
 @property (class, readonly, strong) NSAssertionHandler *currentHandler;
 
@@ -297,4 +297,4 @@ FOUNDATION_EXPORT NSString * const NSAssertionHandlerKey API_AVAILABLE(macos(10.
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

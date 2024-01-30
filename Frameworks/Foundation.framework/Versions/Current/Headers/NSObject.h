@@ -2,6 +2,7 @@
 	Copyright (c) 1994-2019, Apple Inc. All rights reserved.
 */
 
+#include <TargetConditionals.h>
 #import <objc/NSObject.h>
 #import <Foundation/NSObjCRuntime.h>
 #import <Foundation/NSZone.h>
@@ -9,7 +10,7 @@
 @class NSInvocation, NSMethodSignature, NSCoder, NSString, NSEnumerator;
 @class Protocol;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /***************	Basic protocols		***************/
 
@@ -26,8 +27,10 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 @end
 
 @protocol NSCoding
+
 - (void)encodeWithCoder:(NSCoder *)coder;
 - (nullable instancetype)initWithCoder:(NSCoder *)coder; // NS_DESIGNATED_INITIALIZER
+
 @end
 
 // Objects which are safe to be encoded and decoded across privilege boundaries should adopt NSSecureCoding instead of NSCoding. Secure coders (those that respond YES to requiresSecureCoding) will only encode objects that adopt the NSSecureCoding protocol.
@@ -43,11 +46,13 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 /***********	Base class		***********/
 
 @interface NSObject (NSCoderMethods)
+
 + (NSInteger)version;
 + (void)setVersion:(NSInteger)aVersion;
 @property (readonly) Class classForCoder;
 - (nullable id)replacementObjectForCoder:(NSCoder *)coder;
 - (nullable id)awakeAfterUsingCoder:(NSCoder *)coder NS_REPLACES_RECEIVER;
+
 @end
 
 #if TARGET_OS_OSX
@@ -119,4 +124,4 @@ NS_INLINE id _Nullable CFBridgingRelease(CFTypeRef CF_CONSUMED _Nullable X) NS_R
 
 #endif
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

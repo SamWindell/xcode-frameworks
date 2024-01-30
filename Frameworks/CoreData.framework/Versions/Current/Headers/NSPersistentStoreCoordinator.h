@@ -1,7 +1,7 @@
 /*
     NSPersistentStoreCoordinator.h
     Core Data
-    Copyright (c) 2004-2023, Apple Inc.
+    Copyright (c) 2004-2020, Apple Inc.
     All rights reserved.
 */
 
@@ -114,15 +114,6 @@ COREDATA_EXTERN NSString * const NSPersistentStoreConnectionPoolMaxSizeKey API_A
 
 COREDATA_EXTERN NSString * const NSCoreDataCoreSpotlightExporter API_AVAILABLE(macosx(10.13),ios(11.0)) API_UNAVAILABLE(tvos,watchos);
 
-/*
- * To perform a staged lightweight migration, this key must be set with an NSStagedMigrationManager.
- * This class encapsulates developer-described NSCustomMigrationStage's and supplementary NSLightweightMigrationStage's.
- * The NSCustomMigrationStage's will be applied in the order in which they are indexed in the .stages property at the
- * appropriate time (when the model matches the stage model references). The stages array must contain a total ordering
- * of all models to be applied to the store using the aforementioned sub-classes.
- */
-COREDATA_EXTERN NSString * const NSPersistentStoreStagedMigrationManagerOptionKey API_AVAILABLE(macosx(14.0),ios(17.0),tvos(17.0),watchos(10.0));
-
 /* Values to be passed with NSExternalRecordsFileFormatOption indicating the format used when writing external records. 
    The files are serialized dictionaries. 
 */
@@ -197,24 +188,7 @@ COREDATA_EXTERN NSString * const NSPersistentStoreRemoteChangeNotification API_A
 COREDATA_EXTERN NSString * const NSPersistentStoreURLKey API_AVAILABLE(macosx(10.14),ios(12.0),tvos(12.0),watchos(5.0));
 COREDATA_EXTERN NSString * const NSPersistentHistoryTokenKey API_AVAILABLE(macosx(10.14),ios(12.0),tvos(12.0),watchos(5.0));
 
-/*
-  
-  During a Lightweight Migration, an Entity that has a migration transformation that requires dropping a column in
-  a table would require a copy of the old table into a new table.  If NSPersistentStoreDeferredLightweightMigrationOptionKey
-  is set to @YES, this table transformation can be delayed until the developer deems that the resources are available
-  to perform the table transformation.
- 
-  Examples of Lightweight Migration Scenarios that can be delayed:
-       An Entitiy removed Attributes/Relationships
-       Relationships where a ForeignEntityKey is no longer needed
- 
-  The Persistent Store's metadata contains the key - NSPersistentStoreDeferredLightweightMigrationOptionKey - to signal to the developer that work needs to be done.  The delayed
-  table transformations can be processed by invoking finishDeferredLightweightMigration on the Persistent Store Coordinator.
- 
- */
-COREDATA_EXTERN NSString * const NSPersistentStoreDeferredLightweightMigrationOptionKey API_AVAILABLE(macosx(11.0),ios(14.0),tvos(14.0),watchos(7.0));
-
-API_AVAILABLE(macosx(10.4),ios(3.0)) NS_SWIFT_SENDABLE
+API_AVAILABLE(macosx(10.4),ios(3.0))
 @interface NSPersistentStoreCoordinator : NSObject <NSLocking> {
 }
 
@@ -238,7 +212,7 @@ API_AVAILABLE(macosx(10.4),ios(3.0)) NS_SWIFT_SENDABLE
  */
 - (nullable __kindof NSPersistentStore *)addPersistentStoreWithType:(NSString *)storeType configuration:(nullable NSString *)configuration URL:(nullable NSURL *)storeURL options:(nullable NSDictionary *)options error:(NSError **)error;
 
-- (void)addPersistentStoreWithDescription:(NSPersistentStoreDescription *)storeDescription completionHandler:(void (^)(NSPersistentStoreDescription *, NSError * _Nullable))block API_AVAILABLE(macosx(10.12),ios(10.0),tvos(10.0),watchos(3.0)) NS_SWIFT_DISABLE_ASYNC;
+- (void)addPersistentStoreWithDescription:(NSPersistentStoreDescription *)storeDescription completionHandler:(void (^)(NSPersistentStoreDescription *, NSError * _Nullable))block API_AVAILABLE(macosx(10.12),ios(10.0),tvos(10.0),watchos(3.0));
 
 - (BOOL)removePersistentStore:(NSPersistentStore *)store error:(NSError **)error;
 
@@ -282,13 +256,13 @@ API_AVAILABLE(macosx(10.4),ios(3.0)) NS_SWIFT_SENDABLE
         NSModelPathKey - path to the model file (this is resolved to the model.mom path contained in the support directory)
         NSObjectURIKey - URI of the object instance.
 */
-    + (NSDictionary *)elementsDerivedFromExternalRecordURL:(NSURL *)fileURL API_DEPRECATED("Spotlight integration is deprecated. Use CoreSpotlight integration instead.", macosx(10.6,10.13)) API_UNAVAILABLE(ios);
++ (NSDictionary *)elementsDerivedFromExternalRecordURL:(NSURL *)fileURL API_AVAILABLE(macosx(10.6)) API_UNAVAILABLE(ios);
 
 /* Creates and populates a store with the external records found at externalRecordsURL. The store is written to destinationURL using
     options and with type storeType. If storeIdentifier is nil, the records for a single store at externalRecordsURL at imported.
     externalRecordsURL must not exist as the store will be created from scratch (no appending to an existing store is allowed).
 */
-    - (nullable NSPersistentStore *)importStoreWithIdentifier:(nullable NSString *)storeIdentifier fromExternalRecordsDirectory:(NSURL *)externalRecordsURL toURL:(NSURL *)destinationURL options:(nullable NSDictionary *)options withType:(NSString *)storeType error:(NSError **)error API_DEPRECATED("Spotlight integration is deprecated. Use CoreSpotlight integration instead.", macosx(10.6,10.13)) API_UNAVAILABLE(ios);
+- (nullable NSPersistentStore *)importStoreWithIdentifier:(nullable NSString *)storeIdentifier fromExternalRecordsDirectory:(NSURL *)externalRecordsURL toURL:(NSURL *)destinationURL options:(nullable NSDictionary *)options withType:(NSString *)storeType error:(NSError **)error API_AVAILABLE(macosx(10.6)) API_UNAVAILABLE(ios);
     
 /* Used for save as - performance may vary depending on the type of old and new store; the old store is usually removed from the coordinator by the migration operation, and therefore is no longer a useful reference after invoking this method 
 */
@@ -310,12 +284,6 @@ API_AVAILABLE(macosx(10.4),ios(3.0)) NS_SWIFT_SENDABLE
 
 /* Constructs a combined NSPersistentHistoryToken given an array of persistent stores. If stores is nil or an empty array, the NSPersistentHistoryToken will be constructed with all of the persistent stores in the coordinator. */
 - (nullable NSPersistentHistoryToken *)currentPersistentHistoryTokenFromStores:(nullable NSArray*)stores API_AVAILABLE(macosx(10.14),ios(12.0),tvos(12.0),watchos(5.0));
-
-// Finish deferred work from lightweight migration
-- (BOOL)finishDeferredLightweightMigration:(NSError **)error API_AVAILABLE(macosx(11.0),ios(14.0),tvos(14.0),watchos(7.0));
-
-// Finish deferred work from lightweight migration for a single table
-- (BOOL)finishDeferredLightweightMigrationTask:(NSError **)error API_AVAILABLE(macosx(11.0),ios(14.0),tvos(14.0),watchos(7.0));
 
  /*
   *   DEPRECATED

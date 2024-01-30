@@ -11,9 +11,8 @@
 
 @class NSString, NSData, NSError;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
-NS_SWIFT_SENDABLE // All mutable state protected by locks
 @interface NSFileHandle : NSObject <NSSecureCoding>
 
 @property (readonly, copy) NSData *availableData;
@@ -93,8 +92,8 @@ FOUNDATION_EXPORT NSString * const NSFileHandleNotificationMonitorModes API_DEPR
 - (void)waitForDataInBackgroundAndNotify;
 
 #ifdef __BLOCKS__
-@property (nullable, copy) void (NS_SWIFT_SENDABLE ^readabilityHandler)(NSFileHandle *)  API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
-@property (nullable, copy) void (NS_SWIFT_SENDABLE ^writeabilityHandler)(NSFileHandle *) API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
+@property (nullable, copy) void (^readabilityHandler)(NSFileHandle *)  API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
+@property (nullable, copy) void (^writeabilityHandler)(NSFileHandle *) API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
 #endif
 
 @end
@@ -163,7 +162,6 @@ FOUNDATION_EXPORT NSString * const NSFileHandleNotificationMonitorModes API_DEPR
 
 @end
 
-NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 @interface NSPipe : NSObject
 
 @property (readonly, retain) NSFileHandle *fileHandleForReading;
@@ -173,4 +171,4 @@ NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

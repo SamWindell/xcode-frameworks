@@ -1,14 +1,14 @@
 /*
  NSSliderTouchBarItem.h
  Application Kit
- Copyright (c) 2016-2023, Apple Inc.
+ Copyright (c) 2016-2019, Apple Inc.
  All rights reserved.
  */
 
 #import <AppKit/NSUserInterfaceCompression.h>
 #import <AppKit/NSTouchBarItem.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 @class NSSliderAccessory, NSSlider;
 
@@ -54,4 +54,4 @@ API_AVAILABLE(macos(10.12.2), ios(13.0))
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

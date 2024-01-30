@@ -4,11 +4,11 @@
 
 #import <Foundation/NSObject.h>
 
-typedef NSString *NSNotificationName NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSString *NSNotificationName NS_EXTENSIBLE_STRING_ENUM;
 
 @class NSString, NSDictionary, NSOperationQueue;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /****************	Notifications	****************/
 
@@ -20,6 +20,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 - (instancetype)initWithName:(NSNotificationName)name object:(nullable id)object userInfo:(nullable NSDictionary *)userInfo API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0)) NS_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
+
 @end
 
 @interface NSNotification (NSNotificationCreation)
@@ -33,8 +34,12 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /****************	Notification Center	****************/
 
-NS_SWIFT_SENDABLE
-@interface NSNotificationCenter : NSObject
+@interface NSNotificationCenter : NSObject {
+    @package
+    void *_impl;
+    void *_callback;
+    void *_pad[11];
+}
 
 @property (class, readonly, strong) NSNotificationCenter *defaultCenter;
 
@@ -47,12 +52,10 @@ NS_SWIFT_SENDABLE
 - (void)removeObserver:(id)observer;
 - (void)removeObserver:(id)observer name:(nullable NSNotificationName)aName object:(nullable id)anObject;
 
-#if !0
-- (id <NSObject>)addObserverForName:(nullable NSNotificationName)name object:(nullable id)obj queue:(nullable NSOperationQueue *)queue usingBlock:(void (NS_SWIFT_SENDABLE ^)(NSNotification *notification))block API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
+- (id <NSObject>)addObserverForName:(nullable NSNotificationName)name object:(nullable id)obj queue:(nullable NSOperationQueue *)queue usingBlock:(void (^)(NSNotification *note))block API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
     // The return value is retained by the system, and should be held onto by the caller in
     // order to remove the observer with removeObserver: later, to stop observation.
-#endif
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

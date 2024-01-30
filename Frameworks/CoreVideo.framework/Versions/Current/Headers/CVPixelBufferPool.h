@@ -28,7 +28,7 @@
 extern "C" {
 #endif
 
-typedef struct CV_BRIDGED_TYPE(id) __CVPixelBufferPool *CVPixelBufferPoolRef CV_SWIFT_NONSENDABLE;
+typedef struct CV_BRIDGED_TYPE(id) __CVPixelBufferPool *CVPixelBufferPoolRef;
 
 // By default, buffers will age out after one second.   If required, setting an age of zero will disable
 // the age-out mechanism completely.

@@ -1,13 +1,20 @@
 --- !tapi-tbd
 tbd-version:     4
 targets:         [ x86_64-macos, arm64-macos, arm64e-macos ]
+uuids:
+  - target:          x86_64-macos
+    value:           9299D57A-FA79-30B6-ADA6-580A55EFE95C
+  - target:          arm64-macos
+    value:           00000000-0000-0000-0000-000000000000
+  - target:          arm64e-macos
+    value:           0BA704CB-1069-3855-A3EB-62FDB054E25D
 install-name:    '/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/PrintCore'
-current-version: 582
+current-version: 531.1
 parent-umbrella:
   - targets:         [ x86_64-macos, arm64-macos, arm64e-macos ]
     umbrella:        ApplicationServices
 exports:
-  - targets:         [ x86_64-macos, arm64-macos, arm64e-macos ]
+  - targets:         [ arm64e-macos, x86_64-macos, arm64-macos ]
     symbols:         [ _CPLAutoSelectCancel, _CPLAutoSelectCreateContext, _CPLAutoSelectGetInfo, 
                        _CPLAutoSelectHasNewPPD, _CPLAutoSelectInstallableOptions, 
                        _CPLAutoSelectPPD, _CPLAutoSelectReleaseContext, _CPLAutoSelectSetIsBinaryOK, 
@@ -34,24 +41,23 @@ exports:
                        _PJCCreateSuggestedPaper, _PJCGetCurrentProfileIDFromPPD, 
                        _PJCIsMetric, _PJCLaunchPrintCenter, _PJCNewPageFormatWithPMPaper, 
                        _PJCPrintSettingsCreateCustomProfileRef, _PJCPrintSettingsSetCustomProfilePath, 
-                       _PJCPrinterCopyFinishingTemplatesList, _PJCPrinterCopyIPPPresetsList, 
-                       _PJCPrinterCopyLocalizationStrings, _PJCPrinterCopyPrinterInfoDictionary, 
-                       _PJCPrinterCopyReadyMediaList, _PJCPrinterGetDeviceID, _PJCPrinterProxyCreateURL, 
-                       _PJCPrinterSupportsFinishingTemplates, _PJCPrinterSupportsReadyMedia, 
-                       _PJCPrinterSupportsThisCustomPaper, _PJCRunWorkflowWithRenamedPDF, 
-                       _PJCSessionCreateCopyForAppKit, _PJCSessionHasApplicationSetPrinter, 
-                       _PJCSessionSetHideFileExtension, _PJCSetPresetPrintingPref, 
-                       _PJCSetPrintingPref, _PJCTicketGetSrcImageableArea, _PJCTicketGetSrcOrientation, 
-                       _PJCTicketGetSrcPaperSize, _PJCTicketGetSrcResolution, _PJCTicketGetSrcScaling, 
-                       _PMAnalyticsSendEventLazy, _PMBackendExecIO, _PMCFEqual, _PMCGImageCreateWithEPSDataProvider, 
-                       _PMConvertFile, _PMCopyAvailablePPDs, _PMCopyLocalizedPPD, 
-                       _PMCopyPPDData, _PMCopyPageFormat, _PMCopyPrintSettings, _PMCopyUserDefaultPaperSize, 
+                       _PJCPrinterCopyFinishingTemplatesList, _PJCPrinterCopyReadyMediaList, 
+                       _PJCPrinterGetDeviceID, _PJCPrinterProxyCreateURL, _PJCPrinterSupportsFinishingTemplates, 
+                       _PJCPrinterSupportsReadyMedia, _PJCPrinterSupportsThisCustomPaper, 
+                       _PJCRunWorkflowWithRenamedPDF, _PJCSessionCreateCopyForAppKit, 
+                       _PJCSessionHasApplicationSetPrinter, _PJCSessionSetHideFileExtension, 
+                       _PJCSetPresetPrintingPref, _PJCSetPrintingPref, _PJCTicketGetSrcImageableArea, 
+                       _PJCTicketGetSrcOrientation, _PJCTicketGetSrcPaperSize, _PJCTicketGetSrcResolution, 
+                       _PJCTicketGetSrcScaling, _PMAnalyticsSendEventLazy, _PMBackendExecIO, 
+                       _PMCFEqual, _PMCGImageCreateWithEPSDataProvider, _PMConvertFile, 
+                       _PMCopyAvailablePPDs, _PMCopyLocalizedPPD, _PMCopyPPDData, 
+                       _PMCopyPageFormat, _PMCopyPrintSettings, _PMCopyUserDefaultPaperSize, 
                        _PMCreateCFArrayForPMObjects, _PMCreateGenericPrinter, _PMCreatePageFormat, 
                        _PMCreatePageFormatWithPMPaper, _PMCreatePaperInfoTicketFromPPDPaperName, 
-                       _PMCreatePrintSettings, _PMCreatePrinter, _PMCreateSession, 
-                       _PMForceRelease, _PMGetAdjustedPageRect, _PMGetAdjustedPaperRect, 
-                       _PMGetCollate, _PMGetCopies, _PMGetDuplex, _PMGetFirstPage, 
-                       _PMGetLastPage, _PMGetOrientation, _PMGetPageFormatExtendedData, 
+                       _PMCreatePrintSettings, _PMCreatePrinter, _PMCreateProxy, 
+                       _PMCreateSession, _PMFindProxy, _PMForceRelease, _PMGetAdjustedPageRect, 
+                       _PMGetAdjustedPaperRect, _PMGetCollate, _PMGetCopies, _PMGetDuplex, 
+                       _PMGetFirstPage, _PMGetLastPage, _PMGetOrientation, _PMGetPageFormatExtendedData, 
                        _PMGetPageFormatPaper, _PMGetPageRange, _PMGetPrinterModel, 
                        _PMGetReverseOrder, _PMGetScale, _PMGetUnadjustedPageRect, 
                        _PMGetUnadjustedPaperRect, _PMInlineWorkflowCopyItems, _PMLaunchProxy, 
@@ -60,20 +66,20 @@ exports:
                        _PMPageFormatCreateWithDataRepresentation, _PMPageFormatGetPrinterID, 
                        _PMPaperAddToUserPrefs, _PMPaperCopyUserPrefs, _PMPaperCreateCustom, 
                        _PMPaperCreateInternal, _PMPaperCreateLocalizedName, _PMPaperCreatePMTicketRef, 
-                       _PMPaperCreateWithTicketRef, _PMPaperGetHeight, _PMPaperGetID, 
-                       _PMPaperGetMargins, _PMPaperGetPPDPaperName, _PMPaperGetPrinterID, 
-                       _PMPaperGetWidth, _PMPaperIsCustom, _PMPaperRemoveFromUserPrefs, 
-                       _PMPresetCopyName, _PMPresetCreatePrintSettings, _PMPresetGetAttributes, 
-                       _PMPrintSettingsCopyAsDictionary, _PMPrintSettingsCopyKeys, 
-                       _PMPrintSettingsCreateDataRepresentation, _PMPrintSettingsCreateWithDataRepresentation, 
-                       _PMPrintSettingsGetJobName, _PMPrintSettingsGetValue, _PMPrintSettingsSetJobName, 
-                       _PMPrintSettingsSetValue, _PMPrintSettingsToOptions, _PMPrintSettingsToOptionsWithPrinterAndPageFormat, 
+                       _PMPaperGetHeight, _PMPaperGetID, _PMPaperGetMargins, _PMPaperGetPPDPaperName, 
+                       _PMPaperGetPrinterID, _PMPaperGetWidth, _PMPaperIsCustom, 
+                       _PMPaperRemoveFromUserPrefs, _PMPresetCopyName, _PMPresetCreatePrintSettings, 
+                       _PMPresetGetAttributes, _PMPrintSettingsCopyAsDictionary, 
+                       _PMPrintSettingsCopyKeys, _PMPrintSettingsCreateDataRepresentation, 
+                       _PMPrintSettingsCreateWithDataRepresentation, _PMPrintSettingsGetJobName, 
+                       _PMPrintSettingsGetValue, _PMPrintSettingsSetJobName, _PMPrintSettingsSetValue, 
+                       _PMPrintSettingsToOptions, _PMPrintSettingsToOptionsWithPrinterAndPageFormat, 
                        _PMPrinterCanDuplex, _PMPrinterCanIdentify, _PMPrinterCanScan, 
                        _PMPrinterChargeInfoURI, _PMPrinterCopyACL, _PMPrinterCopyDefaultUserCredentials, 
                        _PMPrinterCopyDescriptionURL, _PMPrinterCopyDeviceURI, _PMPrinterCopyFinalDeviceURI, 
-                       _PMPrinterCopyHostName, _PMPrinterCopyMembers, _PMPrinterCopyOAUTHInfo, 
-                       _PMPrinterCopyPresets, _PMPrinterCopyRequiredUserCredentials, 
-                       _PMPrinterCopyScannerUUID, _PMPrinterCopyScanningApp, _PMPrinterCopyScanningAppPath, 
+                       _PMPrinterCopyHostName, _PMPrinterCopyMembers, _PMPrinterCopyPresets, 
+                       _PMPrinterCopyRequiredUserCredentials, _PMPrinterCopyScannerUUID, 
+                       _PMPrinterCopyScanningApp, _PMPrinterCopyScanningAppPath, 
                        _PMPrinterCopyState, _PMPrinterCopySuppliesURI, _PMPrinterCopyTempPPDURL, 
                        _PMPrinterCreateFromPrinterID, _PMPrinterCreatePaperInfoListForMenuPriv, 
                        _PMPrinterGetCommInfo, _PMPrinterGetConsumables, _PMPrinterGetConsumablesDisclaimer, 
@@ -138,9 +144,8 @@ exports:
                        _PMTicketSetCFString, _PMTicketSetCString, _PMTicketSetDouble, 
                        _PMTicketSetItem, _PMTicketSetPMRect, _PMTicketSetSInt32, 
                        _PMTicketSetTicket, _PMTicketSetUInt32, _PMTicketToLightXML, 
-                       _PMTicketToXML, _PMWorkflowCopyItems, _PMWorkflowSubmitPDFWithOptions, 
-                       _PMWorkflowSubmitPDFWithSettings, _PMXMLToTicket, __PMLog, 
-                       __PMLogLocalize, __PMLogPerf, __ZN12PMBaseObject14SetAppReadOnlyEh, 
+                       _PMTicketToXML, _PMUpdateProxy, _PMWorkflowCopyItems, _PMWorkflowSubmitPDFWithOptions, 
+                       _PMWorkflowSubmitPDFWithSettings, _PMXMLToTicket, __ZN12PMBaseObject14SetAppReadOnlyEh, 
                        __ZN12PMBaseObject15CopyObjectStateEPS_, __ZN12PMBaseObject16CreateEmptyArrayEv, 
                        __ZN12PMBaseObject21SetUsingRemoteObjectsEh, __ZN14OpaquePMPresetC1EPK14__CFDictionary, 
                        __ZN14OpaquePMPresetC2EPK14__CFDictionary, __ZN15OpaquePMPrinter14GetPrinterNameEv, 
@@ -169,8 +174,6 @@ exports:
                        _getMediaNameFromPaperInfo, _getPDFSpoolingFunctionCallbacks, 
                        _parsePostScriptStatus, _printUIToolCreateConnection, _printUIToolGetAuthenticationInfo, 
                        _printUIToolPrintFD ]
-    objc-classes:    [ PDEPlugInLoader, PMInkChecker, PMPrintServiceBrowserNode, 
-                       PMPrintServiceExtension, PMPrintServiceExtension_Browser, 
-                       PMPrintServiceExtension_Context, PMPrinterDestination ]
+    objc-classes:    [ PMInkChecker ]
     objc-ivars:      [ PMInkChecker._consumables, PMInkChecker._printer, PMInkChecker._supplies ]
 ...

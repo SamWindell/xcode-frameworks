@@ -6,62 +6,32 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import <CloudKit/CKDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
-API_AVAILABLE_BEGIN(macos(10.10), ios(8.0), watchos(3.0))
-
-CK_EXTERN NSString * const CKErrorDomain;
+CK_EXTERN NSString * const CKErrorDomain API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0));
 
 /*! @abstract When a CKErrorPartialFailure happens this key will be set in the error's userInfo dictionary.
  *
  *  @discussion The value of this key will be a dictionary, and the values will be errors for individual items with the keys being the item IDs that failed.
  */
-CK_EXTERN NSString * const CKPartialErrorsByItemIDKey;
+CK_EXTERN NSString * const CKPartialErrorsByItemIDKey API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0));
 
-/*! If the server rejects a record save because it has been modified since the last time it was read,
- *  a @c CKErrorServerRecordChanged will be returned.  The error's @c userInfo dictionary will contain
- *  a @c CKRecord keyed by @c CKRecordChangedErrorAncestorRecordKey.  This is the original
- *  record used as a basis for making your changes.
- *
- *  Note that if you had attempted to save a new @c CKRecord instance, this record may not have any
- *  key / value pairs set on it, as there was no @c CKRecord instance that represents an ancestor point.
- */
-CK_EXTERN NSString * const CKRecordChangedErrorAncestorRecordKey;
-
-/*! If the server rejects a record save because it has been modified since the last time it was read,
- *  a @c CKErrorServerRecordChanged will be returned.  The error's @c userInfo dictionary will contain
- *  a @c CKRecord keyed by @c CKRecordChangedErrorServerRecordKey.  This is the record
- *  object that was found on the server.
- *
- *  Use this record as the basis for merging your changes.
- */
-CK_EXTERN NSString * const CKRecordChangedErrorServerRecordKey;
-
-/*! If the server rejects a record save because it has been modified since the last time it was read,
- *  a @c CKErrorServerRecordChanged will be returned.  The error's @c userInfo dictionary will contain
- *  a @c CKRecord keyed by @c CKRecordChangedErrorClientRecordKey.  This is the record
- *  object that you tried to save.
- */
-CK_EXTERN NSString * const CKRecordChangedErrorClientRecordKey;
-
-/* On error CKErrorZoneNotFound, the userInfo dictionary may contain a NSNumber instance that specifies a boolean value representing if the error is caused by the user having reset all encrypted data for their account */
-CK_EXTERN NSString * const CKErrorUserDidResetEncryptedDataKey API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0));
+/*! If the server rejects a record save because it has been modified since the last time it was read, a @c CKErrorServerRecordChanged error will be returned and it will contain versions of the record in its userInfo dictionary. Apply your custom conflict resolution logic to the server record under @c CKServerRecordKey and attempt a save of that record. */
+CK_EXTERN NSString * const CKRecordChangedErrorAncestorRecordKey API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0));
+CK_EXTERN NSString * const CKRecordChangedErrorServerRecordKey API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0));
+CK_EXTERN NSString * const CKRecordChangedErrorClientRecordKey API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0));
 
 /*! On some errors, the userInfo dictionary may contain a NSNumber instance that specifies the period of time in seconds after which the client may retry the request. For example, this key will be on @c CKErrorServiceUnavailable, @c CKErrorRequestRateLimited, and other errors for which the recommended resolution is to retry after a delay.
  */
-CK_EXTERN NSString * const CKErrorRetryAfterKey;
+CK_EXTERN NSString * const CKErrorRetryAfterKey API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0));
 
 typedef NS_ENUM(NSInteger, CKErrorCode) {
     /*! CloudKit.framework encountered an error.  This is a non-recoverable error. */
     CKErrorInternalError                  = 1,
     
-    /*! Some items failed, but the operation succeeded overall. Check CKPartialErrorsByItemIDKey in the userInfo dictionary for more details.
-     *  This error is only returned from CKOperation completion blocks, which are deprecated in swift.
-     *  It will not be returned from (swift-only) CKOperation result blocks, which are their replacements
-     */
+    /*! Some items failed, but the operation succeeded overall. Check CKPartialErrorsByItemIDKey in the userInfo dictionary for more details. */
     CKErrorPartialFailure                 = 2,
     
     /*! Network not available */
@@ -161,13 +131,6 @@ typedef NS_ENUM(NSInteger, CKErrorCode) {
     
     /*! The file for this asset could not be accessed. It is likely your application does not have permission to open the file, or the file may be temporarily unavailable due to its data protection class. This operation can be retried after it is able to be opened in your process. */
     CKErrorAssetNotAvailable              API_AVAILABLE(macos(10.13), ios(11.3), tvos(11.3), watchos(4.3)) = 35,
+} API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0));
 
-    /*! The current account is in a state that may need user intervention to recover from. The user should be directed to check the Settings app. Listen for CKAccountChangedNotifications to know when to re-check account status and retry. */
-    CKErrorAccountTemporarilyUnavailable  API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0)) = 36,
-    
-
-};
-
-API_AVAILABLE_END // (macos(10.10), ios(8.0), watchos(3.0))
-
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

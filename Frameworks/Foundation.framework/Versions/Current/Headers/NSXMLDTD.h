@@ -7,13 +7,28 @@
 @class NSArray<ObjectType>, NSData, NSMutableDictionary;
 @class NSXMLDTDNode;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /*!
     @class NSXMLDTD
     @abstract Defines the order, repetition, and allowable values for a document
 */
-@interface NSXMLDTD : NSXMLNode
+@interface NSXMLDTD : NSXMLNode {
+@private
+	NSString *_name;
+	NSString *_publicID;
+	NSString *_systemID;
+	NSArray *_children;
+	BOOL _childrenHaveMutated;
+	uint8_t _padding3[3];
+	NSMutableDictionary *_entities;
+	NSMutableDictionary *_elements;
+	NSMutableDictionary *_notations;
+	NSMutableDictionary *_attributes;
+	NSString *_original;
+	BOOL _modified;
+	uint8_t _padding2[3];
+}
 
 #if 0
 #pragma mark --- Properties ---
@@ -111,4 +126,4 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 + (nullable NSXMLDTDNode *)predefinedEntityDeclarationForName:(NSString *)name;
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

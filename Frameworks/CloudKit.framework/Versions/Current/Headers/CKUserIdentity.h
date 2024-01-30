@@ -7,25 +7,21 @@
 
 #import <Foundation/Foundation.h>
 
-#import <CloudKit/CKDefines.h>
-
 @class CKRecordID, CKUserIdentityLookupInfo;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
-CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
-// NS_SWIFT_SENDABLE on macos(13.3), macCatalyst(16.4), ios(16.4), tvos(16.4), watchos(9.4)
 @interface CKUserIdentity : NSObject <NSSecureCoding, NSCopying>
 /*! Use @c CKDiscoverUserIdentitiesOperation or @c CKFetchShareParticipantsOperation to create a @c CKUserIdentity */
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
 /*! This is the @c lookupInfo you passed in to @c CKDiscoverUserIdentitiesOperation or @c CKFetchShareParticipantsOperation */
-@property (nullable, readonly, copy) CKUserIdentityLookupInfo *lookupInfo;
+@property (nonatomic, readonly, copy, nullable) CKUserIdentityLookupInfo *lookupInfo;
 
-@property (nullable, readonly, copy) NSPersonNameComponents *nameComponents;
-@property (nullable, readonly, copy) CKRecordID *userRecordID;
+@property (nonatomic, readonly, copy, nullable) NSPersonNameComponents *nameComponents;
+@property (nonatomic, readonly, copy, nullable) CKRecordID *userRecordID;
 
 /*! @abstract Link to the Contacts database.
  *
@@ -37,11 +33,11 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
  *
  *  @see Contacts.framework and CNContact.identifier
  */
-@property (readonly, copy) NSArray<NSString *> *contactIdentifiers API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0)) API_UNAVAILABLE(tvos);
+@property (nonatomic, readonly, copy) NSArray<NSString *> *contactIdentifiers API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0)) API_UNAVAILABLE(tvos);
 
 
-@property (readonly, assign) BOOL hasiCloudAccount;
+@property (nonatomic, readonly, assign) BOOL hasiCloudAccount;
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

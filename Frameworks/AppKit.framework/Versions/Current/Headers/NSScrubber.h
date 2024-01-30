@@ -1,14 +1,14 @@
 /*
  NSScrubber.h
  Application Kit
- Copyright (c) 2016-2023, Apple Inc.
+ Copyright (c) 2016-2019, Apple Inc.
  All rights reserved.
  */
 
 #import <AppKit/NSControl.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSScrubber, NSScrubberItemView, NSScrubberSelectionView, NSScrubberLayout, NSPanGestureRecognizer, NSPressGestureRecognizer, NSButton, NSNib;
@@ -17,19 +17,19 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @protocol NSScrubberDataSource <NSObject>
 @required
-- (NSInteger)numberOfItemsForScrubber:(NSScrubber *)scrubber NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2));
-- (__kindof NSScrubberItemView *)scrubber:(NSScrubber *)scrubber viewForItemAtIndex:(NSInteger)index NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2));
+- (NSInteger)numberOfItemsForScrubber:(NSScrubber *)scrubber API_AVAILABLE(macos(10.12.2));
+- (__kindof NSScrubberItemView *)scrubber:(NSScrubber *)scrubber viewForItemAtIndex:(NSInteger)index API_AVAILABLE(macos(10.12.2));
 @end
 
 @protocol NSScrubberDelegate <NSObject>
 @optional
-- (void)scrubber:(NSScrubber *)scrubber didSelectItemAtIndex:(NSInteger)selectedIndex NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2));
-- (void)scrubber:(NSScrubber *)scrubber didHighlightItemAtIndex:(NSInteger)highlightedIndex NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2));
-- (void)scrubber:(NSScrubber *)scrubber didChangeVisibleRange:(NSRange)visibleRange NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2));
+- (void)scrubber:(NSScrubber *)scrubber didSelectItemAtIndex:(NSInteger)selectedIndex API_AVAILABLE(macos(10.12.2));
+- (void)scrubber:(NSScrubber *)scrubber didHighlightItemAtIndex:(NSInteger)highlightedIndex API_AVAILABLE(macos(10.12.2));
+- (void)scrubber:(NSScrubber *)scrubber didChangeVisibleRange:(NSRange)visibleRange API_AVAILABLE(macos(10.12.2));
 
-- (void)didBeginInteractingWithScrubber:(NSScrubber *)scrubber NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2));
-- (void)didFinishInteractingWithScrubber:(NSScrubber *)scrubber NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2));
-- (void)didCancelInteractingWithScrubber:(NSScrubber *)scrubber NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2));
+- (void)didBeginInteractingWithScrubber:(NSScrubber *)scrubber API_AVAILABLE(macos(10.12.2));
+- (void)didFinishInteractingWithScrubber:(NSScrubber *)scrubber API_AVAILABLE(macos(10.12.2));
+- (void)didCancelInteractingWithScrubber:(NSScrubber *)scrubber API_AVAILABLE(macos(10.12.2));
 @end
 
 #pragma mark - Associated Types
@@ -67,7 +67,7 @@ typedef NS_ENUM(NSInteger, NSScrubberAlignment) {
  * @abstract @c NSScrubberSelectionStyle is an abstract class that provides decorative accessory views for selected and highlighted items within a NSScrubber control. Class properties provide convenient access to built-in styles. For a completely custom style, subclassers can override @c -makeSelectionView to create and configure arbitrary @c NSScrubberSelectionView subclasses.
  *
  */
-API_AVAILABLE(macos(10.12.2)) NS_SWIFT_UI_ACTOR
+API_AVAILABLE(macos(10.12.2))
 @interface NSScrubberSelectionStyle : NSObject <NSCoding>
 
 #pragma mark Built-in Styles
@@ -190,4 +190,4 @@ API_AVAILABLE(macos(10.12.2))
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

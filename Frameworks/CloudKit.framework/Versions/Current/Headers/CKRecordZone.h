@@ -6,12 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import <CloudKit/CKDefines.h>
 
-@class CKRecordZoneID, CKReference;
+@class CKRecordZoneID;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_OPTIONS(NSUInteger, CKRecordZoneCapabilities) {
     /*! This zone supports CKFetchRecordChangesOperation */
@@ -20,15 +19,11 @@ typedef NS_OPTIONS(NSUInteger, CKRecordZoneCapabilities) {
     CKRecordZoneCapabilityAtomic         = 1 << 1,
     /*! Records in this zone can be shared */
     CKRecordZoneCapabilitySharing        API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0)) = 1 << 2,
-    /*! This zone supports a single CKShare record that shares all records in the zone */
-    CKRecordZoneCapabilityZoneWideSharing API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0)) = 1 << 3,
 } API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0));
 
 CK_EXTERN NSString * const CKRecordZoneDefaultName API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0));
 
 API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
-CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
-// NS_SWIFT_SENDABLE on macos(14.0), ios(17.0), tvos(17.0), watchos(10.0)
 @interface CKRecordZone : NSObject <NSSecureCoding, NSCopying>
 
 + (CKRecordZone *)defaultRecordZone;
@@ -38,21 +33,11 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
 - (instancetype)initWithZoneName:(NSString *)zoneName;
 - (instancetype)initWithZoneID:(CKRecordZoneID *)zoneID;
 
-@property (readonly, copy) CKRecordZoneID *zoneID;
+@property (nonatomic, readonly, copy) CKRecordZoneID *zoneID;
 
 /*! Capabilities on locally-created record zones are not valid until the record zone is saved. Capabilities on record zones fetched from the server are valid. */
-@property (readonly, assign) CKRecordZoneCapabilities capabilities;
-
-/*! @discussion The share property on a record zone will only be set on zones fetched from the server and only if a
- * corresponding zone-wide share record for the zone exists on the server.
- *
- *  You can create a zone-wide share for a zone using @code -[CKShare initWithRecordZoneID:] @endcode.
- *
- *  Zone-wide sharing is only supported in zones with the @c CKRecordZoneCapabilityZoneWideSharing sharing capability.
- *  You cannot share a zone if it already contains shared records.
- */
-@property (nullable, readonly, copy) CKReference *share API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0));
+@property (nonatomic, readonly, assign) CKRecordZoneCapabilities capabilities;
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

@@ -1,6 +1,6 @@
 /* CoreAnimation - CoreAnimation.h
 
-   Copyright (c) 2006-2022, Apple Inc.
+   Copyright (c) 2006-2018, Apple Inc.
    All rights reserved. */
 
 #ifndef COREANIMATION_H
@@ -11,16 +11,12 @@
 
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>
-#endif
-
 #import <QuartzCore/CAAnimation.h>
 #import <QuartzCore/CAConstraintLayoutManager.h>
 #import <QuartzCore/CADisplayLink.h>
 #import <QuartzCore/CAMetalLayer.h>
-#import <QuartzCore/CAMetalDisplayLink.h>
 #import <QuartzCore/CAEmitterCell.h>
 #import <QuartzCore/CAEmitterLayer.h>
-#import <QuartzCore/CAFrameRateRange.h>
 #import <QuartzCore/CAGradientLayer.h>
 #import <QuartzCore/CALayer.h>
 #import <QuartzCore/CAMediaTiming.h>
@@ -39,5 +35,6 @@
 #import <QuartzCore/CATransformLayer.h>
 #import <QuartzCore/CAValueFunction.h>
 #import <QuartzCore/CAEDRMetadata.h>
+#endif
 
 #endif /* COREANIMATION_H */

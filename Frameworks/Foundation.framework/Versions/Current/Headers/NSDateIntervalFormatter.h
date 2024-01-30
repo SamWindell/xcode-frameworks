@@ -7,7 +7,7 @@
 #include <dispatch/dispatch.h>
 @class NSLocale, NSCalendar, NSTimeZone, NSDate;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, NSDateIntervalFormatterStyle) {
     NSDateIntervalFormatterNoStyle = 0,
@@ -20,9 +20,23 @@ typedef NS_ENUM(NSUInteger, NSDateIntervalFormatterStyle) {
 // NSDateIntervalFormatter is used to format the range between two NSDates in a locale-sensitive way.
 // NSDateIntervalFormatter returns nil and NO for all methods in NSFormatter.
 
-NS_SWIFT_SENDABLE // All mutable state protected by locks, subclasses must be thread-safe
 API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0))
 @interface NSDateIntervalFormatter : NSFormatter
+{
+@private
+    NSLocale *_locale;
+    NSCalendar *_calendar;
+    NSTimeZone *_timeZone;
+    NSString *_dateTemplate;
+    NSString *_dateTemplateFromStyles;
+    void *_formatter;
+    NSDateIntervalFormatterStyle _dateStyle;
+    NSDateIntervalFormatterStyle _timeStyle;
+    BOOL _modified;
+    BOOL _useTemplate;
+    dispatch_semaphore_t _lock;
+    void *_reserved[4];
+}
 
 @property (null_resettable, copy) NSLocale   *locale;                // default is [NSLocale currentLocale]
 @property (null_resettable, copy) NSCalendar *calendar;              // default is the calendar of the locale
@@ -55,4 +69,4 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0))
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

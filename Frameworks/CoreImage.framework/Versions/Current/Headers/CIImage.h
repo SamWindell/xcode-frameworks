@@ -5,11 +5,6 @@
    All rights reserved.
 */
 
-#ifndef CIIMAGE_H
-#define CIIMAGE_H
-
-#ifdef __OBJC__
-
 #import <Foundation/Foundation.h>
 #import <CoreImage/CoreImageDefines.h>
 #import <CoreVideo/CoreVideo.h>
@@ -51,12 +46,6 @@ CORE_IMAGE_EXPORT CIFormat kCIFormatABGR8 NS_AVAILABLE(10_11, 9_0);
 CORE_IMAGE_EXPORT CIFormat kCIFormatRGBAh NS_AVAILABLE(10_4, 6_0);
 CORE_IMAGE_EXPORT CIFormat kCIFormatRGBA16 NS_AVAILABLE(10_4, 10_0);
 CORE_IMAGE_EXPORT CIFormat kCIFormatRGBAf NS_AVAILABLE(10_4, 7_0);
-CORE_IMAGE_EXPORT CIFormat kCIFormatRGBX16 NS_AVAILABLE(11_0, 14_2);
-CORE_IMAGE_EXPORT CIFormat kCIFormatRGBXh NS_AVAILABLE(14_0, 17_0);
-CORE_IMAGE_EXPORT CIFormat kCIFormatRGBXf NS_AVAILABLE(14_0, 17_0);
-
-// RGB101010 stored in little-endian 32bit int, 2 MSB are ignored, full-range (0-1024)
-CORE_IMAGE_EXPORT CIFormat kCIFormatRGB10 NS_AVAILABLE(14_0, 17_0);
 
 CORE_IMAGE_EXPORT CIFormat kCIFormatA8 NS_AVAILABLE(10_11, 9_0);
 CORE_IMAGE_EXPORT CIFormat kCIFormatA16 NS_AVAILABLE(10_11, 9_0);
@@ -102,80 +91,46 @@ CORE_IMAGE_EXPORT CIImageOption const kCIImageColorSpace;
  * applied that will tone map to standard dynamic range (SDR).
  * The option will only have an effect if the image has a CGColorSpace that is high dynamic range (HDR).
  * This option can be useful if further usage of an image is not prepared for HDR values.
- *
- * If the value for this option is @YES, then the HDR input image will be tone mapped to working space SDR.
- * If the value for this option is @NO, then the HDR input image will be linearized to unclamped working space.
- * If this option is not specified, then it will behave as if @NO was specified.
+ *   If the value for this option is @YES, then the HDR input image will be tone mapped to working space SDR.
+ *   If the value for this option is @NO, then the HDR  input image will be linearized to unclamped working space.
+ *   If this option is not specified, then it will behave as if @NO was specified.
  */
 CORE_IMAGE_EXPORT CIImageOption const kCIImageToneMapHDRtoSDR NS_AVAILABLE(11_0, 14_1);
 
-/* A boolean value specifying whether the image should be expanded to HDR if the image content support this.
- * This option is supported by:
- *     imageWithContentsOfURL:options:, initWithContentsOfURL:options,
- *     imageWithData:options:,          initWithData:options:,
- *
- * If this option value is @YES, the image will expanded to a HDR colorspace if supported.
- * If this option not present or the value is @NO, then the image will not be transformed.
- */
-CORE_IMAGE_EXPORT CIImageOption const kCIImageExpandToHDR NS_AVAILABLE(14_0, 17_0);
-
-
-/* A boolean value specifying how the image should sampled. 
- * If this option value is @YES, then the image will be sampled using nearest neighbor sampling.
- * If this option value is @NO, then the image will be sampled using bilinear interpolation.
- * If this option is not specified, then it will behave as if @NO was specified.
- */
+/* A boolean value specifying whether the image should sampled using "nearest neighbor" 
+ * behavior.  If not specified, the image will be sampled using "linear sampling" */
 CORE_IMAGE_EXPORT CIImageOption const kCIImageNearestSampling NS_AVAILABLE(10_13, 11_0);
 
 
-/* A boolean value specifying when the the image should be decoded.
- * This option is supported by:
- *     imageWithContentsOfURL:options:, initWithContentsOfURL:options,
- *     imageWithData:options:,          initWithData:options:,
- *     imageWithCGImage:options:,       initWithCGImage:options:,
- *     imageWithCGImageSource:options:, initWithCGImageSource:options:
- *
- * If this option value is @YES, then if possible the image will be decoded into a non-volatile cache at initialization time.
- * If this option value is @NO, then the image will be decoded into a volatile cache at render time.
- * If not specified, CoreImage will decide when the image should be decoded. */
-CORE_IMAGE_EXPORT CIImageOption const kCIImageCacheImmediately;
-
-
 /* A NSDictionary of metadata properties to pass to CIImage initialization methods.
- * If this option is not specified, the properties will be set to CGImageSourceCopyPropertiesAtIndex.
- * If this option is [NSNull null], the properties will be set to nil.
+ * When used with imageWithCGImage:options:, initWithCGImage:options:, imageWithData:options:, initWithData:options:
+ *   If this option is not specified, the properties will be set to CGImageSourceCopyPropertiesAtIndex.
+ *   If this option is [NSNull null], the properties will be set to nil.
  */
 CORE_IMAGE_EXPORT CIImageOption const kCIImageProperties NS_AVAILABLE(10_8, 5_0);
 
 
-/* A boolean value specifying that the image should transformed according to orientation metadata.
- * This option is supported by:
- *     imageWithContentsOfURL:options:, initWithContentsOfURL:options,
- *     imageWithData:options:,          initWithData:options:,
- *     imageWithCGImageSource:options:, initWithCGImageSource:options:
- * when the image data contains orientation metadata or by any initialization method
- * if the kCIImageProperties option is also provided.
- *
- * If this option value is @YES, the image will transformed according to the orientation metadata
- * and the orientation metadata will be be removed.
- * If this option value is @NO, then the image will not be transformed
- * and the orientation metadata will left unaltered.
- * If this option is not specified, then it will behave as if @NO was specified.
+/* A boolean value specifying whether the image should transformed according to orientation metadata properties.
+ * This can be used with imageWithContentsOfURL: or initWithData: when the image contains orientation metadata
+ * or with any of the initWith:options: method if the kCIImageProperties option is also provided.
+ *   If this option value is @YES, the image will transformed according to the orientation metadata
+ *   and the orientation metadata will be be removed.
+ *   If this option not present or the value is @NO, then the image will not be transformed
+ *   and the orientation metadata will left unaltered.
  */
 CORE_IMAGE_EXPORT CIImageOption const kCIImageApplyOrientationProperty NS_AVAILABLE(10_13, 11_0);
+
 
 CORE_IMAGE_EXPORT CIImageOption const kCIImageTextureTarget CI_GL_DEPRECATED_MAC(10_9,10_14);
 CORE_IMAGE_EXPORT CIImageOption const kCIImageTextureFormat CI_GL_DEPRECATED_MAC(10_9,10_14);
 
 
-/* The kCIImageAuxiliary keys specify that an auxiliary image be returned instead of the primary image.
- * These options are supported by:
- *     imageWithContentsOfURL:options:, initWithContentsOfURL:options,
- *     imageWithData:options:,          initWithData:options:,
- *     imageWithCGImageSource:options:, initWithCGImageSource:options:
- *
- * If the value of any of these keys is @YES, the auxiliary image be returned if present.
- * The returned image will be a monochrome image.
+/* The kCIImageAuxiliaryDepth or kCIImageAuxiliaryDisparity or kCIImageAuxiliaryPortraitEffectsMatte keys can be passed to the methods:
+ + [CIImage imageWithContentsOfURL:options:]
+ + [CIImage imageWithData:options:]
+ If the value of one of these keys is @YES, the auxiliary image be returned instead of the primary image.
+ If an auxiliary image is not present, then nil will be returned.
+ The returned image will be a half float monochrome image.
  */
 CORE_IMAGE_EXPORT CIImageOption const kCIImageAuxiliaryDepth NS_AVAILABLE(10_13, 11_0);
 CORE_IMAGE_EXPORT CIImageOption const kCIImageAuxiliaryDisparity NS_AVAILABLE(10_13, 11_0);
@@ -183,9 +138,9 @@ CORE_IMAGE_EXPORT CIImageOption const kCIImageAuxiliaryPortraitEffectsMatte NS_A
 CORE_IMAGE_EXPORT CIImageOption const kCIImageAuxiliarySemanticSegmentationSkinMatte NS_AVAILABLE(10_15, 13_0);
 CORE_IMAGE_EXPORT CIImageOption const kCIImageAuxiliarySemanticSegmentationHairMatte NS_AVAILABLE(10_15, 13_0);
 CORE_IMAGE_EXPORT CIImageOption const kCIImageAuxiliarySemanticSegmentationTeethMatte NS_AVAILABLE(10_15, 13_0);
+
 CORE_IMAGE_EXPORT CIImageOption const kCIImageAuxiliarySemanticSegmentationGlassesMatte NS_AVAILABLE(11_0, 14_1);
 CORE_IMAGE_EXPORT CIImageOption const kCIImageAuxiliarySemanticSegmentationSkyMatte NS_AVAILABLE(11_1, 14_3);
-CORE_IMAGE_EXPORT CIImageOption const kCIImageAuxiliaryHDRGainMap NS_AVAILABLE(11_0, 14_1);
 
 
 /* Creates a new image from the contents of 'image'. */
@@ -528,20 +483,6 @@ CORE_IMAGE_EXPORT CIImageAutoAdjustmentOption const kCIImageAutoAdjustLevel NS_A
 
 @end
 
-@interface CIImage (LabConversion)
-
-/* Converts the receiver from the Core Image RGB working space to La*b* space.
- * The L channel in the range of 0...100 is stored in the the R channel of the resulting CIImage.
- * The a*b* channels in the range of -128..128 are stored in the GB channels of the resulting CIImage.
- * The A channel of the resulting CIImage is the same as the receiver's */
--(CIImage*) imageByConvertingWorkingSpaceToLab NS_AVAILABLE(13_0,16_0);
-
-/* Converts an image from La*b* to the Core Image RGB working space.
- * This is the inverse of imageByConvertingWorkingSpaceToLab. */
--(CIImage*) imageByConvertingLabToWorkingSpace NS_AVAILABLE(13_0,16_0);
-
-@end
-
 @interface CIImage (AVDepthData)
 
 /* Returns a AVDepthData if the CIImage was created with [CIImage imageWithData] or [CIImage imageWithContentsOfURL] and.
@@ -600,7 +541,3 @@ CORE_IMAGE_EXPORT CIImageAutoAdjustmentOption const kCIImageAutoAdjustLevel NS_A
 
 
 NS_ASSUME_NONNULL_END
-
-#endif /* __OBJC__ */
-
-#endif /* CIIMAGE_H */

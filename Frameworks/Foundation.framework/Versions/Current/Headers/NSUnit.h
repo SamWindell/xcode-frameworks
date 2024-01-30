@@ -6,7 +6,7 @@
 
 #import <Foundation/NSObject.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Unit Converters
 /*
@@ -127,7 +127,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 #pragma mark - Predefined Dimensions
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitAcceleration : NSDimension <NSSecureCoding>
 /*
@@ -139,7 +138,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitAngle : NSDimension <NSSecureCoding>
 /*
@@ -155,7 +153,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitArea : NSDimension <NSSecureCoding>
 /*
@@ -179,7 +176,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitConcentrationMass : NSDimension <NSSecureCoding>
 /*
@@ -193,7 +189,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitDispersion : NSDimension <NSSecureCoding>
 /*
@@ -203,7 +198,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitDuration : NSDimension <NSSecureCoding>  // Note: This class is not meant to be used for date calculation.  Use NSDate/NSCalendar/NSDateComponents for calendrical date and time operations.
 /*
@@ -220,7 +214,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitElectricCharge : NSDimension <NSSecureCoding>
 /*
@@ -236,7 +229,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitElectricCurrent : NSDimension <NSSecureCoding>
 /*
@@ -251,7 +243,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitElectricPotentialDifference : NSDimension <NSSecureCoding>
 /*
@@ -266,7 +257,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitElectricResistance : NSDimension <NSSecureCoding>
 /*
@@ -281,7 +271,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitEnergy : NSDimension <NSSecureCoding>
 /*
@@ -296,7 +285,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitFrequency : NSDimension <NSSecureCoding>
 /*
@@ -317,7 +305,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitFuelEfficiency : NSDimension <NSSecureCoding>
 /*
@@ -336,7 +323,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
  The values of the below follow IEC 80000-13 definitions and conventions.
  */
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(10.15), ios(13.0), tvos(13.0), watchos(6.0))
 NS_SWIFT_NAME(UnitInformationStorage)
 @interface NSUnitInformationStorage : NSDimension <NSSecureCoding>
@@ -390,7 +376,6 @@ NS_SWIFT_NAME(UnitInformationStorage)
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitLength : NSDimension <NSSecureCoding>
 /*
@@ -422,7 +407,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitIlluminance : NSDimension <NSSecureCoding>
 /*
@@ -433,7 +417,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitMass : NSDimension <NSSecureCoding>
 /*
@@ -459,7 +442,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitPower : NSDimension <NSSecureCoding>
 /*
@@ -480,7 +462,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitPressure : NSDimension <NSSecureCoding>
 /*
@@ -500,7 +481,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitSpeed : NSDimension <NSSecureCoding>
 /*
@@ -514,7 +494,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitTemperature : NSDimension <NSSecureCoding>
 /*
@@ -527,7 +506,6 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 @interface NSUnitVolume : NSDimension <NSSecureCoding>
 /*
@@ -568,4 +546,4 @@ API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

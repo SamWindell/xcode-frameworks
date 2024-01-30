@@ -5,7 +5,7 @@
 #import <Foundation/NSPersonNameComponents.h>
 #import <Foundation/NSFormatter.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, NSPersonNameComponentsFormatterStyle) {
     NSPersonNameComponentsFormatterStyleDefault = 0,
@@ -32,7 +32,7 @@ typedef NS_OPTIONS (NSUInteger, NSPersonNameComponentsFormatterOptions) {
     NSPersonNameComponentsFormatterPhonetic = (1UL << 1)
 } API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
 
-NS_SWIFT_SENDABLE
+
 API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0))
 @interface NSPersonNameComponentsFormatter : NSFormatter {
 @private
@@ -46,11 +46,6 @@ API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0))
 /* Specify that the formatter should only format the components object's phoneticRepresentation
  */
 @property (getter=isPhonetic) BOOL phonetic;
-
-
-/* Specifies the locale to format names. Defaults to autoupdatingCurrentLocale. Also resets to autoupdatingCurrentLocale on assignment of nil.
- */
-@property (null_resettable, copy) NSLocale *locale API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0));
 
 /* Shortcut for converting an NSPersonNameComponents object into a string without explicitly creating an instance.
     Create an instance for greater customizability.
@@ -93,4 +88,4 @@ FOUNDATION_EXPORT NSString * const NSPersonNameComponentNickname API_AVAILABLE(m
  */
 FOUNDATION_EXPORT NSString * const NSPersonNameComponentDelimiter API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

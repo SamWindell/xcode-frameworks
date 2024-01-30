@@ -181,8 +181,8 @@ typedef NS_OPTIONS(NSUInteger, MTLResourceOptions)
     MTLResourceHazardTrackingModeTracked API_AVAILABLE(macos(10.15), ios(13.0)) = MTLHazardTrackingModeTracked << MTLResourceHazardTrackingModeShift,
     
     // Deprecated spellings
-    MTLResourceOptionCPUCacheModeDefault       API_DEPRECATED_WITH_REPLACEMENT("MTLResourceCPUCacheModeDefaultCache", macos(10.11, 13.0), ios(8.0, 16.0)) = MTLResourceCPUCacheModeDefaultCache,
-    MTLResourceOptionCPUCacheModeWriteCombined API_DEPRECATED_WITH_REPLACEMENT("MTLResourceCPUCacheModeWriteCombined", macos(10.11, 13.0), ios(8.0, 16.0)) = MTLResourceCPUCacheModeWriteCombined,
+    MTLResourceOptionCPUCacheModeDefault       = MTLResourceCPUCacheModeDefaultCache,
+    MTLResourceOptionCPUCacheModeWriteCombined = MTLResourceCPUCacheModeWriteCombined,
 } API_AVAILABLE(macos(10.11), ios(8.0));
 
 @protocol MTLDevice;
@@ -258,7 +258,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
 
 /*!
  @property allocatedSize
- @abstract The size in bytes occupied by this resource
+ @abstrace The size in bytes occupied by this resource
 */
 @property (readonly) NSUInteger allocatedSize API_AVAILABLE(macos(10.13), ios(11.0));
 

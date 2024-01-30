@@ -112,11 +112,6 @@ extern const CFStringRef kIOSurfacePlaneComponentBitDepths                  API_
 /* kIOSurfacePlaneComponentBitOffsets   - CFArray[CFNumber] for bit offset of each component in this plane, (low bit zero, high bit 7). For example 'BGRA' would be {0, 8, 16, 24} */
 extern const CFStringRef kIOSurfacePlaneComponentBitOffsets                 API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0));
 
-// This key may be used to specify a name for the IOSurface either at creation time, or may be used with IOSurfaceSetValue() to
-// set it dynamically.  If not provided, the name will be set based on the binary containing the address calling into IOSurface.framework
-// to create it.
-extern const CFStringRef kIOSurfaceName                                     API_AVAILABLE(macos(11.0), ios(14.0), watchos(7.0), tvos(14.0));
-
 typedef CF_ENUM(int32_t, IOSurfaceComponentName) {
     kIOSurfaceComponentNameUnknown      = 0,
     kIOSurfaceComponentNameAlpha        = 1,
@@ -137,7 +132,6 @@ typedef CF_ENUM(int32_t, IOSurfaceComponentType) {
     kIOSurfaceComponentTypeUnsignedInteger  = 1,
     kIOSurfaceComponentTypeSignedInteger    = 2,
     kIOSurfaceComponentTypeFloat            = 3,
-    kIOSurfaceComponentTypeSignedNormalized = 4,
 };
 
 /* kIOSurfacePlaneComponentTypes   - CFArray[CFNumber] for IOSurfaceComponentType of each component in this plane. */
@@ -297,16 +291,6 @@ size_t IOSurfaceGetBitOffsetOfComponentOfPlane(IOSurfaceRef buffer, size_t plane
 IOSurfaceSubsampling IOSurfaceGetSubsampling(IOSurfaceRef buffer)
     API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0));
 
-/* Common IOSurface keys for well-known IOSurface Values */
-
-/* kIOSurfaceColorSpace defines the RGB (or other) color space for the data stored in the IOSurface. It
- is expected that this is a serialized CGColorSpaceRef, provided by the CoreGraphics CGColorSpaceRef
- serialization APIs (CGColorSpaceCopyPropertyList). */
-extern const CFStringRef kIOSurfaceColorSpace API_AVAILABLE(macos(10.6), ios(11.0), watchos(4.0), tvos(11.0));
-
-/* CFData representation of the ICC Profile, generally via CGColorSpaceCopyICCData */
-extern const CFStringRef kIOSurfaceICCProfile  API_AVAILABLE(macos(10.6), ios(11.0), watchos(4.0), tvos(11.0));
-
 /* These  calls let you attach CF property list types to a IOSurface buffer.  These calls are
    expensive (they essentially must serialize the data into the kernel) and thus should be avoided whenever
    possible.   Note:  These functions can not be used to change the underlying surface properties. */
@@ -419,11 +403,11 @@ void IOSurfaceDecrementUseCount(IOSurfaceRef buffer)
 int32_t IOSurfaceGetUseCount(IOSurfaceRef buffer)
     API_AVAILABLE(macos(10.6), ios(11.0), watchos(4.0), tvos(11.0));
 
-/* Returns true if an IOSurface is in use by any process in the system, otherwise false. */
+/* Returns true of an IOSurface is in use by any process in the system, otherwise false. */
 Boolean IOSurfaceIsInUse(IOSurfaceRef buffer)
     API_AVAILABLE(macos(10.6), ios(11.0), watchos(4.0), tvos(11.0));
 
-/* Returns true if this IOSurface allows pixel size casting */
+/* Rerturns true if this IOSurface allows pixel size casting */
 Boolean IOSurfaceAllowsPixelSizeCasting(IOSurfaceRef buffer)
     API_AVAILABLE(macos(10.12), ios(11.0), watchos(4.0), tvos(11.0));
 

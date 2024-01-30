@@ -12,8 +12,7 @@
 
 */
 
-#include <TargetConditionals.h>
-#if TARGET_OS_OSX || TARGET_OS_MACCATALYST
+#if TARGET_OS_OSX
 
 #ifndef __LSSHAREDFILELIST__
 #define __LSSHAREDFILELIST__
@@ -42,8 +41,6 @@
 #if PRAGMA_ONCE
 #pragma once
 #endif
-
-CF_ASSUME_NONNULL_BEGIN
 
 #ifdef __cplusplus
 extern "C" {
@@ -353,7 +350,7 @@ LSSharedFileListItemGetTypeID(void)                           API_DEPRECATED("No
  *  
  *  Result:
  *    A reference to created shared file list object or NULL if
- *    creation failed. Release with CFRelease when list
+ *    creation failed. Has to be released with CFRelease when list
  *    object is not needed anymore.
  *  
  *  Availability:
@@ -361,11 +358,11 @@ LSSharedFileListItemGetTypeID(void)                           API_DEPRECATED("No
  *    CarbonLib:        not available
  *    Non-Carbon CFM:   not available
  */
-extern LSSharedFileListRef _Nullable
+extern LSSharedFileListRef 
 LSSharedFileListCreate(
-  CFAllocatorRef   _Nullable inAllocator,
+  CFAllocatorRef   inAllocator,
   CFStringRef      inListType,
-  CFTypeRef        _Nullable listOptions)                     API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
+  CFTypeRef        listOptions)                               API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
 
 
 /*
@@ -441,11 +438,11 @@ LSSharedFileListSetAuthorization(
  */
 extern void 
 LSSharedFileListAddObserver(
-  LSSharedFileListRef _Nullable    inList,
+  LSSharedFileListRef              inList,
   CFRunLoopRef                     inRunloop,
   CFStringRef                      inRunloopMode,
   LSSharedFileListChangedProcPtr   callback,
-  void * _Nullable                 context)                   API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
+  void *                           context)                   API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
 
 
 /*
@@ -488,7 +485,7 @@ LSSharedFileListRemoveObserver(
   CFRunLoopRef                     inRunloop,
   CFStringRef                      inRunloopMode,
   LSSharedFileListChangedProcPtr   callback,
-  void * _Nullable                 context)                   API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
+  void *                           context)                   API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
 
 
 /*
@@ -547,7 +544,7 @@ LSSharedFileListGetSeedValue(LSSharedFileListRef inList)      API_DEPRECATED("No
  *    CarbonLib:        not available
  *    Non-Carbon CFM:   not available
  */
-extern CFTypeRef _Nullable
+extern CFTypeRef 
 LSSharedFileListCopyProperty(
   LSSharedFileListRef   inList,
   CFStringRef           inPropertyName)                       API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
@@ -585,7 +582,7 @@ extern OSStatus
 LSSharedFileListSetProperty(
   LSSharedFileListRef   inList,
   CFStringRef           inPropertyName,
-  CFTypeRef _Nullable   inPropertyData)                       API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
+  CFTypeRef             inPropertyData)                       API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
 
 
 /*
@@ -612,17 +609,16 @@ LSSharedFileListSetProperty(
  *  Result:
  *    Immutable CFArray of LSSharedFileListItemRef values. Has to be
  *    released with CFRelease when snapshot array is not needed anymore.
- *    Returns NULL if an error occurred.
  *  
  *  Availability:
  *    Mac OS X:         in version 10.5 and later in CoreServices.framework
  *    CarbonLib:        not available
  *    Non-Carbon CFM:   not available
  */
-extern CFArrayRef _Nullable
+extern CFArrayRef 
 LSSharedFileListCopySnapshot(
   LSSharedFileListRef   inList,
-  UInt32 * _Nullable    outSnapshotSeed)                      API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
+  UInt32 *              outSnapshotSeed)                      API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
 
 
 /*
@@ -669,22 +665,22 @@ LSSharedFileListCopySnapshot(
  *  
  *  Result:
  *    Reference to new item. Has to be released with CFRelease when the
- *    item is not needed anymore. Returns NULL if an error occurred.
+ *    item is not needed anymore.
  *  
  *  Availability:
  *    Mac OS X:         in version 10.5 and later in CoreServices.framework
  *    CarbonLib:        not available
  *    Non-Carbon CFM:   not available
  */
-extern CF_RETURNS_RETAINED LSSharedFileListItemRef _Nullable
+extern LSSharedFileListItemRef 
 LSSharedFileListInsertItemURL(
   LSSharedFileListRef       inList,
   LSSharedFileListItemRef   insertAfterThisItem,
-  CFStringRef _Nullable     inDisplayName,
-  IconRef _Nullable         inIconRef,
+  CFStringRef               inDisplayName,
+  IconRef                   inIconRef,
   CFURLRef                  inURL,
-  CFDictionaryRef _Nullable inPropertiesToSet,
-  CFArrayRef _Nullable      inPropertiesToClear)              API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
+  CFDictionaryRef           inPropertiesToSet,
+  CFArrayRef                inPropertiesToClear)              API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
 
 
 /*
@@ -741,15 +737,15 @@ LSSharedFileListInsertItemURL(
  *    CarbonLib:        not available
  *    Non-Carbon CFM:   not available
  */
-extern CF_RETURNS_RETAINED LSSharedFileListItemRef _Nullable
+extern LSSharedFileListItemRef 
 LSSharedFileListInsertItemFSRef(
   LSSharedFileListRef       inList,
   LSSharedFileListItemRef   insertAfterThisItem,
-  CFStringRef _Nullable     inDisplayName,
-  IconRef _Nullable         inIconRef,
+  CFStringRef               inDisplayName,
+  IconRef                   inIconRef,
   const FSRef *             inFSRef,
-  CFDictionaryRef _Nullable inPropertiesToSet,
-  CFArrayRef _Nullable      inPropertiesToClear)              API_DEPRECATED_WITH_REPLACEMENT("LSSharedFileListInsertItemURL", macos(10.5, 10.10)) API_UNAVAILABLE(ios, tvos, watchos);
+  CFDictionaryRef           inPropertiesToSet,
+  CFArrayRef                inPropertiesToClear)              API_DEPRECATED_WITH_REPLACEMENT("LSSharedFileListInsertItemURL", macos(10.5, 10.10)) API_UNAVAILABLE(ios, tvos, watchos);
 
 
 /*
@@ -949,8 +945,8 @@ extern OSStatus
 LSSharedFileListItemResolve(
   LSSharedFileListItemRef           inItem,
   LSSharedFileListResolutionFlags   inFlags,
-  CFURLRef _Nullable * _Nullable    outURL,
-  FSRef * _Nullable                 outRef)                   API_DEPRECATED_WITH_REPLACEMENT("LSSharedFileListItemCopyResolvedURL", macos(10.5, 10.10)) API_UNAVAILABLE(ios, tvos, watchos);
+  CFURLRef *                        outURL,
+  FSRef *                           outRef)                   API_DEPRECATED_WITH_REPLACEMENT("LSSharedFileListItemCopyResolvedURL", macos(10.5, 10.10)) API_UNAVAILABLE(ios, tvos, watchos);
 
 
 /*
@@ -986,11 +982,11 @@ LSSharedFileListItemResolve(
  *    which case NULL will be returned.
  *    The caller is responsible for releasing this URL.
  */
-extern CFURLRef _Nullable
+extern CFURLRef
 LSSharedFileListItemCopyResolvedURL(
   LSSharedFileListItemRef           inItem,
   LSSharedFileListResolutionFlags   inFlags,
-  CFErrorRef _Nullable *  _Nullable outError)                 API_DEPRECATED("No longer supported", macos(10.10, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
+  CFErrorRef *                      outError)                 API_DEPRECATED("No longer supported", macos(10.10, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
 
 
 /*
@@ -1011,7 +1007,7 @@ LSSharedFileListItemCopyResolvedURL(
  *    CarbonLib:        not available
  *    Non-Carbon CFM:   not available
  */
-extern CFTypeRef _Nullable
+extern CFTypeRef 
 LSSharedFileListItemCopyProperty(
   LSSharedFileListItemRef   inItem,
   CFStringRef               inPropertyName)                   API_DEPRECATED("No longer supported", macos(10.5, 10.11)) API_UNAVAILABLE(ios, tvos, watchos);
@@ -1046,8 +1042,6 @@ LSSharedFileListItemSetProperty(
 }
 #endif
 
-CF_ASSUME_NONNULL_END
-
 #endif /* __LSSHAREDFILELIST__ */
 
-#endif // TARGET_OS_OSX || TARGET_OS_MACCATALYST
+#endif // TARGET_OS_OSX

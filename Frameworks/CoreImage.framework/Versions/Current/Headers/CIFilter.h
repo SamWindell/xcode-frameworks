@@ -5,10 +5,6 @@
    All rights reserved.
 */
 
-#ifndef CIFILTER_H
-#define CIFILTER_H
-
-#ifdef __OBJC__
 
 #import <Foundation/Foundation.h>
 #import <CoreImage/CoreImageDefines.h>
@@ -337,19 +333,15 @@ NS_CLASS_AVAILABLE(10_4, 5_0)
  */
 + (nullable NSData*)serializedXMPFromFilters:(NSArray<CIFilter *> *)filters
                             inputImageExtent:(CGRect)extent
-    NS_DEPRECATED(10_9,14_0, 6_0,17_0);
+    NS_AVAILABLE(10_9, 6_0);
 
 /* Return an array of CIFilters de-serialized from XMP data.
  */
 + (NSArray<CIFilter *> *)filterArrayFromSerializedXMP:(NSData *)xmpData
                                      inputImageExtent:(CGRect)extent
                                                 error:(NSError **)outError
-    NS_DEPRECATED(10_9,14_0, 6_0,17_0);
+    NS_AVAILABLE(10_9, 6_0);
 
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* __OBJC__ */
-
-#endif /* CIFILTER_H */

@@ -1,6 +1,6 @@
 /* CoreAnimation - CATiledLayer.h
 
-   Copyright (c) 2006-2022, Apple Inc.
+   Copyright (c) 2006-2018, Apple Inc.
    All rights reserved. */
 
 /* This is a subclass of CALayer providing a way to asynchronously
@@ -21,8 +21,6 @@
  * Note: do not attempt to directly modify the `contents' property of
  * an CATiledLayer object - doing so will effectively turn it into a
  * regular CALayer. */
-
-#ifdef __OBJC__
 
 #import <QuartzCore/CALayer.h>
 
@@ -63,5 +61,3 @@ API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif

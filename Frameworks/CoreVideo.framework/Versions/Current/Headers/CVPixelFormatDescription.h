@@ -23,7 +23,7 @@ extern "C" {
 
 /* This document is influenced by Ice Floe #19: http://developer.apple.com/quicktime/icefloe/dispatch019.html */
 
-/* The canonical name for the format.  This should be the same as the codec name you'd use in QT */
+/* The canonical name for the format.  This should bethe same as the codec name you'd use in QT */
 CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatName __OSX_AVAILABLE_STARTING(__MAC_10_4,__IPHONE_4_0);
 
 /* QuickTime/QuickDraw Pixel Format Type constant (OSType) */
@@ -47,9 +47,6 @@ CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatContainsRGB __OSX_AVAILABLE
 
 /* kCFBooleanTrue indicates that the format contains Grayscale data; */
 CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatContainsGrayscale __OSX_AVAILABLE_STARTING(__MAC_10_14,__IPHONE_12_0);
-
-/* kCFBooleanTrue indicates that the format contains sensel data, as in Bayer RAW buffers; */
-CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatContainsSenselArray API_AVAILABLE(macosx(13.0), ios(16.0));
 
 CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatComponentRange __OSX_AVAILABLE_STARTING(__MAC_10_10,__IPHONE_9_0);
 
@@ -114,7 +111,7 @@ CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatQDCompatibility API_AVAILAB
 CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatCGBitmapContextCompatibility API_AVAILABLE(macosx(10.4), ios(4.0), tvos(9.0), watchos(4.0));
 CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatCGImageCompatibility API_AVAILABLE(macosx(10.4), ios(4.0), tvos(9.0), watchos(4.0));
 CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatOpenGLCompatibility API_AVAILABLE(macosx(10.4), ios(4.0), tvos(9.0), watchos(4.0));
-CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatOpenGLESCompatibility API_AVAILABLE(ios(5.0), tvos(9.0)) API_UNAVAILABLE(macosx) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(visionos) __WATCHOS_PROHIBITED;
+CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatOpenGLESCompatibility API_AVAILABLE(ios(5.0), tvos(9.0)) API_UNAVAILABLE(macosx) API_UNAVAILABLE(macCatalyst) __WATCHOS_PROHIBITED;
     
 /* This callback routine implements code to handle the functionality of CVPixelBufferFillExtendedPixels.  
    For custom pixel formats where you will never need to use that call, this is not required. */
@@ -123,7 +120,7 @@ typedef struct {
     CFIndex version;
     CVFillExtendedPixelsCallBack CV_NULLABLE fillCallBack;
     void * CV_NULLABLE refCon;
-} CVFillExtendedPixelsCallBackData CV_SWIFT_NONSENDABLE;
+} CVFillExtendedPixelsCallBackData;
 
 /* The value for this key is a CFData containing a CVFillExtendedPixelsCallBackData struct */
 CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatFillExtendedPixelsCallback __OSX_AVAILABLE_STARTING(__MAC_10_4,__IPHONE_4_0);
@@ -136,14 +133,6 @@ CV_EXPORT CFArrayRef CF_RETURNS_RETAINED CV_NULLABLE CVPixelFormatDescriptionArr
 
 /* Register a new pixel format with CoreVideo */
 CV_EXPORT void CVPixelFormatDescriptionRegisterDescriptionWithPixelFormatType(CFDictionaryRef CV_NONNULL description, OSType pixelFormat) __OSX_AVAILABLE_STARTING(__MAC_10_4,__IPHONE_4_0);
-
-/*!
-	@function   CVIsCompressedPixelFormatAvailable
-	@abstract   Checks if a compressed pixel format is supported on the current platform.
-	@param      pixelFormatType compressed pixel format.
-	@result     True if pixel format is supported on the current platform.
-*/
-CV_EXPORT Boolean CVIsCompressedPixelFormatAvailable( OSType pixelFormatType ) API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0));
 
 #if COREVIDEO_SUPPORTS_DIRECT3D
 CV_EXPORT const CFStringRef CV_NONNULL kCVPixelFormatDirect3DFormat;

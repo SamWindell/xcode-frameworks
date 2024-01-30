@@ -1,9 +1,7 @@
 /* CoreAnimation - CATextLayer.h
 
-   Copyright (c) 2006-2022, Apple Inc.
+   Copyright (c) 2006-2018, Apple Inc.
    All rights reserved. */
-
-#ifdef __OBJC__
 
 #import <QuartzCore/CALayer.h>
 
@@ -95,5 +93,3 @@ CA_EXTERN CATextLayerAlignmentMode const kCAAlignmentJustified
     API_AVAILABLE(macos(10.5), ios(3.2), watchos(2.0), tvos(9.0));
 
 NS_ASSUME_NONNULL_END
-
-#endif

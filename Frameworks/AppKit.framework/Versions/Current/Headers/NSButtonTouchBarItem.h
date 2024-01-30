@@ -1,7 +1,7 @@
 /*
 	NSButtonTouchBarItem.h
 	Application Kit
-	Copyright (c) 2019-2023, Apple Inc.
+	Copyright (c) 2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -13,7 +13,7 @@
 @class UIColor, UIImage;
 #endif
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 API_AVAILABLE(macos(10.15), ios(13.0))
 @interface NSButtonTouchBarItem : NSTouchBarItem
@@ -51,4 +51,4 @@ API_AVAILABLE(macos(10.15), ios(13.0))
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

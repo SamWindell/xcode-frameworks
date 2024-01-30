@@ -1,7 +1,7 @@
 /*
 	NSToolbarItemGroup.h
 	Application Kit
-	Copyright (c) 2000-2023, Apple Inc.
+	Copyright (c) 2000-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -13,13 +13,9 @@
 @class UIImage;
 #endif
 
-/*
- NSToolbarItemGroup is a subclass of NSToolbarItem which can be used to create sets of NSToolbarItems that are always attached to one another and that are added, removed, or reordered as a single unit.  Properties that get set on the parent toolbar item, such as label or view, apply to the entire item.  Otherwise, the individual properties are displayed adjacent to one another.
+/* NSToolbarItemGroup is a subclass of NSToolbarItem which can be used to create sets of NSToolbarItems that are always attached to one another and that are added, removed, or reordered as a single unit.  Properties that get set on the parent toolbar item, such as label or view, apply to the entire item.  Otherwise, the individual properties are displayed adjacent to one another.  */
 
- Subitems will inherit the group's action if no action is defined on the subitem and will validate based on that action when autovalidates is enabled.
- */
-
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, NSToolbarItemGroupSelectionMode) {
     NSToolbarItemGroupSelectionModeSelectOne = 0, // Only one option in the control can be selected at a time.
@@ -78,5 +74,5 @@ API_AVAILABLE(macos(10.5), ios(13.0))
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 

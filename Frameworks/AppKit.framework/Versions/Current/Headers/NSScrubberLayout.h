@@ -1,7 +1,7 @@
 /*
  NSScrubberLayout.h
  Application Kit
- Copyright (c) 2016-2023, Apple Inc.
+ Copyright (c) 2016-2019, Apple Inc.
  All rights reserved.
  */
 
@@ -10,7 +10,7 @@
 
 @protocol NSScrubberDelegate;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSScrubber, NSScrubberFlowLayout, NSIndexSet;
@@ -38,7 +38,7 @@ API_AVAILABLE(macos(10.12.2))
  @class NSScrubberLayout
  @abstract @c NSScrubberLayout is an abstract class that describes the layout of items within a @c NSScrubber control.
  */
-API_AVAILABLE(macos(10.12.2)) NS_SWIFT_UI_ACTOR
+API_AVAILABLE(macos(10.12.2))
 @interface NSScrubberLayout : NSObject <NSCoding>
 
 #pragma mark Base Implementation
@@ -135,4 +135,4 @@ API_AVAILABLE(macos(10.12.2))
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

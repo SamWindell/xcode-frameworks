@@ -2,17 +2,29 @@
 tbd-version:     4
 targets:         [ x86_64-macos, x86_64-maccatalyst, arm64-macos, arm64-maccatalyst, 
                    arm64e-macos, arm64e-maccatalyst ]
+uuids:
+  - target:          x86_64-macos
+    value:           75601AFD-9DAC-3045-8C73-4E439081AD7F
+  - target:          x86_64-maccatalyst
+    value:           75601AFD-9DAC-3045-8C73-4E439081AD7F
+  - target:          arm64-macos
+    value:           00000000-0000-0000-0000-000000000000
+  - target:          arm64-maccatalyst
+    value:           00000000-0000-0000-0000-000000000000
+  - target:          arm64e-macos
+    value:           3CF2EB16-6995-336C-B08B-DCD091FB3DE5
+  - target:          arm64e-maccatalyst
+    value:           3CF2EB16-6995-336C-B08B-DCD091FB3DE5
 install-name:    '/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/Resources/libFontWorkerAccess.dylib'
 exports:
-  - targets:         [ x86_64-macos, x86_64-maccatalyst ]
+  - targets:         [ x86_64-maccatalyst, x86_64-macos ]
     weak-symbols:    [ __ZTI14TATSFontWorker, __ZTS14TATSFontWorker ]
-  - targets:         [ x86_64-macos, x86_64-maccatalyst, arm64-macos, arm64-maccatalyst, 
-                       arm64e-macos, arm64e-maccatalyst ]
-    symbols:         [ _AllowInternalDevFeatures, _BeginSandboxing, _CopyATSPathAppendingPath, 
-                       _EnableSandbox, _GetATSAlternatePath, _GetATSPath, _GetAlternateFrameworkPath, 
-                       _GetEnvironmentVariable, _GetFontWorkerVT, _IsEnvironmentVariableEnabled, 
-                       _LoadATSDylib, _LoadATSDylibFunction, _XTConsumeSandboxExtension, 
-                       _XTConsumeSandboxExtensions, _XTCreateDirectory, _XTCreateRemovedFontsFolderName, 
+  - targets:         [ x86_64-maccatalyst, x86_64-macos, arm64e-maccatalyst, arm64e-macos, 
+                       arm64-macos, arm64-maccatalyst ]
+    symbols:         [ _BeginSandboxing, _CopyATSPathAppendingPath, _EnableSandbox, 
+                       _GetATSAlternatePath, _GetATSPath, _GetEnvironmentVariable, 
+                       _GetFontWorkerVT, _IsEnvironmentVariableEnabled, _LoadATSDylib, 
+                       _LoadATSDylibFunction, _XTConsumeSandboxExtension, _XTConsumeSandboxExtensions, 
                        _XTDataStreamAppendBytes, _XTDataStreamAppendCString, _XTDataStreamAppendDouble, 
                        _XTDataStreamAppendEmptySegments, _XTDataStreamAppendEmptyStrings, 
                        _XTDataStreamAppendString, _XTDataStreamAppendUInt32, _XTDataStreamBytesLeftToRead, 
@@ -41,9 +53,9 @@ exports:
                        __ZN15TCoreFontWorkerD1Ev, __ZN15TCoreFontWorkerD2Ev, __ZN15TSessionManager11SetSafeModeEb, 
                        __ZN15TSessionManager15sSessionManagerE, __ZN15TSessionManager17GetSessionManagerEv, 
                        __ZN15TSessionManager18ResolveServiceNameEPcmPKc, __ZN15TSessionManager20CreateSessionManagerEv, 
+                       __ZN15TSessionManager20IsCJKLanguageEnabledEb, __ZN15TSessionManager22IsIndicLanguageEnabledEb, 
                        __ZN15TSessionManager22IsInstallerEnvironmentEv, __ZN15TSessionManager22sEnableSessionRegistryE, 
-                       __ZN15TSessionManager25GetFontAssetDirectoryPathEv, __ZN15TSessionManager29EnabledLanguagesForFontAssetsEb, 
-                       __ZN15TSessionManager29GetInstallationKindForFontURLEPK7__CFURL, 
+                       __ZN15TSessionManager25GetFontAssetDirectoryPathEv, __ZN15TSessionManager29GetInstallationKindForFontURLEPK7__CFURL, 
                        __ZN15TSessionManager31IsFontConflictProtectionEnabledEv, 
                        __ZN15TSessionManagerC1Ev, __ZN15TSessionManagerC2Ev, __ZN16TCFStringUniquer14sStringUniquerE, 
                        __ZN16TCFStringUniquer16GetStringUniquerEv, __ZN16TCFStringUniquer19CreateStringUniquerEPv, 
@@ -139,10 +151,7 @@ exports:
                        __ZTS17TCFFlattenContext, __ZTS19TCFResurrectContext, __ZTV15TCoreFontWorker, 
                        __ZTV17TCFFlattenContext, __ZTV19TCFResurrectContext, __fConnectionInterrupted, 
                        _indexOfSegment, _kAdopted, _kEscapeString, _kFWFailureMarker, 
-                       _kFWNonExistentMarker, _kFontAssetsPseudoLanguageCodeForCJK, 
-                       _kFontAssetsPseudoLanguageCodeForIndic, _kFontAssetsPseudoLanguageCodeForThai, 
-                       _kFontsDirectoryName, _kFontsDisabledDirectoryName, _kIsDirectory, 
-                       _kIsFile, _kStubFontsDirectoryPath, _parentOfSegment, _readStack, 
-                       _segmentAtPosition, _writeSegmentAtPosition, _writeStack ]
+                       _kFWNonExistentMarker, _kIsDirectory, _kIsFile, _parentOfSegment, 
+                       _readStack, _segmentAtPosition, _writeSegmentAtPosition, _writeStack ]
     objc-classes:    [ TFontWorkerClient ]
 ...

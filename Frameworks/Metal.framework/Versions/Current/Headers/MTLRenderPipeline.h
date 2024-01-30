@@ -15,9 +15,6 @@
 #import <Metal/MTLPipeline.h>
 
 
-#import <Metal/MTLLinkedFunctions.h>
-#import <Metal/MTLFunctionHandle.h>
-
 NS_ASSUME_NONNULL_BEGIN
 @class MTLVertexDescriptor;
 
@@ -131,14 +128,9 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
 MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
 @interface MTLRenderPipelineReflection : NSObject
 
-@property (nonnull, readonly) NSArray <id<MTLBinding>> *vertexBindings API_AVAILABLE(macos(13.0), ios(16.0));
-@property (nonnull, readonly) NSArray <id<MTLBinding>> *fragmentBindings API_AVAILABLE(macos(13.0), ios(16.0));
-@property (nonnull, readonly) NSArray <id<MTLBinding>> *tileBindings API_AVAILABLE(macos(13.0), ios(16.0));
-@property (nonnull, readonly) NSArray <id<MTLBinding>> *objectBindings API_AVAILABLE(macos(13.0), ios(16.0));
-@property (nonnull, readonly) NSArray <id<MTLBinding>> *meshBindings API_AVAILABLE(macos(13.0), ios(16.0));
-@property (nullable, readonly) NSArray <MTLArgument *> *vertexArguments API_DEPRECATED_WITH_REPLACEMENT("vertexBindings", macos(10.11, 13.0), ios(8.0, 16.0));
-@property (nullable, readonly) NSArray <MTLArgument *> *fragmentArguments API_DEPRECATED_WITH_REPLACEMENT("fragmentBindings", macos(10.11, 13.0), ios(8.0, 16.0));
-@property (nullable, readonly) NSArray <MTLArgument *> *tileArguments API_DEPRECATED_WITH_REPLACEMENT("tileBindings", macos(11.0, 13.0), macCatalyst(14.0, 16.0), ios(11.0, 16.0), tvos(14.5, 16.0));
+@property (nullable, readonly) NSArray <MTLArgument *> *vertexArguments;
+@property (nullable, readonly) NSArray <MTLArgument *> *fragmentArguments;
+@property (nullable, readonly) NSArray <MTLArgument *> *tileArguments API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos);
 @end
 
 MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
@@ -152,7 +144,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
 @property (nullable, copy, nonatomic) MTLVertexDescriptor *vertexDescriptor;
 
 /* Rasterization and visibility state */
-@property (readwrite, nonatomic) NSUInteger sampleCount API_DEPRECATED_WITH_REPLACEMENT("rasterSampleCount", macos(10.11, 13.0), ios(8.0, 16.0));
+@property (readwrite, nonatomic) NSUInteger sampleCount; //DEPRECATED - aliases rasterSampleCount property
 @property (readwrite, nonatomic) NSUInteger rasterSampleCount;
 @property (readwrite, nonatomic, getter = isAlphaToCoverageEnabled) BOOL alphaToCoverageEnabled;
 @property (readwrite, nonatomic, getter = isAlphaToOneEnabled) BOOL alphaToOneEnabled;
@@ -166,7 +158,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
 @property (nonatomic) MTLPixelFormat depthAttachmentPixelFormat;
 @property (nonatomic) MTLPixelFormat stencilAttachmentPixelFormat;
 
-@property (readwrite, nonatomic) MTLPrimitiveTopologyClass inputPrimitiveTopology API_AVAILABLE(macos(10.11), ios(12.0), tvos(14.5));
+@property (readwrite, nonatomic) MTLPrimitiveTopologyClass inputPrimitiveTopology API_AVAILABLE(macos(10.11), ios(12.0)) API_UNAVAILABLE(tvos);
 
 @property (readwrite, nonatomic) MTLTessellationPartitionMode tessellationPartitionMode API_AVAILABLE(macos(10.12), ios(10.0));
 @property (readwrite, nonatomic) NSUInteger maxTessellationFactor API_AVAILABLE(macos(10.12), ios(10.0));
@@ -189,101 +181,12 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
  */
 @property (readwrite, nullable, nonatomic, copy) NSArray<id<MTLBinaryArchive>> *binaryArchives API_AVAILABLE(macos(11.0), ios(14.0));
 
-
-/*!
- @property vertexPreloadedLibraries
- @abstract The set of MTLDynamicLibrary to use to resolve external symbols for the vertexFunction before considering symbols from dependent MTLDynamicLibrary.
- @discussion Typical workflows use the libraries property of MTLCompileOptions to record dependent libraries at compile time without having to use vertexPreloadedLibraries.
- This property can be used to override symbols from dependent libraries for experimentation or evaluating alternative implementations.
- It can also be used to provide dynamic libraries that are dynamically created (for example, from source) that have no stable installName that can be used to automatically load from the file system.
- @see MTLDynamicLibrary
- */
-@property (readwrite, nonnull, nonatomic, copy) NSArray<id<MTLDynamicLibrary>>* vertexPreloadedLibraries API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @property fragmentPreloadedLibraries
- @abstract The set of MTLDynamicLibrary to use to resolve external symbols for the fragmentFunction before considering symbols from dependent MTLDynamicLibrary.
- @discussion Typical workflows use the libraries property of MTLCompileOptions to record dependent libraries at compile time without having to use fragmentPreloadedLibraries.
- This property can be used to override symbols from dependent libraries for experimentation or evaluating alternative implementations.
- It can also be used to provide dynamic libraries that are dynamically created (for example, from source) that have no stable installName that can be used to automatically load from the file system.
- @see MTLDynamicLibrary
- */
-@property (readwrite, nonnull, nonatomic, copy) NSArray<id<MTLDynamicLibrary>>* fragmentPreloadedLibraries API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @property vertexLinkedFunctions
- @abstract The set of functions to be linked with the pipeline state and accessed from the vertex function.
- @see MTLLinkedFunctions
- */
-@property (null_resettable, copy, nonatomic) MTLLinkedFunctions *vertexLinkedFunctions
-    API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @property fragmentLinkedFunctions
- @abstract The set of functions to be linked with the pipeline state and accessed from the fragment function.
- @see MTLLinkedFunctions
- */
-@property (null_resettable, copy, nonatomic) MTLLinkedFunctions *fragmentLinkedFunctions
-    API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @property supportAddingVertexBinaryFunctions
- @abstract This flag makes this pipeline support creating a new pipeline by adding binary functions.
- */
-@property (readwrite, nonatomic) BOOL supportAddingVertexBinaryFunctions
-API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @property supportFragmentAddingBinaryFunctions
- @abstract This flag makes this pipeline support creating a new pipeline by adding binary functions.
- */
-@property (readwrite, nonatomic) BOOL supportAddingFragmentBinaryFunctions
-API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @property maxVertexCallStackDepth
- @abstract The maximum depth of the call stack in stack frames from the shader. Defaults to 1 additional stack frame.
- */
-@property (readwrite, nonatomic) NSUInteger maxVertexCallStackDepth
-API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @property maxFragmentCallStackDepth
- @abstract The maximum depth of the call stack in stack frames from the shader. Defaults to 1 additional stack frame.
- */
-@property (readwrite, nonatomic) NSUInteger maxFragmentCallStackDepth
-API_AVAILABLE(macos(12.0), ios(15.0));
-
-
-
 /*!
  @method reset
  @abstract Restore all pipeline descriptor properties to their default values.
  */
 - (void)reset;
 
-@end
-
-MTL_EXPORT API_AVAILABLE(macos(12.0), ios(15.0))
-@interface MTLRenderPipelineFunctionsDescriptor : NSObject <NSCopying>
-
-/*!
- @property vertexAdditionalBinaryFunctions
- @abstract The set of additional binary functions to be accessed from the vertex function in an incrementally created pipeline state.
- */
-@property (nullable, nonatomic, copy) NSArray<id<MTLFunction>> *vertexAdditionalBinaryFunctions;
-
-/*!
- @property fragmentAdditionalBinaryFunctions
- @abstract The set of additional binary functions to be accessed from the fragment function in an incrementally created pipeline state.
- */
-@property (nullable, nonatomic, copy) NSArray<id<MTLFunction>> *fragmentAdditionalBinaryFunctions;
-
-/*!
- @property tileAdditionalBinaryFunctions
- @abstract The set of additional binary functions to be accessed from the tile function in an incrementally created pipeline state.
- */
-@property (nullable, nonatomic, copy) NSArray<id<MTLFunction>> *tileAdditionalBinaryFunctions;
 @end
 
 /*!
@@ -300,15 +203,15 @@ API_AVAILABLE(macos(10.11), ios(8.0))
 
 /*!
  @property maxTotalThreadsPerThreadgroup
- @abstract The maximum total number of threads that can be in a single tile shader threadgroup.
+ @abstract The maximum total number of threads that can be in a single threadgroup.
  */
-@property (readonly) NSUInteger maxTotalThreadsPerThreadgroup API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5));
+@property (readonly) NSUInteger maxTotalThreadsPerThreadgroup API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos);
 
 /*!
  @property threadgroupSizeMatchesTileSize
- @abstract Returns true when the pipeline state requires a tile shader threadgroup size equal to the tile size
+ @abstract Returns true when the pipeline state requires a threadgroup size equal to the tile size
  */
-@property (readonly) BOOL threadgroupSizeMatchesTileSize API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5));
+@property (readonly) BOOL threadgroupSizeMatchesTileSize API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos);
 
 
 
@@ -316,82 +219,16 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  @property imageblockSampleLength
  @brief Returns imageblock memory length used by a single sample when rendered using this pipeline.
  */
-@property (readonly) NSUInteger imageblockSampleLength API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5));
+@property (readonly) NSUInteger imageblockSampleLength API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos);
 
 /*!
  @method imageblockMemoryLengthForDimensions:sampleCount:
  @brief Returns imageblock memory length for given image block dimensions. Dimensions must be valid tile dimensions.
  */
-- (NSUInteger)imageblockMemoryLengthForDimensions:(MTLSize)imageblockDimensions API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5));
+- (NSUInteger)imageblockMemoryLengthForDimensions:(MTLSize)imageblockDimensions API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos);
 
 
 @property (readonly) BOOL supportIndirectCommandBuffers API_AVAILABLE(macos(10.14), ios(12.0));
-
-
-/*!
- @property maxTotalThreadsPerObjectThreadgroup
- @abstract The maximum total number of threads that can be in a single object shader threadgroup.
- @discussion This value is set in MTLMeshRenderPipelineDescriptor.
- */
-@property (readonly) NSUInteger maxTotalThreadsPerObjectThreadgroup API_AVAILABLE(macos(13.0), ios(16.0));
-
-/*!
- @property maxTotalThreadsPerMeshThreadgroup
- @abstract The maximum total number of threads that can be in a single mesh shader threadgroup.
- @discussion This value is set in MTLMeshRenderPipelineDescriptor.
- */
-@property (readonly) NSUInteger maxTotalThreadsPerMeshThreadgroup API_AVAILABLE(macos(13.0), ios(16.0));
-
-/*!
- @property objectThreadExecutionWidth
- @abstract The number of threads in a SIMD group of the object shader.
- @discussion This value is also available in the shader with the [[threads_per_simdgroup]] attribute.
- */
-@property (readonly) NSUInteger objectThreadExecutionWidth API_AVAILABLE(macos(13.0), ios(16.0));
-
-/*!
- @property meshThreadExecutionWidth
- @abstract The number of threads in a SIMD group of the mesh shader.
- @discussion This value is also available in the shader with the [[threads_per_simdgroup]] attribute.
- */
-@property (readonly) NSUInteger meshThreadExecutionWidth API_AVAILABLE(macos(13.0), ios(16.0));
-
-/*!
- @property maxTotalThreadgroupsPerMeshGrid
- @abstract The maximum total number of threadgroups that can be in a single mesh shader grid.
- @discussion This value is set in MTLMeshRenderPipelineDescriptor.
- */
-@property (readonly) NSUInteger maxTotalThreadgroupsPerMeshGrid API_AVAILABLE(macos(13.0), ios(16.0));
-
-/*!
- @property gpuResourceID
- @abstract Handle of the GPU resource suitable for storing in an Argument Buffer
- */
-@property (readonly) MTLResourceID gpuResourceID API_AVAILABLE(macos(13.0), ios(16.0));
-
-/*!
- @method functionHandleWithFunction:stage:
- @brief Gets the function handle for the specified function on the specified stage of the pipeline.
- */
-- (nullable id<MTLFunctionHandle>)functionHandleWithFunction:(id<MTLFunction>)function stage:(MTLRenderStages)stage API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @method newVisibleFunctionTableWithDescriptor:stage:
- @brief Allocate a visible function table for the specified stage of the pipeline with the provided descriptor.
- */
-- (nullable id<MTLVisibleFunctionTable>)newVisibleFunctionTableWithDescriptor:(MTLVisibleFunctionTableDescriptor * __nonnull)descriptor stage:(MTLRenderStages)stage API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @method newIntersectionFunctionTableWithDescriptor:stage:
- @brief Allocate an intersection function table for the specified stage of the pipeline with the provided descriptor.
- */
-- (nullable id <MTLIntersectionFunctionTable>)newIntersectionFunctionTableWithDescriptor:(MTLIntersectionFunctionTableDescriptor * _Nonnull)descriptor stage:(MTLRenderStages)stage API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @method newRenderPipelineStateWithAdditionalBinaryFunctions:error:
- @brief Allocate a new render pipeline state by adding binary functions for each stage of this pipeline state.
- */
-- (nullable id <MTLRenderPipelineState>)newRenderPipelineStateWithAdditionalBinaryFunctions:(nonnull MTLRenderPipelineFunctionsDescriptor *)additionalBinaryFunctions error:(__autoreleasing NSError **)error API_AVAILABLE(macos(12.0), ios(15.0));
 
 @end
 
@@ -401,13 +238,13 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
 /* Individual attachment state access */
 - (MTLRenderPipelineColorAttachmentDescriptor *)objectAtIndexedSubscript:(NSUInteger)attachmentIndex;
 
-/* This always uses 'copy' semantics.  It is safe to set the attachment state at any legal index to nil, which resets that attachment descriptor state to default values. */
+/* This always uses 'copy' semantics.  It is safe to set the attachment state at any legal index to nil, which resets that attachment descriptor state to default vaules. */
 - (void)setObject:(nullable MTLRenderPipelineColorAttachmentDescriptor *)attachment atIndexedSubscript:(NSUInteger)attachmentIndex;
 
 @end
 
 
-MTL_EXPORT API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5))
+MTL_EXPORT API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos)
 @interface MTLTileRenderPipelineColorAttachmentDescriptor : NSObject <NSCopying>
 
 /*! Pixel format.  Defaults to MTLPixelFormatInvalid */
@@ -415,18 +252,18 @@ MTL_EXPORT API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5))
 
 @end
 
-MTL_EXPORT API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5))
+MTL_EXPORT API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos)
 @interface MTLTileRenderPipelineColorAttachmentDescriptorArray : NSObject
 
 /* Individual tile attachment state access */
 - (MTLTileRenderPipelineColorAttachmentDescriptor*)objectAtIndexedSubscript:(NSUInteger)attachmentIndex;
 
-/* This always uses 'copy' semantics.  It is safe to set the attachment state at any legal index to nil, which resets that attachment descriptor state to default values. */
+/* This always uses 'copy' semantics.  It is safe to set the attachment state at any legal index to nil, which resets that attachment descriptor state to default vaules. */
 - (void)setObject:(MTLTileRenderPipelineColorAttachmentDescriptor*)attachment atIndexedSubscript:(NSUInteger)attachmentIndex;
 
 @end
 
-MTL_EXPORT API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5))
+MTL_EXPORT API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos)
 @interface MTLTileRenderPipelineDescriptor : NSObject <NSCopying>
 
 /*!
@@ -471,239 +308,10 @@ MTL_EXPORT API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5))
  */
 @property (readwrite, nullable, nonatomic, copy) NSArray<id<MTLBinaryArchive>> *binaryArchives API_AVAILABLE(macos(11.0), ios(14.0));
 
-
-/*!
- @property preloadedLibraries
- @abstract The set of MTLDynamicLibrary to use to resolve external symbols before considering symbols from dependent MTLDynamicLibrary.
- @discussion Typical workflows use the libraries property of MTLCompileOptions to record dependent libraries at compile time without having to use preloadedLibraries.
- This property can be used to override symbols from dependent libraries for experimentation or evaluating alternative implementations.
- It can also be used to provide dynamic libraries that are dynamically created (for example, from source) that have no stable installName that can be used to automatically load from the file system.
- @see MTLDynamicLibrary
- */
-@property (readwrite, nonnull, nonatomic, copy) NSArray<id<MTLDynamicLibrary>>* preloadedLibraries API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @property linkedFunctions
- @abstract The set of functions to be linked with the pipeline state and accessed from the tile function.
- @see MTLLinkedFunctions
- */
-@property (null_resettable, copy, nonatomic) MTLLinkedFunctions *linkedFunctions
-    API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @property supportAddingBinaryFunctions
- @abstract This flag makes this pipeline support creating a new pipeline by adding binary functions.
- */
-@property (readwrite, nonatomic) BOOL supportAddingBinaryFunctions
-API_AVAILABLE(macos(12.0), ios(15.0));
-
-/*!
- @property maxCallStackDepth
- @abstract The maximum depth of the call stack in stack frames from the tile function. Defaults to 1 additional stack frame.
- */
-@property (readwrite, nonatomic) NSUInteger maxCallStackDepth
-API_AVAILABLE(macos(12.0), ios(15.0));
-
-
 - (void)reset;
 
 @end
 
-
-/*!
- @class MTLMeshRenderPipelineDescriptor
- @discussion As an alternative to a vertex + fragment shader render pipeline, this render pipeline uses a (object +) mesh + fragment shader for rendering geometry.
- */
-MTL_EXPORT API_AVAILABLE(macos(13.0), ios(16.0))
-@interface MTLMeshRenderPipelineDescriptor : NSObject <NSCopying>
-
-/*!
- @property label
- @discussion A name or description provided by the application that will be displayed in debugging tools.
- The default value is nil.
- */
-@property (nullable, copy, nonatomic) NSString *label;
-
-/*!
- @property objectFunction
- @discussion Optional shader function responsible for determining how many threadgroups of the mesh shader to run, can optionally provide payload data for the mesh stage.
- If this is nil, no payload data is available to the mesh function, and the draw command determines how many threadgroups of the mesh stage to run.
- The default value is nil.
- */
-@property (nullable, readwrite, nonatomic, strong) id <MTLFunction> objectFunction;
-
-/*!
- @property meshFunction
- @discussion Shader function responsible for exporting a chunk of geometry per threadgroup for the rasterizer.
- The default value is nil.
- */
-@property (nullable, readwrite, nonatomic, strong) id <MTLFunction> meshFunction;
-
-/*!
- @property fragmentFunction
- @discussion Like a classical render pipeline, this fragments covered by the rasterized geometry are shaded with this function.
- The default value is nil. To create a pipeline, you must either set fragmentFunction to non-nil, or set rasterizationEnabled to NO.
- */
-@property (nullable, readwrite, nonatomic, strong) id <MTLFunction> fragmentFunction;
-
-/*!
- @property maxTotalThreadsPerObjectThreadgroup
- @discussion The maximum size of the product of threadsPerObjectThreadgroup that can be used for draws with this pipeline.
- This information can be used by the optimizer to generate more efficient code, specifically when the specified value does not exceed the thread execution width of the underlying GPU.
- The default value is 0, which means that the value specified with the [[max_total_threads_per_threadgroup(N)]] specified on objectFunction will be used.
- When both the [[max_total_threads_per_threadgroup(N)]] attribute and a non-zero value are specified, both values must match.
- Any value specified cannot exceed the device limit as documented in the "Metal Feature Set Tables" for "Maximum threads per threadgroup".
- */
-@property (readwrite, nonatomic) NSUInteger maxTotalThreadsPerObjectThreadgroup;
-
-/*!
- @property maxTotalThreadsPerMeshThreadgroup
- @discussion The maximum size of the product of threadsPerMeshThreadgroup that can be used for draws with this pipeline.
- This information can be used by the optimizer to generate more efficient code, specifically when the specified value does not exceed the thread execution width of the underlying GPU.
- The default value is 0, which means that the value specified with the [[max_total_threads_per_threadgroup(N)]] specified on meshFunction will be used.
- When both the [[max_total_threads_per_threadgroup(N)]] attribute and a non-zero value are specified, both values must match.
- Any value specified cannot exceed the device limit as documented in the "Metal Feature Set Tables" for "Maximum threads per threadgroup".
- */
-@property (readwrite, nonatomic) NSUInteger maxTotalThreadsPerMeshThreadgroup;
-
-/*!
- @property objectThreadgroupSizeIsMultipleOfThreadExecutionWidth
- @discussion Set this value to YES when you will only use draws with the product of threadsPerObjectThreadgroup set to a multiple of the objectThreadExecutionWidth of the returned pipeline state.
- This information can be used by the optimizer to generate more efficient code.
- The default value is NO.
- */
-@property (readwrite, nonatomic) BOOL objectThreadgroupSizeIsMultipleOfThreadExecutionWidth;
-
-/*!
- @property meshThreadgroupSizeIsMultipleOfThreadExecutionWidth
- @discussion Set this value to YES when you will only use draws with the product of threadsPerMeshThreadgroup set to a multiple of the meshThreadExecutionWidth of the returned pipeline state.
- This information can be used by the optimizer to generate more efficient code.
- The default value is NO.
- */
-@property (readwrite, nonatomic) BOOL meshThreadgroupSizeIsMultipleOfThreadExecutionWidth;
-
-/*!
- @property payloadMemoryLength
- @discussion The size, in bytes, of the buffer indicated by [[payload]] in the object and mesh shader.
- If this value is 0, the size of the dereferenced type declared in the object shader for the buffer is used (space for a single element is assumed for pointers).
- The default value is 0.
- */
-@property (readwrite, nonatomic) NSUInteger payloadMemoryLength;
-
-/*!
- @property maxTotalThreadgroupsPerMeshGrid
- @discussion The maximum value of the product of vector elements that the object shader may pass to the mesh_grid_properties::set_threadgroups_per_grid built-in function.
- The default value is 0, which means that the value specified with the [[max_total_threadgroups_per_mesh_grid(N)]] specified on objectFunction will be used.
- When both the [[max_total_threadgroups_per_mesh_grid(N)]] attribute and a non-zero value are specified, both values must match.
- Any value specified cannot exceed the device limit as documented in the "Metal Feature Set Tables" for "Maximum threadgroups per mesh grid".
- Specifying this value is optional; it may be used to improve scheduling of the workload. If neither this value nor the shader attribute are used, the device's maximum supported value is used instead.
- */
-@property (readwrite, nonatomic) NSUInteger maxTotalThreadgroupsPerMeshGrid;
-
-/*!
- @property objectBuffers
- @abstract Provide mutability information on the buffers used by objectFunction.
- @discussion Specifying these values is optional; it may be used to optimize the shader code.
- */
-@property (readonly) MTLPipelineBufferDescriptorArray *objectBuffers;
-
-/*!
- @property meshBuffers
- @abstract Provide mutability information on the buffers used by meshFunction.
- @discussion Specifying these values is optional; it may be used to optimize the shader code.
- */
-@property (readonly) MTLPipelineBufferDescriptorArray *meshBuffers;
-
-/*!
- @property fragmentBuffers
- @abstract Provide mutability information on the buffers used by fragmentFunction.
- @discussion Specifying these values is optional; it may be used to optimize the shader code.
- */
-@property (readonly) MTLPipelineBufferDescriptorArray *fragmentBuffers;
-
-/*!
- @property rasterSampleCount
- @discussion The number of samples per fragment of the render pass in which this pipeline will be used.
- */
-@property (readwrite, nonatomic) NSUInteger rasterSampleCount;
-
-/*!
- @property alphaToCoverageEnabled
- @abstract Whether the alpha value exported by the fragment shader for the first color attachment is converted to a sample mask, which is subsequently AND-ed with the fragments' sample mask
- @discussion The default value is NO.
- */
-@property (readwrite, nonatomic, getter = isAlphaToCoverageEnabled) BOOL alphaToCoverageEnabled;
-
-/*!
- @property alphaToOneEnabled
- @abstract Whether the alpha value exported by the fragment shader for all color attachments is modified to 1 (after evaluating alphaToCoverage).
- @discussion The default value is NO.
- */
-@property (readwrite, nonatomic, getter = isAlphaToOneEnabled) BOOL alphaToOneEnabled;
-
-/*!
- @property rasterizationEnabled
- @abstract Whether rasterization is disabled, all primitives are dropped prior to rasterization.
- @discussion The default value is YES.
- */
-@property (readwrite, nonatomic, getter = isRasterizationEnabled) BOOL rasterizationEnabled;
-
-/*!
- @property maxVertexAmplificationCount
- @abstract The maximum value that can be passed to setVertexAmplificationCount when using this pipeline.
- @discussion The default value is 1. The value must be supported by the device, which can be checked with supportsVertexAmplificationCount.
- */
-@property (readwrite, nonatomic) NSUInteger maxVertexAmplificationCount;
-
-/*!
- @property colorAttachments
- @abstract Describes the color attachments of the render pass in which this pipeline will be used.
- */
-@property (readonly) MTLRenderPipelineColorAttachmentDescriptorArray *colorAttachments;
-
-/*!
- @property depthAttachmentPixelFormat
- @abstract The pixel format of the depth attachment of the render pass in which this pipeline will be used.
- @discussion The default value is MTLPixelFormatInvalid; indicating no depth attachment will be used.
- */
-@property (nonatomic) MTLPixelFormat depthAttachmentPixelFormat;
-
-/*!
- @property stencilAttachmentPixelFormat
- @abstract The pixel format of the stencil attachment of the render pass in which this pipeline will be used.
- @discussion The default value is MTLPixelFormatInvalid; indicating no stencil attachment will be used.
- */
-@property (nonatomic) MTLPixelFormat stencilAttachmentPixelFormat;
-
-
-/*!
- @property objectLinkedFunctions
- @abstract The set of functions to be linked with the pipeline state and accessed from the object function.
- @see MTLLinkedFunctions
- */
-@property (null_resettable, copy, nonatomic) MTLLinkedFunctions *objectLinkedFunctions API_AVAILABLE(macos(14.0), ios(17.0));
-
-/*!
- @property meshLinkedFunctions
- @abstract The set of functions to be linked with the pipeline state and accessed from the mesh function.
- @see MTLLinkedFunctions
- */
-@property (null_resettable, copy, nonatomic) MTLLinkedFunctions *meshLinkedFunctions API_AVAILABLE(macos(14.0), ios(17.0));
-
-/*!
- @property fragmentLinkedFunctions
- @abstract The set of functions to be linked with the pipeline state and accessed from the fragment function.
- @see MTLLinkedFunctions
- */
-@property (null_resettable, copy, nonatomic) MTLLinkedFunctions *fragmentLinkedFunctions API_AVAILABLE(macos(14.0), ios(17.0));
-
-/*!
- @method reset
- @abstract Restore all mesh pipeline descriptor properties to their default values.
- */
-- (void)reset;
-
-@end
 
 
 NS_ASSUME_NONNULL_END

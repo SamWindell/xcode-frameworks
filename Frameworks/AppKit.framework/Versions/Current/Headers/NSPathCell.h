@@ -1,7 +1,7 @@
 /*
     NSPathCell.h
     Application Kit
-    Copyright (c) 2005-2023, Apple Inc.
+    Copyright (c) 2005-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -12,7 +12,7 @@
 #import <AppKit/NSMenu.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSString, NSImage, NSAnimation, NSPathComponentCell, NSURL, NSPopUpButtonCell, NSNotification, NSOpenPanel;
@@ -112,15 +112,15 @@ API_AVAILABLE(macos(10.5))
 
 /* Called before the 'openPanel' is shown, but after the 'openPanel' has allowedFileTypes set to the cell's allowedTypes. At this time, you can further customize the 'openPanel' as required. This is only ever called when the style is set to NSPathStylePopUp.
 */
-- (void)pathCell:(NSPathCell *)pathCell willDisplayOpenPanel:(NSOpenPanel *)openPanel NS_SWIFT_UI_ACTOR;
+- (void)pathCell:(NSPathCell *)pathCell willDisplayOpenPanel:(NSOpenPanel *)openPanel;
 
 /* Called before the 'menu' is shown. At this time, you can further customize the 'menu' as required, adding and removing items. This is only ever called when the style is set to NSPathStylePopUp.
 */
-- (void)pathCell:(NSPathCell *)pathCell willPopUpMenu:(NSMenu *)menu NS_SWIFT_UI_ACTOR;
+- (void)pathCell:(NSPathCell *)pathCell willPopUpMenu:(NSMenu *)menu;
 
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 
 

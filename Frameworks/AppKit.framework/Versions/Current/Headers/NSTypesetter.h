@@ -1,7 +1,7 @@
 #if !__has_include(<UIFoundation/NSTypesetter.h>)
 /*
 	NSTypesetter.h
-	Copyright (c) 1994-2023, Apple Inc.  All rights reserved. 
+	Copyright (c) 1994-2019, Apple Inc.  All rights reserved. 
 
 	An abstract class to lay glyphs out in horizontal or vertical boxes	
 */
@@ -13,7 +13,7 @@
 #import <AppKit/NSLayoutManager.h>
 #import <AppKit/NSParagraphStyle.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 #if !TARGET_OS_IPHONE
 
 @interface NSTypesetter : NSObject
@@ -175,7 +175,7 @@ typedef NS_OPTIONS(NSUInteger, NSTypesetterControlCharacterAction) {
 
 
 #endif // !TARGET_OS_IPHONE
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 #else
 #import <UIFoundation/NSTypesetter.h>
 #endif

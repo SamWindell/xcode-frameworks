@@ -26,14 +26,15 @@ To enumerate without doing a call per index, you can use the method getIndexes:m
 #import <Foundation/NSObject.h>
 #import <Foundation/NSRange.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 @interface NSIndexSet : NSObject <NSCopying, NSMutableCopying, NSSecureCoding> {
     @protected   // all instance variables are private
     struct {
+        NSUInteger _isEmpty:1;
         NSUInteger _hasSingleRange:1;
-        NSUInteger _hasBitfield:1;
-        NSUInteger _reservedArrayBinderController:30;
+        NSUInteger _cacheValid:1;
+        NSUInteger _reservedArrayBinderController:29;
     } _indexSetFlags;
     union {
         struct {
@@ -43,9 +44,6 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
             void * _data;
             void *_reserved;
         } _multipleRanges;
-        struct {
-            uint64_t _bitfield;
-        } _singleBitfield;
     } _internal;
 }
 
@@ -106,7 +104,10 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @end
 
-@interface NSMutableIndexSet : NSIndexSet
+@interface NSMutableIndexSet : NSIndexSet {
+    @protected
+    void *_reserved;
+}
 
 - (void)addIndexes:(NSIndexSet *)indexSet;
 - (void)removeIndexes:(NSIndexSet *)indexSet;
@@ -122,4 +123,4 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

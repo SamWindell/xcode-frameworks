@@ -6,7 +6,6 @@
 #ifndef COREIMAGEDEFINES_H
 #define COREIMAGEDEFINES_H
 
-#ifndef __METAL_VERSION__
 
 #include <TargetConditionals.h>
 
@@ -14,9 +13,10 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#if TARGET_OS_IPHONE
 #include <CoreGraphics/CoreGraphics.h>
-#ifdef __OBJC__
-#import <Foundation/Foundation.h>
+#else
+#include <ApplicationServices/ApplicationServices.h>
 #endif
 
 #ifdef __cplusplus
@@ -36,34 +36,22 @@
 #define CORE_IMAGE_CLASS_EXPORT __attribute__((visibility("default")))
 
 
-#ifdef __OBJC__
 #ifdef CI_SILENCE_GL_DEPRECATION
-  #if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-  #define CI_GL_DEPRECATED(...)  API_UNAVAILABLE(visionos)
-  #define CI_GL_DEPRECATED_IOS(...) API_UNAVAILABLE(visionos)
-  #else
-  #define CI_GL_DEPRECATED(fromM,toM, fromI,toI)  NS_AVAILABLE(fromM,fromI)
   #define CI_GL_DEPRECATED_IOS(from, to)  NS_AVAILABLE_IOS(from)
-  #endif
   #define CI_GL_DEPRECATED_MAC(from, to)  NS_AVAILABLE_MAC(from)
+  #define CI_GL_DEPRECATED(fromM,toM, fromI,toI)  NS_AVAILABLE(fromM,fromI)
   #define CIKL_DEPRECATED(fromM,toM, fromI,toI)  NS_AVAILABLE(fromM,fromI)
 #else
-  #if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-  #define CI_GL_DEPRECATED(...)  API_UNAVAILABLE(visionos)
-  #define CI_GL_DEPRECATED_IOS(...) API_UNAVAILABLE(visionos)
-  #else
-  #define CI_GL_DEPRECATED(fromM,toM, fromI,toI)  NS_DEPRECATED(fromM,toM, fromI,toI, "Core Image OpenGL API deprecated. (Define CI_SILENCE_GL_DEPRECATION to silence these warnings)")
   #define CI_GL_DEPRECATED_IOS(from, to)  NS_DEPRECATED_IOS(from, to, "Core Image OpenGLES API deprecated. (Define CI_SILENCE_GL_DEPRECATION to silence these warnings)")
-  #endif
   #define CI_GL_DEPRECATED_MAC(from, to)  NS_DEPRECATED_MAC(from, to, "Core Image OpenGL API deprecated. (Define CI_SILENCE_GL_DEPRECATION to silence these warnings)")
+  #define CI_GL_DEPRECATED(fromM,toM, fromI,toI)  NS_DEPRECATED(fromM,toM, fromI,toI, "Core Image OpenGL API deprecated. (Define CI_SILENCE_GL_DEPRECATION to silence these warnings)")
   #define CIKL_DEPRECATED(fromM,toM, fromI,toI)  NS_DEPRECATED(fromM,toM, fromI,toI, "Core Image Kernel Language API deprecated. (Define CI_SILENCE_GL_DEPRECATION to silence these warnings)")
 #endif
+
+#if TARGET_OS_MAC || !TARGET_OS_SIMULATOR || defined(__IPHONE_13_0)
+  #define COREIMAGE_SUPPORTS_IOSURFACE 1
+#else
+  #define COREIMAGE_SUPPORTS_IOSURFACE 0
 #endif
-
-#define COREIMAGE_SUPPORTS_IOSURFACE 1
-
-#define UNIFIED_CORE_IMAGE 1
-
-#endif /* !__METAL_VERSION__ */
 
 #endif /* COREIMAGEDEFINES_H */

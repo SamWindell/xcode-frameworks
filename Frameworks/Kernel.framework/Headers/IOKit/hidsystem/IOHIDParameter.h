@@ -40,7 +40,6 @@
 #include <IOKit/hidsystem/IOHIDTypes.h>
 #include <IOKit/hidsystem/IOLLEvent.h>
 #include <IOKit/hid/IOHIDProperties.h>
-#include <IOKit/hid/IOHIDEventServiceKeys.h>
 
 /*
  * Identify this driver as one that uses the new driverkit and messaging API
@@ -92,10 +91,17 @@
 #define kIOHIDPointerAccelerationTableKey  "HIDPointerAccelerationTable"
 
 // velocity for pointer acceleration
+#define kIOHIDPointerAccelerationMultiplierKey        "HIDPointerAccelerationMultiplier"
 
 
 #define kIOHIDScrollResetKey			"HIDScrollReset"
+#define kIOHIDScrollResolutionKey		"HIDScrollResolution"
+#define kIOHIDScrollReportRateKey       "HIDScrollReportRate"
 #define kIOHIDScrollAccelerationTableKey	"HIDScrollAccelerationTable"
+
+#define kIOHIDScrollResolutionXKey		"HIDScrollResolutionX"
+#define kIOHIDScrollResolutionYKey		"HIDScrollResolutionY"
+#define kIOHIDScrollResolutionZKey		"HIDScrollResolutionZ"
 
 #define kIOHIDScrollAccelerationTableXKey	"HIDScrollAccelerationTableX"
 #define kIOHIDScrollAccelerationTableYKey	"HIDScrollAccelerationTableY"
@@ -104,6 +110,10 @@
 #define kIOHIDScrollMouseButtonKey      "HIDScrollMouseButton"
 
 #define kIOHIDScrollZoomModifierMaskKey "HIDScrollZoomModifierMask"
+
+#define kIOHIDTrackpadScrollAccelerationKey "HIDTrackpadScrollAcceleration"
+
+#define kIOHIDTrackpadAccelerationType	"HIDTrackpadAcceleration"
 
 #define kIOHIDClickTimeKey				"HIDClickTime"
 #define kIOHIDClickSpaceKey				"HIDClickSpace"
@@ -156,7 +166,10 @@
 #define kIOHIDResetLEDsKey          "HIDResetLEDs"
 
 // Parametric Acceleration Keys
+#define kHIDAccelParametricCurvesKey            "HIDAccelCurves"
+#define kHIDPointerReportRateKey                "HIDPointerReportRate"
 #define kHIDTrackingAccelParametricCurvesKey    "HIDTrackingAccelCurves"
+#define kHIDScrollAccelParametricCurvesKey      "HIDScrollAccelCurves"
 #define kHIDAccelParametricCurvesDebugKey       "HIDAccelCurvesDebug"
 #define kHIDScrollAccelParametricCurvesDebugKey "HIDScrollAccelCurvesDebug"
 #define kHIDAccelGainLinearKey                  "HIDAccelGainLinear"

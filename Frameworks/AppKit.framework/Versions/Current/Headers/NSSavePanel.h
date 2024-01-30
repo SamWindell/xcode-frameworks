@@ -1,7 +1,7 @@
 /*
     NSSavePanel.h
     Application Kit
-    Copyright (c) 1994-2023, Apple Inc.
+    Copyright (c) 1994-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -10,7 +10,7 @@
 #import <AppKit/NSPanel.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSBox, NSTextField, NSTextView, NSView, NSURL, NSProgressIndicator, NSControl;
@@ -40,12 +40,6 @@ enum {
 
 #pragma mark -
 #pragma mark Configuration Properties
-
-/* Gets and sets the identifier.
-    The panel's current state such as the root directory and the current directory are saved and restored relative to the identifier.
-    Note: When the identifier is changed, the properties that depend on the identifier are updated from user defaults. Properties that have a null default value are not changed (and keep their existing value).
-*/
-@property (nullable, copy) NSUserInterfaceItemIdentifier identifier;
 
 /* NSSavePanel/NSOpenPanel: Gets and sets the directoryURL shown. A value of nil indicates that the last directory shown to the user will be used. This method will not block to resolve the URL, and the directory will asyncronously be set, if required.
 */
@@ -90,7 +84,7 @@ enum {
 */
 @property BOOL canSelectHiddenExtension;
 
-/*  NSSavePanel: Set to YES if the extension-hiding checkbox should be checked.
+/*  NSSavePanel: Set to YES if the extension-hiding checkbox should checked. The value persists in the user defaults specific for the application.
     NSOpenPanel: Should not be used.
 */
 @property (getter=isExtensionHidden) BOOL extensionHidden;
@@ -168,29 +162,29 @@ enum {
     NSOpenPanel: Return YES to allow the 'url' to be enabled in the panel. Delegate implementations should be fast to avoid stalling the UI. Applications linked on Mac OS 10.7 and later should be prepared to handle non-file URL schemes.
     NSSavePanel: This method is not called; all urls are always disabled.
 */
-- (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.6));
+- (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url API_AVAILABLE(macos(10.6));
 
 /* Optional - URL validation for saving and opening files. 
     NSSavePanel: The method is called once by the save panel when the user chooses the Save button. The user is intending to save a file at 'url'. Return YES if the 'url' is a valid location to save to. Note that an item at 'url' may not physically exist yet, unless the user decided to overwrite an existing item. Return NO and fill in the 'outError' with a user displayable error message for why the 'url' is not valid. If a recovery option is provided by the error, and recovery succeeded, the panel will attempt to close again.
     NSOpenPanel: The method is called once for each selected filename (or directory) when the user chooses the Open button. Return YES if the 'url' is acceptable to open. Return NO and fill in the 'outError' with a user displayable message for why the 'url' is not valid for opening. You would use this method over panel:shouldEnableURL: if the processing of the selected item takes a long time. If a recovery option is provided by the error, and recovery succeeded, the panel will attempt to close again.
 */
-- (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError **)outError NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.6));
+- (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError **)outError API_AVAILABLE(macos(10.6));
 
 /* Optional - Sent when the user has changed the selected directory to the directory located at 'url'. 'url' may be nil, if the current directory can't be represented by an NSURL object (ie: the media sidebar directory, or the "Computer").
 */
-- (void)panel:(id)sender didChangeToDirectoryURL:(nullable NSURL *)url NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.6));
+- (void)panel:(id)sender didChangeToDirectoryURL:(nullable NSURL *)url API_AVAILABLE(macos(10.6));
 
 /* Optional - Filename customization for the NSSavePanel. Allows the delegate to customize the filename entered by the user, before the extension is appended, and before the user is potentially asked to replace a file.
 */
-- (nullable NSString *)panel:(id)sender userEnteredFilename:(NSString *)filename confirmed:(BOOL)okFlag NS_SWIFT_UI_ACTOR;
+- (nullable NSString *)panel:(id)sender userEnteredFilename:(NSString *)filename confirmed:(BOOL)okFlag;
 
 /* Optional - Sent when the user clicks the disclosure triangle to expand or collapse the file browser while in NSOpenPanel.
 */
-- (void)panel:(id)sender willExpand:(BOOL)expanding NS_SWIFT_UI_ACTOR;
+- (void)panel:(id)sender willExpand:(BOOL)expanding;
 
 /* Optional - Sent when the user has changed the selection.
 */
-- (void)panelSelectionDidChange:(nullable id)sender NS_SWIFT_UI_ACTOR;
+- (void)panelSelectionDidChange:(nullable id)sender;
 
 @end
 
@@ -218,8 +212,10 @@ enum {
  NSSavePanel: An array of NSStrings specifying the file types the user can save the file as. The file type can be a common file extension, or a UTI. A nil value indicates that any file type can be used. If the array is not nil and the array contains no items, an exception will be raised. If no extension is given by the user, the first item in the allowedFileTypes will be used as the extension for the save panel. If the user specifies a type not in the array, and 'allowsOtherFileTypes' is YES, they will be presented with another dialog when prompted to save. The default value is 'nil'.
  NSOpenPanel: On versions less than 10.6, this property is ignored. For applications that link against 10.6 and higher, this property will determine which files should be enabled in the open panel. Using the deprecated methods to show the open panel (the ones that take a "types:" parameter) will overwrite this value, and should not be used. The allowedFileTypes can be changed while the panel is running (ie: from an accessory view). The file type can be a common file extension, or a UTI. This is also known as the "enabled file types". A nil value indicates that all files should be enabled.
  */
-@property (nullable, copy) NSArray<NSString *> *allowedFileTypes API_DEPRECATED("Use -allowedContentTypes instead", macos(10.3,12.0));
+@property (nullable, copy) NSArray<NSString *> *allowedFileTypes API_DEPRECATED("Use -allowedContentTypes instead", macos(10.3,API_TO_BE_DEPRECATED));
 @end
 
+
+
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

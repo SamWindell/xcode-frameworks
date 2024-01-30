@@ -1,12 +1,10 @@
 /* CoreAnimation - CAGradientLayer.h
 
-   Copyright (c) 2008-2022, Apple Inc.
+   Copyright (c) 2008-2018, Apple Inc.
    All rights reserved. */
 
 /* The gradient layer draws a color gradient over its background color,
  * filling the shape of the layer (i.e. including rounded corners). */
-
-#ifdef __OBJC__
 
 #import <QuartzCore/CALayer.h>
 #import <QuartzCore/CAMediaTimingFunction.h>
@@ -74,5 +72,3 @@ CA_EXTERN CAGradientLayerType const kCAGradientLayerConic
     API_AVAILABLE(macos(10.14), ios(12.0), watchos(5.0), tvos(12.0));
 
 NS_ASSUME_NONNULL_END
-
-#endif

@@ -8,7 +8,6 @@
 #import <Foundation/Foundation.h>
 #import <Metal/MTLDefines.h>
 #import <Metal/MTLTexture.h>
-#import <Metal/MTLCommandEncoder.h>
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -92,96 +91,32 @@ typedef NS_ENUM(NSUInteger, MTLDataType) {
     MTLDataTypeSampler API_AVAILABLE(macos(10.13), ios(11.0)) = 59,
     MTLDataTypePointer API_AVAILABLE(macos(10.13), ios(11.0)) = 60,
 
-    MTLDataTypeR8Unorm         API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 62,
-    MTLDataTypeR8Snorm         API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 63,
-    MTLDataTypeR16Unorm        API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 64,
-    MTLDataTypeR16Snorm        API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 65,
-    MTLDataTypeRG8Unorm        API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 66,
-    MTLDataTypeRG8Snorm        API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 67,
-    MTLDataTypeRG16Unorm       API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 68,
-    MTLDataTypeRG16Snorm       API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 69,
-    MTLDataTypeRGBA8Unorm      API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 70,
-    MTLDataTypeRGBA8Unorm_sRGB API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 71,
-    MTLDataTypeRGBA8Snorm      API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 72,
-    MTLDataTypeRGBA16Unorm     API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 73,
-    MTLDataTypeRGBA16Snorm     API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 74,
-    MTLDataTypeRGB10A2Unorm    API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 75,
-    MTLDataTypeRG11B10Float    API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 76,
-    MTLDataTypeRGB9E5Float     API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) = 77,
+    MTLDataTypeR8Unorm         API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 62,
+    MTLDataTypeR8Snorm         API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 63,
+    MTLDataTypeR16Unorm        API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 64,
+    MTLDataTypeR16Snorm        API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 65,
+    MTLDataTypeRG8Unorm        API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 66,
+    MTLDataTypeRG8Snorm        API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 67,
+    MTLDataTypeRG16Unorm       API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 68,
+    MTLDataTypeRG16Snorm       API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 69,
+    MTLDataTypeRGBA8Unorm      API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 70,
+    MTLDataTypeRGBA8Unorm_sRGB API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 71,
+    MTLDataTypeRGBA8Snorm      API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 72,
+    MTLDataTypeRGBA16Unorm     API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 73,
+    MTLDataTypeRGBA16Snorm     API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 74,
+    MTLDataTypeRGB10A2Unorm    API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 75,
+    MTLDataTypeRG11B10Float    API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 76,
+    MTLDataTypeRGB9E5Float     API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos) = 77,
     MTLDataTypeRenderPipeline  API_AVAILABLE(macos(10.14), ios(13.0)) = 78,
-    MTLDataTypeComputePipeline API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(13.0)) = 79,
+    MTLDataTypeComputePipeline API_AVAILABLE(ios(13.0),macos(11.0)) = 79,
     MTLDataTypeIndirectCommandBuffer   API_AVAILABLE(macos(10.14), ios(12.0)) = 80,
-    MTLDataTypeLong  API_AVAILABLE(macos(12.0), ios(14.0)) = 81,
-    MTLDataTypeLong2 API_AVAILABLE(macos(12.0), ios(14.0)) = 82,
-    MTLDataTypeLong3 API_AVAILABLE(macos(12.0), ios(14.0)) = 83,
-    MTLDataTypeLong4 API_AVAILABLE(macos(12.0), ios(14.0)) = 84,
-
-    MTLDataTypeULong  API_AVAILABLE(macos(12.0), ios(14.0)) = 85,
-    MTLDataTypeULong2 API_AVAILABLE(macos(12.0), ios(14.0)) = 86,
-    MTLDataTypeULong3 API_AVAILABLE(macos(12.0), ios(14.0)) = 87,
-    MTLDataTypeULong4 API_AVAILABLE(macos(12.0), ios(14.0)) = 88,
     MTLDataTypeVisibleFunctionTable API_AVAILABLE(macos(11.0), ios(14.0)) = 115,
     MTLDataTypeIntersectionFunctionTable API_AVAILABLE(macos(11.0), ios(14.0)) = 116,
     MTLDataTypePrimitiveAccelerationStructure API_AVAILABLE(macos(11.0), ios(14.0)) = 117,
     MTLDataTypeInstanceAccelerationStructure API_AVAILABLE(macos(11.0), ios(14.0)) = 118,
-    MTLDataTypeBFloat  API_AVAILABLE(macos(14.0), ios(17.0)) = 121,
-    MTLDataTypeBFloat2 API_AVAILABLE(macos(14.0), ios(17.0)) = 122,
-    MTLDataTypeBFloat3 API_AVAILABLE(macos(14.0), ios(17.0)) = 123,
-    MTLDataTypeBFloat4 API_AVAILABLE(macos(14.0), ios(17.0)) = 124,
 } API_AVAILABLE(macos(10.11), ios(8.0));
 
 @class MTLArgument;
-
-/*!
- @enum MTLBindingsType
- @abstract The type of a resource binding.
- 
- @constant MTLBindingTypeBuffer
- This binding represents a buffer.
- 
- @constant MTLBindingTypeThreadgroupMemory
- This binding represents threadgroup memory.
- 
- @constant MTLBindingTypeTexture
- This binding represents a texture.
- 
- @constant MTLBindingTypeSampler
- This binding represents a sampler.
- 
- @constant MTLBindingTypeImageblockData
- This binding represents an image block data.
- 
- @constant MTLBindingTypeImageblock
- This binding represents an image block.
-  
- @constant MTLBindingTypeVisibleFunctionTable
- This binding represents a visible function table object.
- 
- @constant MTLBindingTypePrimitiveAccelerationStructure
- This binding represents a primitive acceleration structure object.
- 
- @constant MTLBindingTypeInstanceAccelerationStructure
- This binding represents an instance acceleration structure object.
- 
- @constant MTLBinidngTypeIntersectionFunctionTable
- This binding represents an intersection function table object.
- 
- @constant MTLBindingTypeObjectPayload
- This binding represents an object payload.
-*/
-typedef NS_ENUM(NSInteger, MTLBindingType) {
-    MTLBindingTypeBuffer = 0,
-    MTLBindingTypeThreadgroupMemory = 1,
-    MTLBindingTypeTexture = 2,
-    MTLBindingTypeSampler = 3,
-    MTLBindingTypeImageblockData = 16,
-    MTLBindingTypeImageblock = 17,
-    MTLBindingTypeVisibleFunctionTable = 24,
-    MTLBindingTypePrimitiveAccelerationStructure = 25,
-    MTLBindingTypeInstanceAccelerationStructure = 26,
-    MTLBindingTypeIntersectionFunctionTable = 27,
-    MTLBindingTypeObjectPayload = 34,
-} API_AVAILABLE(macos(11.0), ios(14.0));
 
 /*!
  @enum MTLArgumentType
@@ -206,26 +141,23 @@ typedef NS_ENUM(NSUInteger, MTLArgumentType) {
     MTLArgumentTypeTexture = 2,
     MTLArgumentTypeSampler = 3,
 
-    MTLArgumentTypeImageblockData API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5))     = 16,
-    MTLArgumentTypeImageblock API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5))         = 17,
+    MTLArgumentTypeImageblockData API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos)     = 16,
+    MTLArgumentTypeImageblock API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0)) API_UNAVAILABLE(tvos)         = 17,
     MTLArgumentTypeVisibleFunctionTable API_AVAILABLE(macos(11.0), ios(14.0)) = 24,
     MTLArgumentTypePrimitiveAccelerationStructure API_AVAILABLE(macos(11.0), ios(14.0)) = 25,
     MTLArgumentTypeInstanceAccelerationStructure API_AVAILABLE(macos(11.0), ios(14.0)) = 26,
     MTLArgumentTypeIntersectionFunctionTable API_AVAILABLE(macos(11.0), ios(14.0)) = 27,
-} API_DEPRECATED_WITH_REPLACEMENT("MTLBindingType", macos(10.11, 13.0), ios(8.0, 16.0));
+} API_AVAILABLE(macos(10.11), ios(8.0));
 
+/*!
+ @enum MTLArgumentAccess
+*/
+typedef NS_ENUM(NSUInteger, MTLArgumentAccess) {
 
-typedef NS_ENUM(NSUInteger, MTLBindingAccess) {
-    MTLBindingAccessReadOnly   = 0,
-    MTLBindingAccessReadWrite  = 1,
-    MTLBindingAccessWriteOnly  = 2,
-    MTLArgumentAccessReadOnly API_DEPRECATED_WITH_REPLACEMENT("MTLBindingAccessReadOnly", macos(10.13, 14.0), ios(8.0, 17.0)) = MTLBindingAccessReadOnly,
-    MTLArgumentAccessReadWrite API_DEPRECATED_WITH_REPLACEMENT("MTLBindingAccessReadWrite", macos(10.13, 14.0), ios(8.0, 17.0)) = MTLBindingAccessReadWrite,
-    MTLArgumentAccessWriteOnly API_DEPRECATED_WITH_REPLACEMENT("MTLBindingAccessWriteOnly", macos(10.13, 14.0), ios(8.0, 17.0)) = MTLBindingAccessWriteOnly,
-};
-
-typedef MTLBindingAccess MTLArgumentAccess API_DEPRECATED_WITH_REPLACEMENT("MTLBindingAccess", macos(10.11, 14.0), ios(8.0, 17.0));
-
+    MTLArgumentAccessReadOnly   = 0,
+    MTLArgumentAccessReadWrite  = 1,
+    MTLArgumentAccessWriteOnly  = 2,
+} API_AVAILABLE(macos(10.11), ios(8.0));
 
 @class MTLStructType;
 @class MTLArrayType;
@@ -284,7 +216,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.13), ios(11.0))
 @interface MTLPointerType : MTLType
 
 @property (readonly) MTLDataType elementType;           // MTLDataTypeFloat, MTLDataTypeFloat4, MTLDataTypeStruct, ...
-@property (readonly) MTLBindingAccess access;
+@property (readonly) MTLArgumentAccess access;
 @property (readonly) NSUInteger alignment;              // min alignment for the element data
 @property (readonly) NSUInteger dataSize;               // sizeof(T) for T *argName
 
@@ -300,7 +232,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.13), ios(11.0))
 
 @property (readonly) MTLDataType textureDataType; // half, float, int, or uint.
 @property (readonly) MTLTextureType textureType;  // texture1D, texture2D...
-@property (readonly) MTLBindingAccess access;    // read, write, read-write
+@property (readonly) MTLArgumentAccess access;    // read, write, read-write
 @property (readonly) BOOL isDepthTexture;         // true for depth textures
 
 @end
@@ -308,13 +240,12 @@ MTL_EXPORT API_AVAILABLE(macos(10.13), ios(11.0))
 /*!
  MTLArgument
 */
-MTL_EXPORT
-API_DEPRECATED_WITH_REPLACEMENT("MTLBinding", macos(10.11, 13.0), ios(8.0, 16.0))
+MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
 @interface MTLArgument : NSObject
 
 @property (readonly) NSString *name;
 @property (readonly) MTLArgumentType type;
-@property (readonly) MTLBindingAccess access;
+@property (readonly) MTLArgumentAccess access;
 @property (readonly) NSUInteger index;
 
 @property (readonly, getter=isActive) BOOL active;
@@ -338,45 +269,4 @@ API_DEPRECATED_WITH_REPLACEMENT("MTLBinding", macos(10.11, 13.0), ios(8.0, 16.0)
 
 @end
 
-MTL_EXPORT API_AVAILABLE(macos(13.0), ios(16.0))
-@protocol MTLBinding<NSObject>
-@property (readonly) NSString *name;
-@property (readonly) MTLBindingType type;
-@property (readonly) MTLBindingAccess access;
-@property (readonly) NSUInteger index;
-
-@property (readonly, getter=isUsed) BOOL used;
-@property (readonly, getter=isArgument) BOOL argument;
-@end
-
-MTL_EXPORT API_AVAILABLE(macos(13.0), ios(16.0))
-@protocol MTLBufferBinding<MTLBinding>
-@property (readonly) NSUInteger      bufferAlignment;        // min alignment of starting offset in the buffer
-@property (readonly) NSUInteger      bufferDataSize;         // sizeof(T) for T *argName
-@property (readonly) MTLDataType     bufferDataType;         // MTLDataTypeFloat, MTLDataTypeFloat4, MTLDataTypeStruct, ...
-@property (readonly, nullable) MTLStructType  *bufferStructType;
-@property (readonly, nullable) MTLPointerType *bufferPointerType;
-@end
-
-MTL_EXPORT API_AVAILABLE(macos(13.0), ios(16.0))
-@protocol MTLThreadgroupBinding<MTLBinding>
-@property (readonly) NSUInteger     threadgroupMemoryAlignment;
-@property (readonly) NSUInteger     threadgroupMemoryDataSize; // sizeof(T) for T *argName
-@end
-
-MTL_EXPORT API_AVAILABLE(macos(13.0), ios(16.0))
-@protocol MTLTextureBinding<MTLBinding>
-@property (readonly) MTLTextureType textureType; // texture1D, texture2D...
-@property (readonly) MTLDataType    textureDataType; // half, float, int, or uint.
-@property (readonly, getter=isDepthTexture) BOOL           depthTexture; // true for depth textures
-@property (readonly) NSUInteger     arrayLength;
-@end
-
-MTL_EXPORT API_AVAILABLE(macos(13.0), ios(16.0))
-@protocol MTLObjectPayloadBinding<MTLBinding>
-@property (readonly) NSUInteger      objectPayloadAlignment;        // min alignment of starting offset in the buffer
-@property (readonly) NSUInteger      objectPayloadDataSize;         // sizeof(T) for T *argName
-@end
-
 NS_ASSUME_NONNULL_END
-

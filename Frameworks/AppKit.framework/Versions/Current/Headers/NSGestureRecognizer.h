@@ -1,7 +1,7 @@
 /*
     NSGestureRecognizer.h
     Application Kit
-    Copyright (c) 2013-2023, Apple Inc.
+    Copyright (c) 2013-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -10,7 +10,7 @@
 #import <AppKit/NSTouch.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @protocol NSGestureRecognizerDelegate;
@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, NSGestureRecognizerState) {
     NSGestureRecognizerStateRecognized = NSGestureRecognizerStateEnded // the recognizer has received events recognized as the gesture. the action method will be called at the next turn of the run loop and the recognizer will be reset to NSGestureRecognizerStatePossible
 };
 
-API_AVAILABLE(macos(10.10)) NS_SWIFT_UI_ACTOR
+API_AVAILABLE(macos(10.10))
 @interface NSGestureRecognizer : NSObject <NSCoding>
 
 /* valid action method signatures:
@@ -85,29 +85,29 @@ API_AVAILABLE(macos(10.10)) NS_SWIFT_UI_ACTOR
 /* called when the window begins a new recognition stream
  return YES to allow the recognizer to process events. return NO to fail recognition and opt the recognizer out of the event stream
  */
-- (BOOL)gestureRecognizer:(NSGestureRecognizer *)gestureRecognizer shouldAttemptToRecognizeWithEvent:(NSEvent *)event NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.11));
+- (BOOL)gestureRecognizer:(NSGestureRecognizer *)gestureRecognizer shouldAttemptToRecognizeWithEvent:(NSEvent *)event API_AVAILABLE(macos(10.11));
 
 /* called when a gesture recognizer attempts to transition out of NSGestureRecognizerStatePossible. returning NO causes it to transition to NSGestureRecognizerStateFailed */
-- (BOOL)gestureRecognizerShouldBegin:(NSGestureRecognizer *)gestureRecognizer NS_SWIFT_UI_ACTOR;
+- (BOOL)gestureRecognizerShouldBegin:(NSGestureRecognizer *)gestureRecognizer;
 
 /* called when the recognition of one of gestureRecognizer or otherGestureRecognizer would be blocked by the other
    return YES to allow both to recognize simultaneously. the default implementation returns NO (by default no two gestures can be recognized simultaneously)
 
    note: returning YES is guaranteed to allow simultaneous recognition. returning NO is not guaranteed to prevent simultaneous recognition, as the other gesture's delegate may return YES
 */
-- (BOOL)gestureRecognizer:(NSGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(NSGestureRecognizer *)otherGestureRecognizer NS_SWIFT_UI_ACTOR;
+- (BOOL)gestureRecognizer:(NSGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(NSGestureRecognizer *)otherGestureRecognizer;
 
 /* called once per attempt to recognize, so failure requirements can be determined lazily and may be set up between recognizers across view hierarchies
    return YES to set up a dynamic failure requirement between gestureRecognizer and otherGestureRecognizer
 
    note: returning YES is guaranteed to set up the failure requirement. returning NO does not guarantee that there will not be a failure requirement as the other gesture's counterpart delegate or subclass methods may return YES
 */
-- (BOOL)gestureRecognizer:(NSGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(NSGestureRecognizer *)otherGestureRecognizer NS_SWIFT_UI_ACTOR;
-- (BOOL)gestureRecognizer:(NSGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(NSGestureRecognizer *)otherGestureRecognizer NS_SWIFT_UI_ACTOR;
+- (BOOL)gestureRecognizer:(NSGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(NSGestureRecognizer *)otherGestureRecognizer;
+- (BOOL)gestureRecognizer:(NSGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(NSGestureRecognizer *)otherGestureRecognizer;
 
 /* called before touchesBegan:withEvent: is called on the gesture recognizer for a new touch. return NO to prevent the gesture recognizer from seeing this touch
  */
-- (BOOL)gestureRecognizer:(NSGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(NSTouch *)touch NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2));
+- (BOOL)gestureRecognizer:(NSGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(NSTouch *)touch API_AVAILABLE(macos(10.12.2));
 @end
 
 // the extensions in this header are to be used only by subclasses of NSGestureRecognizer
@@ -161,4 +161,4 @@ API_AVAILABLE(macos(10.10)) NS_SWIFT_UI_ACTOR
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

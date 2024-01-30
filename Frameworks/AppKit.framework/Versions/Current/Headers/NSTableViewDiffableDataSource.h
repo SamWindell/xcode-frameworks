@@ -1,14 +1,14 @@
 /*
     NSTableViewDiffableDataSource.h
     Application Kit
-    Copyright (c) 2019-2023, Apple Inc.
+    Copyright (c) 2019, Apple Inc.
     All rights reserved.
 */
 
 #import <AppKit/NSTableView.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSTableRowView;
@@ -49,6 +49,7 @@ typedef NSTableRowView * _Nonnull (^NSTableViewDiffableDataSourceRowProvider)(NS
 
 @property (copy,nullable) NSTableViewDiffableDataSourceRowProvider rowViewProvider;
 
+// FIXME: GroupRow or SectionHeader?
 typedef NSView * _Nonnull (^NSTableViewDiffableDataSourceSectionHeaderViewProvider)(NSTableView * _Nonnull tableView, NSInteger row, id _Nonnull sectionId);
 
 @property (copy,nullable) NSTableViewDiffableDataSourceSectionHeaderViewProvider sectionHeaderViewProvider;
@@ -59,4 +60,4 @@ typedef NSView * _Nonnull (^NSTableViewDiffableDataSourceSectionHeaderViewProvid
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

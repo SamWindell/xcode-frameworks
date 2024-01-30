@@ -7,7 +7,7 @@
 
 @class NSString, NSURL, NSError;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /****************	Read/Write Options	****************/
 
@@ -30,7 +30,6 @@ typedef NS_OPTIONS(NSUInteger, NSDataWritingOptions) {
     NSDataWritingFileProtectionComplete API_AVAILABLE(macos(11.0), ios(4.0), watchos(2.0), tvos(9.0))                              = 0x20000000,
     NSDataWritingFileProtectionCompleteUnlessOpen API_AVAILABLE(macos(11.0), ios(5.0), watchos(2.0), tvos(9.0))                    = 0x30000000,
     NSDataWritingFileProtectionCompleteUntilFirstUserAuthentication API_AVAILABLE(macos(11.0), ios(5.0), watchos(2.0), tvos(9.0))  = 0x40000000,
-    NSDataWritingFileProtectionCompleteWhenUserInactive API_AVAILABLE(ios(17.0), watchos(10.0), tvos(17.0)) API_UNAVAILABLE(macos)  = 0x50000000,
     NSDataWritingFileProtectionMask API_AVAILABLE(macos(11.0), ios(4.0), watchos(2.0), tvos(9.0))                                  = 0xf0000000,
 
     // Options with old names for NSData writing methods. Please stop using these old names.
@@ -226,12 +225,17 @@ typedef NS_ENUM(NSInteger, NSDataCompressionAlgorithm) {
 
 @end
 
-#if !0
 /****************	    Purgeable Data	****************/
 
 API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0))
-@interface NSPurgeableData : NSMutableData <NSDiscardableContent>
-@end
-#endif
+@interface NSPurgeableData : NSMutableData <NSDiscardableContent> {
+@private
+    NSUInteger _length;
+    int32_t _accessCount;
+    uint8_t _private[32];
+    void *_reserved;
+}
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+@end
+
+NS_ASSUME_NONNULL_END

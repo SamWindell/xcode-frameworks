@@ -36,47 +36,47 @@ extern "C" {
 CF_ASSUME_NONNULL_BEGIN
 CF_IMPLICIT_BRIDGING_ENABLED
 
-extern const CFStringRef kDADiskDescriptionVolumeKindKey       /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionVolumeMountableKey  /* ( CFBoolean    ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionVolumeNameKey       /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionVolumeNetworkKey    /* ( CFBoolean    ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionVolumePathKey       /* ( CFURL        ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionVolumeTypeKey       /* ( CFString     ) */ API_AVAILABLE(macos(10.11));
-extern const CFStringRef kDADiskDescriptionVolumeUUIDKey      /* ( CFUUID       ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaBlockSizeKey   /* ( CFNumber     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaBSDMajorKey    /* ( CFNumber     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaBSDMinorKey    /* ( CFNumber     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaBSDNameKey     /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaBSDUnitKey     /* ( CFNumber     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaContentKey     /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaEjectableKey   /* ( CFBoolean    ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaIconKey        /* ( CFDictionary ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaKindKey        /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaLeafKey        /* ( CFBoolean    ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaNameKey        /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaPathKey        /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaRemovableKey   /* ( CFBoolean    ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaSizeKey        /* ( CFNumber     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaTypeKey        /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaUUIDKey        /* ( CFUUID       ) */ API_AVAILABLE(macos(10.5));
-extern const CFStringRef kDADiskDescriptionMediaWholeKey       /* ( CFBoolean    ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaWritableKey    /* ( CFBoolean    ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionMediaEncryptedKey   /* ( CFBoolean    ) */ API_AVAILABLE(macos(10.14.4));
-extern const CFStringRef kDADiskDescriptionMediaEncryptionDetailKey /* ( CFNumber ) */API_AVAILABLE(macos(10.14.4));
+extern const CFStringRef kDADiskDescriptionVolumeKindKey;      /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionVolumeMountableKey; /* ( CFBoolean    ) */
+extern const CFStringRef kDADiskDescriptionVolumeNameKey;      /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionVolumeNetworkKey;   /* ( CFBoolean    ) */
+extern const CFStringRef kDADiskDescriptionVolumePathKey;      /* ( CFURL        ) */
+extern const CFStringRef kDADiskDescriptionVolumeTypeKey;      /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionVolumeUUIDKey;      /* ( CFUUID       ) */
 
-extern const CFStringRef kDADiskDescriptionDeviceGUIDKey       /* ( CFData       ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionDeviceInternalKey   /* ( CFBoolean    ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionDeviceModelKey      /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionDevicePathKey      /* ( CFString     ) */  API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionDeviceProtocolKey   /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionDeviceRevisionKey   /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionDeviceUnitKey       /* ( CFNumber     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionDeviceVendorKey     /* ( CFString     ) */ API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionDeviceTDMLockedKey  /* ( CFBoolean    ) */ API_AVAILABLE(macos(10.14.4));
+extern const CFStringRef kDADiskDescriptionMediaBlockSizeKey;  /* ( CFNumber     ) */
+extern const CFStringRef kDADiskDescriptionMediaBSDMajorKey;   /* ( CFNumber     ) */
+extern const CFStringRef kDADiskDescriptionMediaBSDMinorKey;   /* ( CFNumber     ) */
+extern const CFStringRef kDADiskDescriptionMediaBSDNameKey;    /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionMediaBSDUnitKey;    /* ( CFNumber     ) */
+extern const CFStringRef kDADiskDescriptionMediaContentKey;    /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionMediaEjectableKey;  /* ( CFBoolean    ) */
+extern const CFStringRef kDADiskDescriptionMediaIconKey;       /* ( CFDictionary ) */
+extern const CFStringRef kDADiskDescriptionMediaKindKey;       /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionMediaLeafKey;       /* ( CFBoolean    ) */
+extern const CFStringRef kDADiskDescriptionMediaNameKey;       /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionMediaPathKey;       /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionMediaRemovableKey;  /* ( CFBoolean    ) */
+extern const CFStringRef kDADiskDescriptionMediaSizeKey;       /* ( CFNumber     ) */
+extern const CFStringRef kDADiskDescriptionMediaTypeKey;       /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionMediaUUIDKey;       /* ( CFUUID       ) */
+extern const CFStringRef kDADiskDescriptionMediaWholeKey;      /* ( CFBoolean    ) */
+extern const CFStringRef kDADiskDescriptionMediaWritableKey;   /* ( CFBoolean    ) */
+extern const CFStringRef kDADiskDescriptionMediaEncryptedKey;  /* ( CFBoolean    ) */
+extern const CFStringRef kDADiskDescriptionMediaEncryptionDetailKey; /* ( CFNumber ) */
 
-extern const CFStringRef kDADiskDescriptionBusNameKey          /* ( CFString     ) */  API_AVAILABLE(macos(10.4));
-extern const CFStringRef kDADiskDescriptionBusPathKey          /* ( CFString     ) */  API_AVAILABLE(macos(10.4));
+extern const CFStringRef kDADiskDescriptionDeviceGUIDKey;      /* ( CFData       ) */
+extern const CFStringRef kDADiskDescriptionDeviceInternalKey;  /* ( CFBoolean    ) */
+extern const CFStringRef kDADiskDescriptionDeviceModelKey;     /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionDevicePathKey;      /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionDeviceProtocolKey;  /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionDeviceRevisionKey;  /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionDeviceUnitKey;      /* ( CFNumber     ) */
+extern const CFStringRef kDADiskDescriptionDeviceVendorKey;    /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionDeviceTDMLockedKey; /* ( CFBoolean    ) */
 
+extern const CFStringRef kDADiskDescriptionBusNameKey;         /* ( CFString     ) */
+extern const CFStringRef kDADiskDescriptionBusPathKey;         /* ( CFString     ) */
 
 #ifndef __DISKARBITRATIOND__
 
@@ -92,7 +92,7 @@ typedef struct CF_BRIDGED_TYPE( id ) __DADisk * DADiskRef;
  * @abstract   Returns the type identifier of all DADisk instances.
  */
 
-extern CFTypeID DADiskGetTypeID( void ) API_AVAILABLE(macos(10.4));
+extern CFTypeID DADiskGetTypeID( void );
 
 /*!
  * @function   DADiskCreateFromBSDName
@@ -107,7 +107,7 @@ extern CFTypeID DADiskGetTypeID( void ) API_AVAILABLE(macos(10.4));
  * with CFRelease().
  */
 
-extern DADiskRef __nullable DADiskCreateFromBSDName( CFAllocatorRef __nullable allocator, DASessionRef session, const char * name ) API_AVAILABLE(macos(10.4));
+extern DADiskRef __nullable DADiskCreateFromBSDName( CFAllocatorRef __nullable allocator, DASessionRef session, const char * name );
 
 /*!
  * @function   DADiskCreateFromIOMedia
@@ -122,7 +122,7 @@ extern DADiskRef __nullable DADiskCreateFromBSDName( CFAllocatorRef __nullable a
  * with CFRelease().
  */
 
-extern DADiskRef __nullable DADiskCreateFromIOMedia( CFAllocatorRef __nullable allocator, DASessionRef session, io_service_t media ) API_AVAILABLE(macos(10.4));
+extern DADiskRef __nullable DADiskCreateFromIOMedia( CFAllocatorRef __nullable allocator, DASessionRef session, io_service_t media );
 
 /*!
  * @function   DADiskCreateFromVolumePath
@@ -137,7 +137,7 @@ extern DADiskRef __nullable DADiskCreateFromIOMedia( CFAllocatorRef __nullable a
  * with CFRelease().
  */
 
-extern DADiskRef __nullable DADiskCreateFromVolumePath( CFAllocatorRef __nullable allocator, DASessionRef session, CFURLRef path ) API_AVAILABLE(macos(10.7));
+extern DADiskRef __nullable DADiskCreateFromVolumePath( CFAllocatorRef __nullable allocator, DASessionRef session, CFURLRef path );
 
 /*!
  * @function   DADiskGetBSDName
@@ -148,7 +148,7 @@ extern DADiskRef __nullable DADiskCreateFromVolumePath( CFAllocatorRef __nullabl
  * The BSD device name can be used with opendev() to open the BSD device.
  */
 
-extern const char * __nullable DADiskGetBSDName( DADiskRef disk ) API_AVAILABLE(macos(10.4));
+extern const char * __nullable DADiskGetBSDName( DADiskRef disk );
 
 /*!
  * @function   DADiskCopyIOMedia
@@ -161,7 +161,7 @@ extern const char * __nullable DADiskGetBSDName( DADiskRef disk ) API_AVAILABLE(
  * with IOObjectRelease().
  */
 
-extern io_service_t DADiskCopyIOMedia( DADiskRef disk ) API_AVAILABLE(macos(10.4));
+extern io_service_t DADiskCopyIOMedia( DADiskRef disk );
 
 /*!
  * @function   DADiskCopyDescription
@@ -179,7 +179,7 @@ extern io_service_t DADiskCopyIOMedia( DADiskRef disk ) API_AVAILABLE(macos(10.4
  * with CFRelease().
  */
 
-extern CFDictionaryRef __nullable DADiskCopyDescription( DADiskRef disk ) API_AVAILABLE(macos(10.4));
+extern CFDictionaryRef __nullable DADiskCopyDescription( DADiskRef disk );
 
 /*!
  * @function   DADiskCopyWholeDisk
@@ -192,7 +192,7 @@ extern CFDictionaryRef __nullable DADiskCopyDescription( DADiskRef disk ) API_AV
  * with CFRelease().
  */
 
-extern DADiskRef __nullable DADiskCopyWholeDisk( DADiskRef disk ) API_AVAILABLE(macos(10.4));
+extern DADiskRef __nullable DADiskCopyWholeDisk( DADiskRef disk );
 
 #endif /* !__DISKARBITRATIOND__ */
 

@@ -46,42 +46,32 @@ CF_ASSUME_NONNULL_BEGIN
 CF_IMPLICIT_BRIDGING_ENABLED
 
 	/*! @abstract Indicates that no padding will be used when encrypting or decrypting. */
-	extern const CFStringRef kSecPaddingNoneKey
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecPaddingNoneKey;
 	/*! Indicates that PKCS1 padding will be used when encrypting or decrypting. */
-	extern const CFStringRef kSecPaddingPKCS1Key
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecPaddingPKCS1Key;
 	/*! Indicates that PKCS5 padding will be used when encrypting or decrypting. */
-	extern const CFStringRef kSecPaddingPKCS5Key
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecPaddingPKCS5Key;
 	/*! Indicates that PKCS7 padding will be used when encrypting or decrypting. */
-	extern const CFStringRef kSecPaddingPKCS7Key
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecPaddingPKCS7Key;
     /*! Indicates that PKCS7 padding will be used when encrypting or decrypting. */
     extern const CFStringRef kSecPaddingOAEPKey
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.8, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+        __OSX_AVAILABLE_STARTING(__MAC_10_8,__IPHONE_NA);
 	/*! Indicates that no mode will be used when encrypting or decrypting. */
-	extern const CFStringRef kSecModeNoneKey
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecModeNoneKey;
 	/*! Indicates that ECB mode will be used when encrypting or decrypting. */
-	extern const CFStringRef kSecModeECBKey
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecModeECBKey;
     /*! Indicates that CBC mode will be used when encrypting or decrypting. */
-	extern const CFStringRef kSecModeCBCKey
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecModeCBCKey;
 	/*! Indicates that CFB mode will be used when encrypting or decrypting. */
-	extern const CFStringRef kSecModeCFBKey
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecModeCFBKey;
 	/*! Indicates that OFB mode will be used when encrypting or decrypting. */
-	extern const CFStringRef kSecModeOFBKey
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecModeOFBKey;
 	
 	/*!
 	    @abstract
 		This attribute holds the encryption key for the transform. (ReadOnly)
 	 */
-	extern const CFStringRef kSecEncryptKey
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecEncryptKey;
 
 	/*!
 	    @abstract
@@ -90,8 +80,7 @@ CF_IMPLICIT_BRIDGING_ENABLED
 		This key is optional.  If you do not supply a value for this key,
 	 	an appropriate value will be supplied for you.
 	*/
-	extern const CFStringRef kSecPaddingKey
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecPaddingKey;
 
 	/*!
 	    @abstract
@@ -100,8 +89,7 @@ CF_IMPLICIT_BRIDGING_ENABLED
 		This key is optional.  If you do not supply a
 	 	value for this key, an appropriate value will be supplied for you.
 	*/
-	extern const CFStringRef kSecIVKey
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecIVKey;
 
 	/*!
      @abstract
@@ -110,8 +98,7 @@ CF_IMPLICIT_BRIDGING_ENABLED
      This key is optional.  If you do not supply this key,
      an appropriate value will be supplied for you.
      */
-	extern const CFStringRef kSecEncryptionMode
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	extern const CFStringRef kSecEncryptionMode;
 	
 	/*!
      @abstract
@@ -122,7 +109,7 @@ CF_IMPLICIT_BRIDGING_ENABLED
      will be added.   It is ignored when the padding mode is not OAEP.
      */
 	extern const CFStringRef kSecOAEPMessageLengthAttributeName
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+        __OSX_AVAILABLE_STARTING(__MAC_10_8,__IPHONE_NA);
 	/*!
      @abstract
      Specifies the OAEP encoding paramaters
@@ -132,7 +119,7 @@ CF_IMPLICIT_BRIDGING_ENABLED
      OAEP padding modes.
      */
     extern const CFStringRef kSecOAEPEncodingParametersAttributeName
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+         __OSX_AVAILABLE_STARTING(__MAC_10_8,__IPHONE_NA);
 	/*!
      @abstract
      Specifies the OAEP MGF1 digest algorithm.
@@ -141,7 +128,7 @@ CF_IMPLICIT_BRIDGING_ENABLED
      If unset SHA1 is used.   It is ifnored by non OAEP padding modes.
      */
     extern const CFStringRef kSecOAEPMGF1DigestAlgorithmAttributeName
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+         __OSX_AVAILABLE_STARTING(__MAC_10_8,__IPHONE_NA);
 
 	/*!
 	 @function SecEncryptTransformCreate
@@ -159,7 +146,7 @@ CF_IMPLICIT_BRIDGING_ENABLED
 	
 	SecTransformRef SecEncryptTransformCreate(SecKeyRef keyRef,
 											  CFErrorRef* error)
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	__OSX_AVAILABLE_STARTING(__MAC_10_7,__IPHONE_NA);
 	
 	/*!
 	 @function SecDecryptTransformCreate
@@ -177,7 +164,7 @@ CF_IMPLICIT_BRIDGING_ENABLED
 	
 	SecTransformRef SecDecryptTransformCreate(SecKeyRef keyRef,
 											  CFErrorRef* error)
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	__OSX_AVAILABLE_STARTING(__MAC_10_7,__IPHONE_NA);
 	
 /*!
 	@function SecDecryptTransformGetTypeID
@@ -186,7 +173,7 @@ CF_IMPLICIT_BRIDGING_ENABLED
 */
 
     CFTypeID SecDecryptTransformGetTypeID(void)
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	__OSX_AVAILABLE_STARTING(__MAC_10_7,__IPHONE_NA);
 
 /*!
 	@function SecEncryptTransformGetTypeID
@@ -195,7 +182,7 @@ CF_IMPLICIT_BRIDGING_ENABLED
 */
 
     CFTypeID SecEncryptTransformGetTypeID(void)
-    API_DEPRECATED("SecTransform is no longer supported", macos(10.7, 13.0), ios(NA, NA), tvos(NA, NA), watchos(NA, NA), macCatalyst(NA, NA));
+	__OSX_AVAILABLE_STARTING(__MAC_10_7,__IPHONE_NA);
 
 CF_IMPLICIT_BRIDGING_DISABLED
 CF_ASSUME_NONNULL_END

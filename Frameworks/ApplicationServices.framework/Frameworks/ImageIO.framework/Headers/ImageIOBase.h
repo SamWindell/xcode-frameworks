@@ -29,8 +29,8 @@
 # define IMAGEIO_UNAVAILABLE_DESKTOP
 # define IMAGEIO_UNAVAILABLE_EMBEDDED
 
-# define _iio_Nullable _Nullable
-# define _iio_Nonnull  _Nonnull
+# define _iio_Nullable
+# define _iio_Nonnull
 
 #else
 
@@ -92,8 +92,10 @@
 #   endif
 #endif
 
-#if !defined(IIO_HAS_IOSURFACE)
-#   define IIO_HAS_IOSURFACE 1
+#if (TARGET_OS_MAC || TARGET_OS_IPHONE) 
+#    define IIO_HAS_IOSURFACE 1
+#else
+#    define IIO_HAS_IOSURFACE 0
 #endif
 
 #if defined(__has_feature) && __has_feature(objc_bridge_id)

@@ -4,7 +4,7 @@
 
 #import <Foundation/NSXMLNode.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /*!
     @typedef NSXMLDTDNodeKind
@@ -90,4 +90,4 @@ typedef NS_ENUM(NSUInteger, NSXMLDTDNodeKind) {
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

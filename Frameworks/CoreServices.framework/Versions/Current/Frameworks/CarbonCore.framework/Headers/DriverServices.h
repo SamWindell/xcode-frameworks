@@ -33,7 +33,6 @@
 
 
 #include <Availability.h>
-#include <os/availability.h>
 
 #if PRAGMA_ONCE
 #pragma once
@@ -55,7 +54,7 @@ enum {
   durationDay                   = 86400000, /* 24 * durationHour,*/
   durationNoWait                = 0,    /* don't block*/
   durationForever               = 0x7FFFFFFF /* no time limit*/
-} API_DEPRECATED( "Deprecated", macos(10.0,10.8));
+};
 
 
 typedef UnsignedWide                    Nanoseconds;

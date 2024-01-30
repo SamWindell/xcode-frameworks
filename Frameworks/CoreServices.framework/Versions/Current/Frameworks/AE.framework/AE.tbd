@@ -2,8 +2,21 @@
 tbd-version:     4
 targets:         [ x86_64-macos, x86_64-maccatalyst, arm64-macos, arm64-maccatalyst, 
                    arm64e-macos, arm64e-maccatalyst ]
+uuids:
+  - target:          x86_64-macos
+    value:           5377134F-CCA8-3610-8888-8598115A8E8F
+  - target:          x86_64-maccatalyst
+    value:           5377134F-CCA8-3610-8888-8598115A8E8F
+  - target:          arm64-macos
+    value:           00000000-0000-0000-0000-000000000000
+  - target:          arm64-maccatalyst
+    value:           00000000-0000-0000-0000-000000000000
+  - target:          arm64e-macos
+    value:           3737110E-66A8-3E93-AF93-FCD46EAC0AC8
+  - target:          arm64e-maccatalyst
+    value:           3737110E-66A8-3E93-AF93-FCD46EAC0AC8
 install-name:    '/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/AE'
-current-version: 944
+current-version: 918.4
 compatibility-version: 0
 parent-umbrella:
   - targets:         [ x86_64-macos, x86_64-maccatalyst, arm64-macos, arm64-maccatalyst, 
@@ -14,19 +27,8 @@ allowable-clients:
                        arm64e-macos, arm64e-maccatalyst ]
     clients:         [ DesktopServices, Foundation, HIServices, LaunchServices, PrintCore ]
 exports:
-  - targets:         [ x86_64-macos, x86_64-maccatalyst, arm64-macos, arm64-maccatalyst, 
-                       arm64e-macos, arm64e-maccatalyst ]
-    symbols:         [ _CreateRangeDescriptor, _DisposeAEBlockUPP, _DisposeAEUnblockUPP, 
-                       _InvokeAEBlockUPP, _InvokeAEUnblockUPP, _NewAEBlockUPP, _NewAEUnblockUPP, 
-                       __AECreateAEReceiveMachPort, __AEInstallAEInteractWithUserCallback, 
-                       __AERegisterCurrentApplicationInfomationWithAppleEventsD, 
-                       __AppleEventsHintApp, __AppleEventsHintAppWithBlock, __AppleEventsNullAction, 
-                       __AppleEventsNullActionWithBlock, __AppleEventsSendPortRequiresProcessAssertions, 
-                       _aeAppendToImplEnd, _aeBindToArbitraryMachPort, _aeClassicCompatFlattenDesc, 
-                       _aeClassicCompatSizeOfFlattenedDesc, _aeConvertCarbonToClassic, 
-                       _aeConvertClassicToCarbon, _aeDecodeMachMsg, _aeEventToEppcMsg, 
-                       _aeReconstructAppleEvent, _aeReconstructReplyAppleEvent, _aeRemoveFromImplEnd ]
-  - targets:         [ x86_64-macos, arm64-macos, arm64e-macos ]
+  - targets:         [ x86_64-maccatalyst, x86_64-macos, arm64e-maccatalyst, arm64e-macos, 
+                       arm64-macos, arm64-maccatalyst ]
     symbols:         [ _AEBuildAppleEvent, _AEBuildDesc, _AEBuildParameters, _AECallObjectAccessor, 
                        _AECheckIsRecord, _AECoerceDesc, _AECoercePtr, _AECoercionHandlersApplyFunction, 
                        _AECompareDesc, _AEConvertFromMsg, _AECountItems, _AECreateAppleEvent, 
@@ -57,46 +59,40 @@ exports:
                        _AEStreamWriteDesc, _AEStreamWriteKey, _AEStreamWriteKeyDesc, 
                        _AEUnflattenDesc, _AEUnflattenDescFromBytes, _CreateCompDescriptor, 
                        _CreateLogicalDescriptor, _CreateObjSpecifier, _CreateOffsetDescriptor, 
-                       _DisposeAECoerceDescUPP, _DisposeAECoercePtrUPP, _DisposeAEDisposeExternalUPP, 
-                       _DisposeAEEventHandlerUPP, _DisposeOSLAccessorUPP, _DisposeOSLAdjustMarksUPP, 
-                       _DisposeOSLCompareUPP, _DisposeOSLCountUPP, _DisposeOSLDisposeTokenUPP, 
-                       _DisposeOSLGetErrDescUPP, _DisposeOSLGetMarkTokenUPP, _DisposeOSLMarkUPP, 
-                       _GDBPrintAECoercionTables, _GDBPrintAEDesc, _GDBPrintAEHandlerTables, 
-                       _GDBPrintHelpDebuggingAppleEvents, _InvokeAECoerceDescUPP, 
-                       _InvokeAECoercePtrUPP, _InvokeAEDisposeExternalUPP, _InvokeAEEventHandlerUPP, 
-                       _InvokeOSLAccessorUPP, _InvokeOSLAdjustMarksUPP, _InvokeOSLCompareUPP, 
-                       _InvokeOSLCountUPP, _InvokeOSLDisposeTokenUPP, _InvokeOSLGetErrDescUPP, 
-                       _InvokeOSLGetMarkTokenUPP, _InvokeOSLMarkUPP, _NewAECoerceDescUPP, 
-                       _NewAECoercePtrUPP, _NewAEDisposeExternalUPP, _NewAEEventHandlerUPP, 
-                       _NewOSLAccessorUPP, _NewOSLAdjustMarksUPP, _NewOSLCompareUPP, 
-                       _NewOSLCountUPP, _NewOSLDisposeTokenUPP, _NewOSLGetErrDescUPP, 
-                       _NewOSLGetMarkTokenUPP, _NewOSLMarkUPP, __AEAddAnnotationsToAppleEvent, 
-                       __AEAppleEventMergeAnnotations, __AECanSandboxedApplicationSendAppleEvent, 
-                       __AECopyEntitlementForToken, __AECopyRegisteredMachPort, __AECreateAEReceivePortInRunLoopWithSource, 
+                       _CreateRangeDescriptor, _GDBPrintAECoercionTables, _GDBPrintAEDesc, 
+                       _GDBPrintAEHandlerTables, _GDBPrintHelpDebuggingAppleEvents, 
+                       __AEAddAnnotationsToAppleEvent, __AEAppleEventMergeAnnotations, 
+                       __AECanSandboxedApplicationSendAppleEvent, __AECopyEntitlementForToken, 
+                       __AECopyRegisteredMachPort, __AECreateAEReceiveMachPort, __AECreateAEReceivePortInRunLoopWithSource, 
                        __AECreateAnnotatedAppleEvent, __AEDescEventGetCounts, __AEDescEventIndexedAttributeItem, 
                        __AEDescEventIndexedParamItem, __AEDescGetAsString, __AEDescInformation, 
                        __AEDescListGetCount, __AEDescListIndexedItem, __AEDescRecordGetCount, 
                        __AEDescRecordIndexedItem, __AEDescToInternalImpl, __AEDoesAppleEventContainAnyTypesWhichRequireAnnotation, 
                        __AEEventDescGetInformation, __AEEventRequiresSecurityHandlerChecks, 
                        __AEEventSecurityHandlerDoChecks, __AEGenerateAnnotations, 
-                       __AEGetEventSecurityHandler, __AEInstallEventHandlerBlock, 
+                       __AEInstallAEInteractWithUserCallback, __AEInstallEventHandlerBlock, 
                        __AEInstallEventSecurityHandler, __AEInstallEventSecurityHandlerBlock, 
-                       __AEIsAppleEventTargetInSandbox, __AERemoveAEReceivePort, 
-                       __AERemoveEventSecurityHandler, __AEUnflattenDescFromBytes, 
+                       __AEIsAppleEventTargetInSandbox, __AERegisterCurrentApplicationInfomationWithAppleEventsD, 
+                       __AERemoveAEReceivePort, __AERemoveEventSecurityHandler, __AEUnflattenDescFromBytes, 
                        __AppleEventsCheckInApp, __AppleEventsCheckInAppWithBlock, 
                        __AppleEventsCopyApplicationEntitlements, __AppleEventsCopyApplicationEntitlementsWithBlock, 
                        __AppleEventsCopyStatusString, __AppleEventsCopyStatusStringWithBlock, 
                        __AppleEventsForwardEntitlements, __AppleEventsForwardEntitlementsWithBlock, 
-                       __AppleEventsIsCheckedInWithToAppleEventsD, __AppleEventsListApplications, 
+                       __AppleEventsHintApp, __AppleEventsHintAppWithBlock, __AppleEventsListApplications, 
                        __AppleEventsListApplicationsWithBlock, __AppleEventsLookupApplicationPort, 
                        __AppleEventsLookupApplicationPortWithBlock, __AppleEventsReleaseProcessAssertion, 
                        __AppleEventsReleaseProcessAssertionWithBlock, __AppleEventsRequestProcessAssertion, 
-                       __AppleEventsRequestProcessAssertionWithBlock, __kAppleEventsScriptingEntitlementKey, 
-                       _aeAddFilter, _aeCheckMessage, _aeCheckinApp, _aeCreateBuffer, 
-                       _aeCreateDefaultReply, _aeDescToCFStringCopy, _aeDescToCFTypeCopy, 
-                       _aeGetInteractionAllowed, _aeGetTheCurrentEvent, _aeHintApp, 
-                       _aeInitializeFromHIToolbox, _aeInstallBulk, _aeInstallRunLoopDispatcher, 
-                       _aeInteractWithUser, _aeMakeMeta, _aeProcessAppleEvent, _aePushHighLevelEvent, 
+                       __AppleEventsRequestProcessAssertionWithBlock, __AppleEventsSendPortRequiresProcessAssertions, 
+                       __kAppleEventsScriptingEntitlementKey, _aeAddFilter, _aeAppendToImplEnd, 
+                       _aeBindToArbitraryMachPort, _aeCheckMessage, _aeCheckinApp, 
+                       _aeClassicCompatFlattenDesc, _aeClassicCompatSizeOfFlattenedDesc, 
+                       _aeConvertCarbonToClassic, _aeConvertClassicToCarbon, _aeCreateBuffer, 
+                       _aeCreateDefaultReply, _aeDecodeMachMsg, _aeDescToCFStringCopy, 
+                       _aeDescToCFTypeCopy, _aeEventToEppcMsg, _aeGetInteractionAllowed, 
+                       _aeGetTheCurrentEvent, _aeHintApp, _aeInitializeFromHIToolbox, 
+                       _aeInstallBulk, _aeInstallRunLoopDispatcher, _aeInteractWithUser, 
+                       _aeMakeMeta, _aeProcessAppleEvent, _aePushHighLevelEvent, 
+                       _aeReconstructAppleEvent, _aeReconstructReplyAppleEvent, _aeRemoveFromImplEnd, 
                        _aeResetTimer, _aeResumeTheCurrentEvent, _aeRmvFilter, _aeSend, 
                        _aeSetInteractionAllowed, _aeSetTheCurrentEvent, _aeSimpleMunger, 
                        _aeSuspendTheCurrentEvent, _kAERemoteProcessNameKey, _kAERemoteProcessProcessIDKey, 

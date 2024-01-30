@@ -8,7 +8,7 @@
 #import <Foundation/NSDictionary.h>
 #import <Foundation/NSException.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /***************	Exceptions		***********/
 
@@ -34,7 +34,7 @@ FOUNDATION_EXPORT NSExceptionName const NSDecimalNumberDivideByZeroException;
 @end
 
 /***************	NSDecimalNumber: the class		***********/
-NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
+
 @interface NSDecimalNumber : NSNumber {
 @private
     signed   int _exponent:8;
@@ -44,15 +44,14 @@ NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
     unsigned int _reserved:1;
     unsigned int _hasExternalRefCount:1;
     unsigned int _refs:16;
-
     unsigned short _mantissa[0]; /* GCC */
-
 }
 
 - (instancetype)initWithMantissa:(unsigned long long)mantissa exponent:(short)exponent isNegative:(BOOL)flag;
 - (instancetype)initWithDecimal:(NSDecimal)dcm NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithString:(nullable NSString *)numberValue;
 - (instancetype)initWithString:(nullable NSString *)numberValue locale:(nullable id)locale;
+
 - (NSString *)descriptionWithLocale:(nullable id)locale;
 
 @property (readonly) NSDecimal decimalValue;
@@ -93,9 +92,7 @@ NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 - (NSComparisonResult)compare:(NSNumber *)decimalNumber;
     // compare two NSDecimalNumbers
 
-
 @property (class, strong) id <NSDecimalNumberBehaviors> defaultBehavior;
-
     // One behavior per thread - The default behavior is
     //   rounding mode: NSRoundPlain
     //   scale: No defined scale (full precision)
@@ -111,7 +108,7 @@ NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 @end
 
 /***********	A class for defining common behaviors		*******/
-NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
+
 @interface NSDecimalNumberHandler : NSObject <NSDecimalNumberBehaviors, NSCoding> {
   @private
     signed int _scale:16;
@@ -156,4 +153,4 @@ NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

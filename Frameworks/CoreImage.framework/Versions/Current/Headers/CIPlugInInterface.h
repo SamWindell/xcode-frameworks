@@ -6,13 +6,6 @@
  *
  */
 
-#ifndef CIPLUGININTERFACE_H
-#define CIPLUGININTERFACE_H
-
-#ifdef __OBJC__
-
-#import <objc/objc.h>
-
 #if TARGET_OS_OSX
 
 /*!
@@ -39,7 +32,3 @@
 @end
 
 #endif
-
-#endif /* __OBJC__ */
-
-#endif /* CIPLUGININTERFACE_H */

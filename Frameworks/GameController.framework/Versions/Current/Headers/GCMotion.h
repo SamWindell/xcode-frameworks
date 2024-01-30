@@ -7,9 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class GCController;
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class GCController;
 
 /**
  A 3 dimensional acceleration vector measured as scalar multiples of earth's gravitational acceleration, G.

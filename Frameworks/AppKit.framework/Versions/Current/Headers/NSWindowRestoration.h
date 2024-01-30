@@ -1,7 +1,7 @@
 /*
 	NSWindowRestoration.h
 	Application Kit
-	Copyright (c) 1994-2023, Apple Inc.
+	Copyright (c) 1994-2019, Apple Inc.
 	All rights reserved.
  */
 
@@ -15,7 +15,7 @@
 /* NSWindowRestoration is the mechanism by which Cocoa apps can persist their user interface state, such as window frames, and integrate with the machinery of the rest of the system. */
 
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @protocol NSWindowRestoration <NSObject>
@@ -26,7 +26,7 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
  Note that the receiver may invoke the completion handler before or after the method returns, and on any queue.  If you plan to invoke the completion handler after the method returns, you must copy the completion handler via the -copy method, and -release it after you invoke it.  It is not necessary or recommended for implementations of this method to order restored windows onscreen (for example, the window may have been minimized, in which case it will not be ordered onscreen).
  
  */
-+ (void)restoreWindowWithIdentifier:(NSUserInterfaceItemIdentifier)identifier state:(NSCoder *)state completionHandler:(void (^)(NSWindow * _Nullable, NSError * _Nullable))completionHandler NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.7));
++ (void)restoreWindowWithIdentifier:(NSUserInterfaceItemIdentifier)identifier state:(NSCoder *)state completionHandler:(void (^)(NSWindow * _Nullable, NSError * _Nullable))completionHandler API_AVAILABLE(macos(10.7));
 @end
 
 /* NSDocumentController implements the NSWindowRestoration protocol.  It is set as the restoration class for document windows.  You may subclass it and override the restoreWindowWithIdentifier:state:completionHandler: method to control how documents are restored. */
@@ -93,10 +93,6 @@ APPKIT_EXTERN NSNotificationName const NSApplicationDidFinishRestoringWindowsNot
 */
 @property (class, readonly, copy) NSArray<NSString *> *restorableStateKeyPaths API_AVAILABLE(macos(10.7));
 
-/** When secure state restoration is used, values at restorableStateKeyPaths must support NSSecureCoding and this method will be consulted when restoring state. Any values not of an allowed class will not be set.
-*/
-+ (NSArray<Class> *)allowedClassesForRestorableStateKeyPath:(NSString *)keyPath API_AVAILABLE(macos(12.0));
-
 @end
 
 
@@ -131,9 +127,8 @@ If your document has variable or optional windows, you may override this to crea
 - (void)restoreStateWithCoder:(NSCoder *)coder API_AVAILABLE(macos(10.7));
 - (void)invalidateRestorableState API_AVAILABLE(macos(10.7));
 @property (class, readonly, copy) NSArray<NSString *> *restorableStateKeyPaths API_AVAILABLE(macos(10.7));
-+ (NSArray<Class> *)allowedClassesForRestorableStateKeyPath:(NSString *)keyPath API_AVAILABLE(macos(12.0));
 
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

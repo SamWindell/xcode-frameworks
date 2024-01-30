@@ -1,7 +1,7 @@
 /*
  NSTouchBar.h
  Application Kit
- Copyright (c) 2015-2023, Apple Inc.
+ Copyright (c) 2015-2019, Apple Inc.
  All rights reserved.
 */
 
@@ -11,13 +11,13 @@
 #import <AppKit/NSResponder.h>
 #endif
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NSString * NSTouchBarCustomizationIdentifier NS_SWIFT_BRIDGED_TYPEDEF API_AVAILABLE(ios(13.0));
 
 @protocol NSTouchBarDelegate, NSTouchBarProvider;
 
-API_AVAILABLE(macos(10.12.2), ios(13.0)) NS_SWIFT_UI_ACTOR
+API_AVAILABLE(macos(10.12.2), ios(13.0))
 @interface NSTouchBar : NSObject <NSCoding>
 
 /* 
@@ -129,7 +129,7 @@ API_AVAILABLE(ios(13.0))
 /*
     When constructing the items array, this delegate method will be invoked to construct an NSTouchBarItem if that item cannot be found in the `templateItems` set.
 */
-- (nullable NSTouchBarItem *)touchBar:(NSTouchBar *)touchBar makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier NS_SWIFT_UI_ACTOR;
+- (nullable NSTouchBarItem *)touchBar:(NSTouchBar *)touchBar makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier;
 @end
 
 /*
@@ -171,7 +171,7 @@ API_AVAILABLE(ios(13.0))
     The basic method for providing an NSTouchBar. AppKit will key value observe this property, if for some reason you wish to replace a live NSTouchBar wholesale.
     Note that many subclasses of NSResponder already implement this method and conform to this protocol.
 */
-@property (strong, readonly, nullable) NSTouchBar *touchBar NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2));
+@property (strong, readonly, nullable) NSTouchBar *touchBar API_AVAILABLE(macos(10.12.2));
 @end
 
 #if !TARGET_OS_IPHONE
@@ -196,4 +196,4 @@ API_AVAILABLE(ios(13.0))
 @end
 #endif
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

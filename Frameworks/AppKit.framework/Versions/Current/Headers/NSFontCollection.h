@@ -1,7 +1,7 @@
 /*
 	NSFontCollection.h
 	Application Kit
-	Copyright (c) 2010-2023, Apple Inc.
+	Copyright (c) 2010-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -12,7 +12,7 @@
 #import <Foundation/NSString.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSFontDescriptor;
@@ -85,7 +85,7 @@ API_AVAILABLE(macos(10.7))
 + (BOOL)hideFontCollectionWithName:(NSFontCollectionName)name visibility:(NSFontCollectionVisibility)visibility error:(NSError **)error;
 
 // Rename named collection
-+ (BOOL)renameFontCollectionWithName:(NSFontCollectionName)oldName visibility:(NSFontCollectionVisibility)visibility toName:(NSFontCollectionName)newName error:(NSError **)outError;
++ (BOOL)renameFontCollectionWithName:(NSFontCollectionName)name visibility:(NSFontCollectionVisibility)visibility toName:(NSFontCollectionName)name error:(NSError **)error;
 
 // Named collections visible to this process (array of NSString)
 @property (class, readonly, copy) NSArray<NSFontCollectionName> *allFontCollectionNames;
@@ -184,5 +184,5 @@ APPKIT_EXTERN NSFontCollectionName const NSFontCollectionFavorites API_AVAILABLE
 APPKIT_EXTERN NSFontCollectionName const NSFontCollectionRecentlyUsed API_AVAILABLE(macos(10.7));	// Collection automatically maintained by NSFontManager
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 

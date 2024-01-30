@@ -10,7 +10,6 @@
 #include <float.h>
 #include <TargetConditionals.h>
 #include <CoreFoundation/CFBase.h>
-#include <CoreFoundation/CFCGTypes.h>
 #include <os/availability.h>
 
 /* Definition of `__CG_HAS_COMPILER_ATTRIBUTE'. */
@@ -204,7 +203,7 @@
 #define CG_UNAVAILABLE_DESKTOP API_UNAVAILABLE(macos)
 #define CG_UNAVAILABLE_EMBEDDED API_UNAVAILABLE(ios, tvos, watchos)
 
-#if (defined(TARGET_OS_LINUX) && TARGET_OS_LINUX) || defined(CG_LINUX)
+#if defined(CG_LINUX) || defined(TARGET_OS_LINUX)  
 # undef __OSX_AVAILABLE_STARTING
 # undef __OSX_AVAILABLE_BUT_DEPRECATED
 # undef CG_AVAILABLE_STARTING
@@ -306,15 +305,6 @@
 # endif
 #endif
 
-/* Definition of CG_PURE. */
-#if !defined(CG_PURE)
-# if __CG_HAS_COMPILER_ATTRIBUTE(pure)
-#  define CG_PURE  __attribute__((pure))
-# else
-#  define CG_PURE 
-# endif
-#endif
-
 /* Definition of `__CG_FORMAT_PRINTF'. */
 
 #if !defined(__CG_FORMAT_PRINTF)
@@ -338,7 +328,6 @@
 # endif
 #endif
 
-#ifndef CF_DEFINES_CG_TYPES
 /* Definition of `CGFLOAT_TYPE', `CGFLOAT_IS_DOUBLE', `CGFLOAT_MIN', and
    `CGFLOAT_MAX'. */
 
@@ -347,21 +336,17 @@
 # define CGFLOAT_IS_DOUBLE 1
 # define CGFLOAT_MIN DBL_MIN
 # define CGFLOAT_MAX DBL_MAX
-# define CGFLOAT_EPSILON DBL_EPSILON
 #else
 # define CGFLOAT_TYPE float
 # define CGFLOAT_IS_DOUBLE 0
 # define CGFLOAT_MIN FLT_MIN
 # define CGFLOAT_MAX FLT_MAX
-# define CGFLOAT_EPSILON FLT_EPSILON
 #endif
 
 /* Definition of the `CGFloat' type and `CGFLOAT_DEFINED'. */
 
 typedef CGFLOAT_TYPE CGFloat;
 #define CGFLOAT_DEFINED 1
-
-#endif /* CF_DEFINES_CG_TYPES */
 
 /* Definition of `CG_OBSOLETE'. Deprecated; to be removed. */
 

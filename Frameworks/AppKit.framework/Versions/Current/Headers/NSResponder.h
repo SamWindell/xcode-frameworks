@@ -1,7 +1,7 @@
 /*
         NSResponder.h
         Application Kit
-        Copyright (c) 1994-2023, Apple Inc.
+        Copyright (c) 1994-2019, Apple Inc.
         All rights reserved.
 */
 
@@ -12,18 +12,17 @@
 #import <AppKit/NSPasteboard.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSError, NSEvent, NSMenu, NSUndoManager, NSWindow;
 
-NS_SWIFT_UI_ACTOR
 @interface NSResponder : NSObject <NSCoding>
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
 
-@property (nullable, unsafe_unretained) NSResponder *nextResponder;
+@property (nullable, assign) NSResponder *nextResponder;
 - (BOOL)tryToPerform:(SEL)action with:(nullable id)object;
 - (BOOL)performKeyEquivalent:(NSEvent *)event;
 - (nullable id)validRequestorForSendType:(nullable NSPasteboardType)sendType returnType:(nullable NSPasteboardType)returnType;
@@ -112,7 +111,6 @@ NS_SWIFT_UI_ACTOR
 
 /* This protocol contains a large number of methods intended for use as key binding commands.  NSResponder does not implement any of them.  NSTextView implements a certain subset of them (see the NSTextView.h header).  Your responder subclasses can implement any that make sense.  You can make up your own as well, but you should use these if the concepts map.  If your view is key and uses key binding and the user types a key sequence which is bound to a command which is not implemented in your class, it is OK, nothing will happen by default.
 */
-NS_SWIFT_UI_ACTOR
 @protocol NSStandardKeyBindingResponding <NSObject>
 @optional
 
@@ -349,5 +347,5 @@ You can override this method to customize the presentation of errors by examinin
 
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 

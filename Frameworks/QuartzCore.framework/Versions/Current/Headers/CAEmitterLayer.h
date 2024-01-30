@@ -1,6 +1,6 @@
 /* CoreAnimation - CAEmitterLayer.h
 
-   Copyright (c) 2007-2022, Apple Inc.
+   Copyright (c) 2007-2018, Apple Inc.
    All rights reserved. */
 
 /* Particle emitter layer.
@@ -13,8 +13,6 @@
  *
  * The particles are drawn above the backgroundColor and border of the
  * layer. */
-
-#ifdef __OBJC__
 
 #import <QuartzCore/CALayer.h>
 
@@ -147,5 +145,3 @@ CA_EXTERN CAEmitterLayerRenderMode const kCAEmitterLayerAdditive
     API_AVAILABLE(macos(10.6), ios(5.0), watchos(2.0), tvos(9.0));
 
 NS_ASSUME_NONNULL_END
-
-#endif

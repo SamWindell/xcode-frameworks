@@ -1,7 +1,7 @@
 #if !__has_include(<UIFoundation/NSTextTable.h>)
 /*
         NSTextTable.h
-        Copyright (c) 2004-2023, Apple Inc.
+        Copyright (c) 2004-2019, Apple Inc.
         All rights reserved.
 
         Classes to represent text tables and other text blocks.
@@ -16,7 +16,7 @@
 @class NSLayoutManager;
 @class NSTextContainer;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 #if !TARGET_OS_IPHONE
 
 /* Values for NSTextBlockValueType */
@@ -129,7 +129,7 @@ typedef NS_ENUM(NSUInteger, NSTextTableLayoutAlgorithm) {
 
 #endif // !TARGET_OS_IPHONE
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 #else
 #import <UIFoundation/NSTextTable.h>
 #endif

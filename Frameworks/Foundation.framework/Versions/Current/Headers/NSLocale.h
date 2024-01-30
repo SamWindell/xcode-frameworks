@@ -8,16 +8,16 @@
 
 @class NSCalendar;
 
-typedef NSString * NSLocaleKey NS_TYPED_ENUM;
+typedef NSString * NSLocaleKey NS_STRING_ENUM;
 
 @class NSArray<ObjectType>, NSDictionary<KeyType, ObjectType>, NSString;
 
 // Toll-free bridged with CFLocaleRef
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
-NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 @interface NSLocale : NSObject <NSCopying, NSSecureCoding>
+
 - (nullable id)objectForKey:(NSLocaleKey)key;
 
 - (nullable NSString *)displayNameForKey:(NSLocaleKey)key value:(id)value;
@@ -25,6 +25,7 @@ NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 - (instancetype)initWithLocaleIdentifier:(NSString *)string NS_DESIGNATED_INITIALIZER;
 
 - (nullable instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
+
 @end
 
 @interface NSLocale (NSExtendedLocale)
@@ -35,17 +36,8 @@ NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 @property (readonly, copy) NSString *languageCode API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
 - (nullable NSString *)localizedStringForLanguageCode:(NSString *)languageCode API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
 
-/// Returns the identifier for the language part of the locale. For example, returns "en-US" for "en_US@rg=gbzzzz"  locale.
-@property (readonly, copy) NSString *languageIdentifier API_AVAILABLE(macosx(14.0), ios(17.0), watchos(10.0), tvos(17.0));
-
-@property (nullable, readonly, copy) NSString *countryCode API_DEPRECATED_WITH_REPLACEMENT("regionCode", macos(10.12, API_TO_BE_DEPRECATED), ios(10.0, API_TO_BE_DEPRECATED), watchos(3.0, API_TO_BE_DEPRECATED), tvos(10.0, API_TO_BE_DEPRECATED));
-
+@property (nullable, readonly, copy) NSString *countryCode API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
 - (nullable NSString *)localizedStringForCountryCode:(NSString *)countryCode API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
-
-/// Returns the region code of the locale.
-/// If the `rg` subtag is present, the value of the subtag will be used. For example,  returns "GB" for "en_US@rg=gbzzzz" locale.
-/// If the `localeIdentifier` doesn’t contain a region, returns `nil`.
-@property (nullable, readonly, copy) NSString *regionCode API_AVAILABLE(macosx(14.0), ios(17.0), watchos(10.0), tvos(17.0));
 
 @property (nullable, readonly, copy) NSString *scriptCode API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
 - (nullable NSString *)localizedStringForScriptCode:(NSString *)scriptCode API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
@@ -130,6 +122,7 @@ typedef NS_ENUM(NSUInteger, NSLocaleLanguageDirection) {
 
 @end
 
+
 FOUNDATION_EXPORT NSNotificationName const NSCurrentLocaleDidChangeNotification API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
 
 
@@ -179,4 +172,4 @@ FOUNDATION_EXPORT NSString * const NSPersianCalendar API_DEPRECATED_WITH_REPLACE
 FOUNDATION_EXPORT NSString * const NSIndianCalendar API_DEPRECATED_WITH_REPLACEMENT("NSCalendarIdentifierIndian", macos(10.6, 10.10), ios(4.0, 8.0), watchos(2.0, 2.0), tvos(9.0, 9.0));
 FOUNDATION_EXPORT NSString * const NSISO8601Calendar API_DEPRECATED_WITH_REPLACEMENT("NSCalendarIdentifierISO8601", macos(10.6, 10.10), ios(4.0, 8.0), watchos(2.0, 2.0), tvos(9.0, 9.0));
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

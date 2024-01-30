@@ -12,6 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class CLRegionInternal;
+
 /*
  * CLRegionState
  *
@@ -23,11 +25,7 @@ typedef NS_CLOSED_ENUM(NSInteger, CLRegionState) {
 	CLRegionStateUnknown,
 	CLRegionStateInside,
 	CLRegionStateOutside
-#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-} API_AVAILABLE(macos(10.10), ios(7.0)) API_UNAVAILABLE(watchos, tvos, visionos);
-#else
 } API_AVAILABLE(macos(10.10), ios(7.0)) API_UNAVAILABLE(watchos, tvos);
-#endif
 
 /*
  * CLProximity
@@ -41,11 +39,7 @@ typedef NS_ENUM(NSInteger, CLProximity) {
 	CLProximityImmediate,
 	CLProximityNear,
 	CLProximityFar
-#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-} API_AVAILABLE(ios(7.0), macos(10.15)) API_UNAVAILABLE(watchos, tvos, visionos);
-#else
 } API_AVAILABLE(ios(7.0), macos(10.15)) API_UNAVAILABLE(watchos, tvos);
-#endif
 
 /*
  *  CLRegion
@@ -54,12 +48,12 @@ typedef NS_ENUM(NSInteger, CLProximity) {
  *    A logical area.
  */
 CL_EXTERN
-#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-API_AVAILABLE(macos(10.7), ios(4.0)) API_UNAVAILABLE(visionos)
-#else
 API_AVAILABLE(macos(10.7), ios(4.0))
-#endif
 @interface CLRegion : NSObject <NSCopying, NSSecureCoding>
+{
+@package
+	CLRegionInternal *_internal;
+}
 /*
  *  initCircularRegionWithCenter:radius:identifier:
  *  
@@ -72,11 +66,8 @@ API_AVAILABLE(macos(10.7), ios(4.0))
  */
 - (instancetype)initCircularRegionWithCenter:(CLLocationCoordinate2D)center
 									  radius:(CLLocationDistance)radius
-#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-								  identifier:(NSString *)identifier API_DEPRECATED("Please see CLCircularRegion", ios(4.0, 7.0), macos(10.7, 10.10)) API_UNAVAILABLE(tvos, visionos);
-#else
 								  identifier:(NSString *)identifier API_DEPRECATED("Please see CLCircularRegion", ios(4.0, 7.0), macos(10.7, 10.10)) API_UNAVAILABLE(tvos);
-#endif
+
 /*
  *  center
  *  
@@ -85,11 +76,8 @@ API_AVAILABLE(macos(10.7), ios(4.0))
  *
  *    This method has been deprecated, please see CLCircularRegion.
  */
-#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-@property (readonly, atomic) CLLocationCoordinate2D center API_DEPRECATED("Please see CLCircularRegion", ios(4.0, 7.0), macos(10.7, 10.10)) API_UNAVAILABLE(tvos, visionos);
-#else
-@property (readonly, atomic) CLLocationCoordinate2D center API_DEPRECATED("Please see CLCircularRegion", ios(4.0, 7.0), macos(10.7, 10.10)) API_UNAVAILABLE(tvos);
-#endif
+@property (readonly, nonatomic) CLLocationCoordinate2D center API_DEPRECATED("Please see CLCircularRegion", ios(4.0, 7.0), macos(10.7, 10.10)) API_UNAVAILABLE(tvos);
+
 /*
  *  radius
  *  
@@ -98,11 +86,8 @@ API_AVAILABLE(macos(10.7), ios(4.0))
  *
  *    This method has been deprecated, please see CLCircularRegion.
  */
-#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-@property (readonly, atomic) CLLocationDistance radius API_DEPRECATED("Please see CLCircularRegion", ios(4.0, 7.0), macos(10.7, 10.10)) API_UNAVAILABLE(tvos, visionos);
-#else
-@property (readonly, atomic) CLLocationDistance radius API_DEPRECATED("Please see CLCircularRegion", ios(4.0, 7.0), macos(10.7, 10.10)) API_UNAVAILABLE(tvos);
-#endif
+@property (readonly, nonatomic) CLLocationDistance radius API_DEPRECATED("Please see CLCircularRegion", ios(4.0, 7.0), macos(10.7, 10.10)) API_UNAVAILABLE(tvos);
+
 /*
  *  identifier
  *  
@@ -118,7 +103,7 @@ API_AVAILABLE(macos(10.7), ios(4.0))
  *    App will be launched and the delegate will be notified via locationManager:didEnterRegion:
  *    when the user enters the region. By default, this is YES.
  */
-@property (atomic, assign) BOOL notifyOnEntry API_AVAILABLE(ios(7.0), macos(10.10));
+@property (nonatomic, assign) BOOL notifyOnEntry API_AVAILABLE(ios(7.0), macos(10.10));
 
 /*
  *  notifyOnExit
@@ -127,7 +112,7 @@ API_AVAILABLE(macos(10.7), ios(4.0))
  *    App will be launched and the delegate will be notified via locationManager:didExitRegion:
  *    when the user exits the region. By default, this is YES.
  */
-@property (atomic, assign) BOOL notifyOnExit API_AVAILABLE(ios(7.0), macos(10.10));
+@property (nonatomic, assign) BOOL notifyOnExit API_AVAILABLE(ios(7.0), macos(10.10));
 
 /*
  *  containsCoordinate:
@@ -137,11 +122,8 @@ API_AVAILABLE(macos(10.7), ios(4.0))
  *
  *    This method has been deprecated, please see CLCircularRegion.
  */
-#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-- (BOOL)containsCoordinate:(CLLocationCoordinate2D)coordinate API_DEPRECATED("Please see CLCircularRegion", ios(4.0, 7.0), macos(10.7, 10.10)) API_UNAVAILABLE(tvos, visionos);
-#else
 - (BOOL)containsCoordinate:(CLLocationCoordinate2D)coordinate API_DEPRECATED("Please see CLCircularRegion", ios(4.0, 7.0), macos(10.7, 10.10)) API_UNAVAILABLE(tvos);
-#endif
+
 @end
 
 NS_ASSUME_NONNULL_END

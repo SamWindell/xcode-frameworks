@@ -879,7 +879,7 @@ typedef STACK_UPP_TYPE(SpeechWordProcPtr)                       SpeechWordUPP;
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern SpeechTextDoneUPP
-NewSpeechTextDoneUPP(SpeechTextDoneProcPtr userRoutine)       API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+NewSpeechTextDoneUPP(SpeechTextDoneProcPtr userRoutine)       AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  NewSpeechDoneUPP()
@@ -890,7 +890,7 @@ NewSpeechTextDoneUPP(SpeechTextDoneProcPtr userRoutine)       API_DEPRECATED("Us
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern SpeechDoneUPP
-NewSpeechDoneUPP(SpeechDoneProcPtr userRoutine)               API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+NewSpeechDoneUPP(SpeechDoneProcPtr userRoutine)               AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  NewSpeechSyncUPP()
@@ -901,7 +901,7 @@ NewSpeechDoneUPP(SpeechDoneProcPtr userRoutine)               API_DEPRECATED("Us
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern SpeechSyncUPP
-NewSpeechSyncUPP(SpeechSyncProcPtr userRoutine)               API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+NewSpeechSyncUPP(SpeechSyncProcPtr userRoutine)               AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  NewSpeechErrorUPP()
@@ -912,7 +912,7 @@ NewSpeechSyncUPP(SpeechSyncProcPtr userRoutine)               API_DEPRECATED("Us
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern SpeechErrorUPP
-NewSpeechErrorUPP(SpeechErrorProcPtr userRoutine)             API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+NewSpeechErrorUPP(SpeechErrorProcPtr userRoutine)             AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  NewSpeechPhonemeUPP()
@@ -923,7 +923,7 @@ NewSpeechErrorUPP(SpeechErrorProcPtr userRoutine)             API_DEPRECATED("Us
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern SpeechPhonemeUPP
-NewSpeechPhonemeUPP(SpeechPhonemeProcPtr userRoutine)         API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+NewSpeechPhonemeUPP(SpeechPhonemeProcPtr userRoutine)         AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  NewSpeechWordUPP()
@@ -934,7 +934,7 @@ NewSpeechPhonemeUPP(SpeechPhonemeProcPtr userRoutine)         API_DEPRECATED("Us
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern SpeechWordUPP
-NewSpeechWordUPP(SpeechWordProcPtr userRoutine)               API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+NewSpeechWordUPP(SpeechWordProcPtr userRoutine)               AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  DisposeSpeechTextDoneUPP()
@@ -945,7 +945,7 @@ NewSpeechWordUPP(SpeechWordProcPtr userRoutine)               API_DEPRECATED("Us
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern void
-DisposeSpeechTextDoneUPP(SpeechTextDoneUPP userUPP)           API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+DisposeSpeechTextDoneUPP(SpeechTextDoneUPP userUPP)           AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  DisposeSpeechDoneUPP()
@@ -956,7 +956,7 @@ DisposeSpeechTextDoneUPP(SpeechTextDoneUPP userUPP)           API_DEPRECATED("Us
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern void
-DisposeSpeechDoneUPP(SpeechDoneUPP userUPP)                   API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+DisposeSpeechDoneUPP(SpeechDoneUPP userUPP)                   AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  DisposeSpeechSyncUPP()
@@ -967,7 +967,7 @@ DisposeSpeechDoneUPP(SpeechDoneUPP userUPP)                   API_DEPRECATED("Us
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern void
-DisposeSpeechSyncUPP(SpeechSyncUPP userUPP)                   API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+DisposeSpeechSyncUPP(SpeechSyncUPP userUPP)                   AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  DisposeSpeechErrorUPP()
@@ -978,7 +978,7 @@ DisposeSpeechSyncUPP(SpeechSyncUPP userUPP)                   API_DEPRECATED("Us
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern void
-DisposeSpeechErrorUPP(SpeechErrorUPP userUPP)                 API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+DisposeSpeechErrorUPP(SpeechErrorUPP userUPP)                 AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  DisposeSpeechPhonemeUPP()
@@ -989,7 +989,7 @@ DisposeSpeechErrorUPP(SpeechErrorUPP userUPP)                 API_DEPRECATED("Us
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern void
-DisposeSpeechPhonemeUPP(SpeechPhonemeUPP userUPP)             API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+DisposeSpeechPhonemeUPP(SpeechPhonemeUPP userUPP)             AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  DisposeSpeechWordUPP()
@@ -1000,7 +1000,7 @@ DisposeSpeechPhonemeUPP(SpeechPhonemeUPP userUPP)             API_DEPRECATED("Us
  *    Non-Carbon CFM:   available as macro/inline
  */
 extern void
-DisposeSpeechWordUPP(SpeechWordUPP userUPP)                   API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+DisposeSpeechWordUPP(SpeechWordUPP userUPP)                   AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  InvokeSpeechTextDoneUPP()
@@ -1017,7 +1017,7 @@ InvokeSpeechTextDoneUPP(
   const void * __nullable * __nullable  nextBuf,
   unsigned long *                       byteLen,
   SInt32 *                              controlFlags,
-  SpeechTextDoneUPP                     userUPP)              API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  SpeechTextDoneUPP                     userUPP)              AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  InvokeSpeechDoneUPP()
@@ -1031,7 +1031,7 @@ extern void
 InvokeSpeechDoneUPP(
   SpeechChannel  chan,
   SRefCon        refCon,
-  SpeechDoneUPP  userUPP)                                     API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  SpeechDoneUPP  userUPP)                                     AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  InvokeSpeechSyncUPP()
@@ -1046,7 +1046,7 @@ InvokeSpeechSyncUPP(
   SpeechChannel  chan,
   SRefCon        refCon,
   OSType         syncMessage,
-  SpeechSyncUPP  userUPP)                                     API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  SpeechSyncUPP  userUPP)                                     AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  InvokeSpeechErrorUPP()
@@ -1062,7 +1062,7 @@ InvokeSpeechErrorUPP(
   SRefCon         refCon,
   OSErr           theError,
   long            bytePos,
-  SpeechErrorUPP  userUPP)                                    API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  SpeechErrorUPP  userUPP)                                    AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  InvokeSpeechPhonemeUPP()
@@ -1077,7 +1077,7 @@ InvokeSpeechPhonemeUPP(
   SpeechChannel     chan,
   SRefCon           refCon,
   SInt16            phonemeOpcode,
-  SpeechPhonemeUPP  userUPP)                                  API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  SpeechPhonemeUPP  userUPP)                                  AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 /*
  *  InvokeSpeechWordUPP()
@@ -1093,7 +1093,7 @@ InvokeSpeechWordUPP(
   SRefCon        refCon,
   unsigned long  wordPos,
   UInt16         wordLen,
-  SpeechWordUPP  userUPP)                                     API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  SpeechWordUPP  userUPP)                                     AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 #if __MACH__
   #ifdef __cplusplus
@@ -1149,7 +1149,7 @@ typedef CALLBACK_API( void , SpeechWordCFProcPtr )(SpeechChannel chan, SRefCon r
  *    Non-Carbon CFM:   in SpeechLib 1.0 and later
  */
 extern NumVersion 
-SpeechManagerVersion(void)                                    API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+SpeechManagerVersion(void)                                    AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1164,7 +1164,7 @@ extern OSErr
 MakeVoiceSpec(
   OSType       creator,
   OSType       id,
-  VoiceSpec *  voice)                                         API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+  VoiceSpec *  voice)                                         AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1176,7 +1176,7 @@ MakeVoiceSpec(
  *    Non-Carbon CFM:   in SpeechLib 1.0 and later
  */
 extern OSErr 
-CountVoices(SInt16 * numVoices)                               API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+CountVoices(SInt16 * numVoices)                               AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1190,7 +1190,7 @@ CountVoices(SInt16 * numVoices)                               API_DEPRECATED("Us
 extern OSErr 
 GetIndVoice(
   SInt16       index,
-  VoiceSpec *  voice)                                         API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+  VoiceSpec *  voice)                                         AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1205,7 +1205,7 @@ extern OSErr
 GetVoiceDescription(
   const VoiceSpec * __nullable  voice,
   VoiceDescription * __nullable info,
-  long                          infoLength)                   API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+  long                          infoLength)                   AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1220,7 +1220,7 @@ extern OSErr
 GetVoiceInfo(
   const VoiceSpec * __nullable  voice,
   OSType                        selector,
-  void *                        voiceInfo)                    API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+  void *                        voiceInfo)                    AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1234,7 +1234,7 @@ GetVoiceInfo(
 extern OSErr 
 NewSpeechChannel(
   VoiceSpec * __nullable                voice,
-  SpeechChannel __nullable * __nonnull  chan)                 API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+  SpeechChannel __nullable * __nonnull  chan)                 AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1246,7 +1246,7 @@ NewSpeechChannel(
  *    Non-Carbon CFM:   in SpeechLib 1.0 and later
  */
 extern OSErr 
-DisposeSpeechChannel(SpeechChannel chan)                      API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+DisposeSpeechChannel(SpeechChannel chan)                      AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1261,7 +1261,7 @@ DisposeSpeechChannel(SpeechChannel chan)                      API_DEPRECATED("Us
  *    Non-Carbon CFM:   in SpeechLib 1.0 and later
  */
 extern OSErr 
-SpeakString(ConstStr255Param textToBeSpoken)                  API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+SpeakString(ConstStr255Param textToBeSpoken)                  AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 
 /*
@@ -1279,7 +1279,7 @@ extern OSErr
 SpeakText(
   SpeechChannel   chan,
   const void *    textBuf,
-  unsigned long   textBytes)                                  API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  unsigned long   textBytes)                                  AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 
 /*
@@ -1298,7 +1298,7 @@ SpeakBuffer(
   SpeechChannel   chan,
   const void *    textBuf,
   unsigned long   textBytes,
-  SInt32          controlFlags)                               API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  SInt32          controlFlags)                               AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 
 /*
@@ -1310,7 +1310,7 @@ SpeakBuffer(
  *    Non-Carbon CFM:   in SpeechLib 1.0 and later
  */
 extern OSErr 
-StopSpeech(SpeechChannel chan)                                API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+StopSpeech(SpeechChannel chan)                                AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1324,7 +1324,7 @@ StopSpeech(SpeechChannel chan)                                API_DEPRECATED("Us
 extern OSErr 
 StopSpeechAt(
   SpeechChannel   chan,
-  SInt32          whereToStop)                                API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+  SInt32          whereToStop)                                AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1338,7 +1338,7 @@ StopSpeechAt(
 extern OSErr 
 PauseSpeechAt(
   SpeechChannel   chan,
-  SInt32          whereToPause)                               API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+  SInt32          whereToPause)                               AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1350,7 +1350,7 @@ PauseSpeechAt(
  *    Non-Carbon CFM:   in SpeechLib 1.0 and later
  */
 extern OSErr 
-ContinueSpeech(SpeechChannel chan)                            API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+ContinueSpeech(SpeechChannel chan)                            AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1362,7 +1362,7 @@ ContinueSpeech(SpeechChannel chan)                            API_DEPRECATED("Us
  *    Non-Carbon CFM:   in SpeechLib 1.0 and later
  */
 extern SInt16 
-SpeechBusy(void)                                              API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+SpeechBusy(void)                                              AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1374,7 +1374,7 @@ SpeechBusy(void)                                              API_DEPRECATED("Us
  *    Non-Carbon CFM:   in SpeechLib 1.0 and later
  */
 extern SInt16 
-SpeechBusySystemWide(void)                                    API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+SpeechBusySystemWide(void)                                    AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1388,7 +1388,7 @@ SpeechBusySystemWide(void)                                    API_DEPRECATED("Us
 extern OSErr 
 SetSpeechRate(
   SpeechChannel   chan,
-  Fixed           rate)                                       API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+  Fixed           rate)                                       AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1402,7 +1402,7 @@ SetSpeechRate(
 extern OSErr 
 GetSpeechRate(
   SpeechChannel   chan,
-  Fixed *         rate)                                       API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+  Fixed *         rate)                                       AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1416,7 +1416,7 @@ GetSpeechRate(
 extern OSErr 
 SetSpeechPitch(
   SpeechChannel   chan,
-  Fixed           pitch)                                      API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+  Fixed           pitch)                                      AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1430,7 +1430,7 @@ SetSpeechPitch(
 extern OSErr 
 GetSpeechPitch(
   SpeechChannel   chan,
-  Fixed *         pitch)                                      API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,13.0));
+  Fixed *         pitch)                                      AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER;
 
 
 /*
@@ -1448,7 +1448,7 @@ extern OSErr
 SetSpeechInfo(
   SpeechChannel             chan,
   OSType                    selector,
-  const void * __nullable   speechInfo)                       API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  const void * __nullable   speechInfo)                       AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 
 /*
@@ -1466,7 +1466,7 @@ extern OSErr
 GetSpeechInfo(
   SpeechChannel   chan,
   OSType          selector,
-  void *          speechInfo)                                 API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  void *          speechInfo)                                 AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 
 /*
@@ -1486,7 +1486,7 @@ TextToPhonemes(
   const void *      textBuf,
   unsigned long     textBytes,
   Handle __nonnull  phonemeBuf,
-  long *            phonemeBytes)                             API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  long *            phonemeBytes)                             AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 
 /*
@@ -1503,7 +1503,7 @@ TextToPhonemes(
 extern OSErr 
 UseDictionary(
   SpeechChannel     chan,
-  Handle __nonnull  dictionary)                               API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.0,10.8));
+  Handle __nonnull  dictionary)                               AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8;
 
 
 /* Replaces SpeakBuffer*/
@@ -1519,7 +1519,7 @@ extern OSErr
 SpeakCFString(
   SpeechChannel               chan,
   CFStringRef                 aString,
-  CFDictionaryRef __nullable  options)                        API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.5,13.0));
+  CFDictionaryRef __nullable  options)                        AVAILABLE_MAC_OS_X_VERSION_10_5_AND_LATER;
 
 
 /* Replaces UseDictionary*/
@@ -1534,7 +1534,7 @@ SpeakCFString(
 extern OSErr 
 UseSpeechDictionary(
   SpeechChannel     chan,
-  CFDictionaryRef   speechDictionary)                         API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.5,13.0));
+  CFDictionaryRef   speechDictionary)                         AVAILABLE_MAC_OS_X_VERSION_10_5_AND_LATER;
 
 
 /* Replaces TextToPhonemes*/
@@ -1550,7 +1550,7 @@ extern OSErr
 CopyPhonemesFromText(
   SpeechChannel                       chan,
   CFStringRef                         text,
-  CFStringRef __nullable * __nonnull CF_RETURNS_RETAINED  phonemes)     API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.5,13.0));
+  CFStringRef __nullable * __nonnull CF_RETURNS_RETAINED  phonemes)     AVAILABLE_MAC_OS_X_VERSION_10_5_AND_LATER;
 
 
 /* Replaces GetSpeechInfo*/
@@ -1566,7 +1566,7 @@ extern OSErr
 CopySpeechProperty(
   SpeechChannel                     chan,
   CFStringRef                       property,
-  CFTypeRef __nullable * __nonnull CF_RETURNS_RETAINED  object)         API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.5,13.0));
+  CFTypeRef __nullable * __nonnull CF_RETURNS_RETAINED  object)         AVAILABLE_MAC_OS_X_VERSION_10_5_AND_LATER;
 
 
 /* Replaces SetSpeechInfo*/
@@ -1582,7 +1582,7 @@ extern OSErr
 SetSpeechProperty(
   SpeechChannel         chan,
   CFStringRef           property,
-  CFTypeRef __nullable  object)                               API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.5,13.0));
+  CFTypeRef __nullable  object)                               AVAILABLE_MAC_OS_X_VERSION_10_5_AND_LATER;
 
 
 /* Support loading and unloading synthesizers and voices from locations other than the standard directories.*/
@@ -1595,7 +1595,7 @@ SetSpeechProperty(
  *    Non-Carbon CFM:   not available
  */
 extern OSErr 
-SpeechSynthesisRegisterModuleURL(CFURLRef url)                API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.6,13.0));
+SpeechSynthesisRegisterModuleURL(CFURLRef url)                AVAILABLE_MAC_OS_X_VERSION_10_6_AND_LATER;
 
 
 /*
@@ -1607,7 +1607,7 @@ SpeechSynthesisRegisterModuleURL(CFURLRef url)                API_DEPRECATED("Us
  *    Non-Carbon CFM:   not available
  */
 extern OSErr 
-SpeechSynthesisUnregisterModuleURL(CFURLRef url)              API_DEPRECATED("Use AVSpeechSynthesizer in AVFoundation framework", macos(10.6,13.0));
+SpeechSynthesisUnregisterModuleURL(CFURLRef url)              AVAILABLE_MAC_OS_X_VERSION_10_6_AND_LATER;
 
 
 

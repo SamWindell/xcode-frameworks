@@ -7,9 +7,9 @@
 
 @class NSString;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
-typedef struct NS_SWIFT_SENDABLE _NSRange {
+typedef struct _NSRange {
     NSUInteger location;
     NSUInteger length;
 } NSRange;
@@ -47,4 +47,4 @@ FOUNDATION_EXPORT NSRange NSRangeFromString(NSString *aString);
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

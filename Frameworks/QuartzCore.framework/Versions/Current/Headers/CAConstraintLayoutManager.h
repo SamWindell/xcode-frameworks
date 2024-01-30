@@ -1,9 +1,7 @@
 /* CoreAnimation - CAConstraintLayoutManager.h
 
-   Copyright (c) 2006-2022, Apple Inc.
+   Copyright (c) 2006-2018, Apple Inc.
    All rights reserved. */
-
-#ifdef __OBJC__
 
 #import <QuartzCore/CALayer.h>
 
@@ -112,5 +110,3 @@ API_AVAILABLE(macos(10.5))
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif

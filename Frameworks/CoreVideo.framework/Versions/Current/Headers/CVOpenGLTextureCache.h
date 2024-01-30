@@ -24,7 +24,7 @@ extern "C" {
     @abstract   CoreVideo OpenGL Texture Cache
 
 */
-typedef struct CV_BRIDGED_TYPE(id) __CVOpenGLTextureCache *CVOpenGLTextureCacheRef CV_SWIFT_NONSENDABLE;
+typedef struct CV_BRIDGED_TYPE(id) __CVOpenGLTextureCache *CVOpenGLTextureCacheRef;
 
 /* Dictionary keys and values for use with the 'cacheAttributes' parameter of CVOpenGLTextureCacheCreate */
 

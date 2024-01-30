@@ -5,6 +5,9 @@
 //  Copyright © 2020 Apple, Inc. All rights reserved.
 //
 
+#ifndef MTLFunctionLog_h
+#define MTLFunctionLog_h
+
 #import <Metal/MTLTypes.h>
 
 @protocol MTLFunction;
@@ -35,3 +38,7 @@ API_AVAILABLE(macos(11.0), ios(14.0))
 @property (readonly, nullable, nonatomic) id<MTLFunctionLogDebugLocation> debugLocation;
 @end
 
+
+
+
+#endif /* MTLFunctionLog_h */

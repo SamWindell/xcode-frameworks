@@ -6,8 +6,6 @@
  *
  */
 
-#pragma once
-
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CLLocation.h>
 
@@ -23,11 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
  *    during which the device was at the specified coordinate.
  */
 CL_EXTERN
-#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-API_AVAILABLE(ios(8.0), macos(10.15)) API_UNAVAILABLE(watchos, tvos, visionos)
-#else
 API_AVAILABLE(ios(8.0), macos(10.15)) API_UNAVAILABLE(watchos, tvos)
-#endif
 @interface CLVisit : NSObject <NSSecureCoding, NSCopying>
 
 /*

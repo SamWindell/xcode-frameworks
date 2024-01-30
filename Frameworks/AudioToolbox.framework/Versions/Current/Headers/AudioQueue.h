@@ -135,8 +135,8 @@ typedef struct OpaqueAudioQueueTimeline *   AudioQueueTimelineRef;
     				Access to the required codec is not permitted (possibly due to incompatible
     				AudioSession settings on iOS).
     @constant   kAudioQueueErr_QueueInvalidated
-    				On iOS derived platforms (excluding Catalyst), the audio server has exited,
-    				causing this audio queue to have become invalid.
+    				On iOS, the audio server has exited, causing this audio queue to have become
+    				invalid.
     @constant   kAudioQueueErr_TooManyTaps
     				There can only be one processing tap per audio queue.
     @constant   kAudioQueueErr_InvalidTapContext
@@ -516,18 +516,6 @@ typedef struct AudioQueueBuffer {
     UInt32                          mPacketDescriptionCount;
 #ifdef __cplusplus
     AudioQueueBuffer() : mAudioDataBytesCapacity(0), mAudioData(0), mPacketDescriptionCapacity(0), mPacketDescriptions(0) { }
-
-	AudioQueueBuffer(void* dataPtr, UInt32 dataCapacity, AudioStreamPacketDescription* packetDescs,
-		UInt32 packetDescCapacity)
-		: mAudioDataBytesCapacity(dataCapacity),
-		  mAudioData(dataPtr),
-		  mAudioDataByteSize(0),
-		  mUserData(nullptr),
-		  mPacketDescriptionCapacity(packetDescCapacity),
-		  mPacketDescriptions(packetDescs),
-		  mPacketDescriptionCount(0)
-	{
-	}
 #endif
 } AudioQueueBuffer;
 
@@ -1637,8 +1625,7 @@ AudioQueueDeviceGetCurrentTime(     AudioQueueRef           inAQ,
     @param      inTime
         A pointer to a structure containing the time to be translated.
     @param      outTime
-        On entry, mFlags indicate the desired translations. On exit, mFlags indicates which
-        of the requested translated fields were successfully populated.
+        A pointer to the the translated time.
     @result
         An OSStatus result code.
 */

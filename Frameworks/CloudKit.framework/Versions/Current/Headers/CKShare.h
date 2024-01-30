@@ -6,18 +6,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import <CloudKit/CKRecord.h>
 #import <CloudKit/CKShareParticipant.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 CK_EXTERN CKRecordType const CKRecordTypeShare API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
-
-/*! A zone-wide CKShare always uses the record name @c CKRecordNameZoneWideShare.
- *  You can use this to fetch the @c CKShare record for the zone with a @c CKFetchRecordsOperation.
- */
-CK_EXTERN NSString * const CKRecordNameZoneWideShare API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0));
 
 /*! Predefined keys in the @c CKRecordTypeShare schema.  They're used by the out of process UI flow to send a share, and as part of the share acceptance flow.  These are optional */
 
@@ -37,25 +31,11 @@ CK_EXTERN CKRecordFieldKey const CKShareTypeKey API_AVAILABLE(macos(10.12), ios(
  */
 
 API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
-// This class should not be subclassed. If it is, Sendable may no longer apply.
-// NS_SWIFT_SENDABLE on macos(14.0), ios(17.0), tvos(17.0), watchos(10.0)
 @interface CKShare : CKRecord <NSSecureCoding, NSCopying>
 
 /*! When saving a newly created CKShare, you must save the share and its rootRecord in the same CKModifyRecordsOperation batch. */
 - (instancetype)initWithRootRecord:(CKRecord *)rootRecord;
 - (instancetype)initWithRootRecord:(CKRecord *)rootRecord shareID:(CKRecordID *)shareID NS_DESIGNATED_INITIALIZER;
-
-/*! Creates a zone-wide @c CKShare.  A zone-wide @c CKShare can only exist in a zone with sharing capability @c CKRecordZoneCapabilityZoneWideSharing.
- * Only one such share can exist in a zone at a time.
- *
- * All records in this zone will appear in a participant's @c CKFetchRecordZoneChangesOperation results in the shared database after the
- * share has been accepted by the participant.
- *
- * Since these shares do not have an associated root record, @c shouldFetchRootRecord and @c rootRecordDesiredKeys are always ignored when
- * running a @c CKFetchShareMetadataOperation on a zone-wide share URL. Additionally, @c rootRecordID on the resulting @c CKShareMetadata is
- * always absent.
- */
-- (instancetype)initWithRecordZoneID:(CKRecordZoneID *)recordZoneID NS_DESIGNATED_INITIALIZER API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0));
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
@@ -66,23 +46,23 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
  *  Changing the public permission to @c CKShareParticipantPermissionReadOnly or @c CKShareParticipantPermissionReadWrite will result in all pending participants being removed.  Already-accepted participants will remain on the share.
  *  Changing the public permission to @c CKShareParticipantPermissionNone will result in all participants being removed from the share.  You may subsequently choose to call @c addParticipant: before saving the share, those participants will be added to the share.
  */
-@property (assign) CKShareParticipantPermission publicPermission;
+@property (nonatomic, assign) CKShareParticipantPermission publicPermission;
 
 /*! @abstract A URL that can be used to invite participants to this share.
  *
  *  @discussion Only available after share record has been saved to the server.  This url is stable, and is tied to the rootRecord.  That is, if you share a rootRecord, delete the share, and re-share the same rootRecord via a newly created share, that newly created share's url will be identical to the prior share's url
  */
-@property (nullable, readonly, copy) NSURL *URL;
+@property (nonatomic, readonly, copy, nullable) NSURL *URL;
 
 /*! @abstract All participants on the share that the current user has permissions to see.
  *
  *  @discussion At the minimum that will include the owner and the current user.
  */
-@property (readonly, copy) NSArray<CKShareParticipant *> *participants;
+@property (nonatomic, readonly, copy) NSArray<CKShareParticipant *> *participants;
 
 /*! Convenience methods for fetching special users from the participant array */
-@property (readonly, copy) CKShareParticipant *owner;
-@property (nullable, readonly, copy) CKShareParticipant *currentUserParticipant;
+@property (nonatomic, readonly, copy) CKShareParticipant *owner;
+@property (nonatomic, readonly, copy, nullable) CKShareParticipant *currentUserParticipant;
 
 /*! @discussion If a participant with a matching userIdentity already exists, then that existing participant's properties will be updated; no new participant will be added.
  *  In order to modify the list of participants, a share must have publicPermission set to @c CKShareParticipantPermissionNone.  That is, you cannot mix-and-match private users and public users in the same share.
@@ -101,4 +81,4 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

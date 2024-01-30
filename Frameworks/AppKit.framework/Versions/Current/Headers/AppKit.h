@@ -1,7 +1,7 @@
 /*
 	AppKit.h
 	Application Kit
-	Copyright (c) 1994-2023, Apple Inc.
+	Copyright (c) 1994-2019, Apple Inc.
 	All rights reserved.
 
 	This file is included by all AppKit application source files for easy building.  Using this file is preferred over importing individual files because it will use a precompiled version.
@@ -12,7 +12,6 @@
 #import <AppKit/AppKitErrors.h>
 #import <AppKit/NSGraphicsContext.h>
 #import <AppKit/NSAccessibility.h>
-#import <AppKit/NSAccessibilityColor.h>
 #import <AppKit/NSActionCell.h>
 #import <AppKit/NSAlert.h>
 #import <AppKit/NSAnimationContext.h>
@@ -46,7 +45,6 @@
 #import <AppKit/NSMatrix.h>
 #import <AppKit/NSMenu.h>
 #import <AppKit/NSMenuItem.h>
-#import <AppKit/NSMenuItemBadge.h>
 #import <AppKit/NSColor.h>
 #import <AppKit/NSColorSpace.h>
 #import <AppKit/NSBitmapImageRep.h>
@@ -138,7 +136,7 @@
 #import <AppKit/NSTextCheckingController.h>
 #import <AppKit/NSTextField.h>
 #import <AppKit/NSTextFieldCell.h>
-#import <AppKit/NSTextInsertionIndicator.h>
+#import <AppKit/NSText.h>
 #import <AppKit/NSTokenField.h>
 #import <AppKit/NSTokenFieldCell.h>
 #import <AppKit/NSTouchBar.h>
@@ -156,7 +154,6 @@
 #import <AppKit/NSRunningApplication.h>
 #import <AppKit/NSComboBox.h>
 #import <AppKit/NSComboBoxCell.h>
-#import <AppKit/NSComboButton.h>
 #import <AppKit/NSTableCellView.h>
 #import <AppKit/NSTableColumn.h>
 #import <AppKit/NSTableHeaderCell.h>
@@ -263,16 +260,3 @@
 #import <AppKit/NSStepperTouchBarItem.h>
 #import <AppKit/NSTintConfiguration.h>
 #import <AppKit/NSSearchToolbarItem.h>
-#import <AppKit/NSPreviewRepresentingActivityItem.h>
-
-#import <AppKit/NSTextRange.h>
-#import <AppKit/NSTextSelection.h>
-#import <AppKit/NSTextSelectionNavigation.h>
-#import <AppKit/NSTextContentManager.h>
-#import <AppKit/NSTextElement.h>
-#import <AppKit/NSTextListElement.h>
-#import <AppKit/NSTextLayoutFragment.h>
-#import <AppKit/NSTextLayoutManager.h>
-#import <AppKit/NSTextLineFragment.h>
-#import <AppKit/NSTextViewportLayoutController.h>
-#import <AppKit/NSTextAttachmentCell.h>

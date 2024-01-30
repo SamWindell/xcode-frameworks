@@ -1,7 +1,7 @@
 /*
 	NSItemProvider.h
 	Application Kit
-	Copyright (c) 2014-2023, Apple Inc.
+	Copyright (c) 2014-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -9,7 +9,7 @@
 #import <Foundation/NSItemProvider.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 // Item information support for Services-with-UI.
@@ -33,4 +33,4 @@ APPKIT_EXTERN NSString * const NSTypeIdentifierPhoneNumberText NS_AVAILABLE(10_1
 APPKIT_EXTERN NSString * const NSTypeIdentifierTransitInformationText NS_AVAILABLE(10_10, 8_0); // NSTextCheckingTypeTransitInformation, com.apple.structured-text.transit-information
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

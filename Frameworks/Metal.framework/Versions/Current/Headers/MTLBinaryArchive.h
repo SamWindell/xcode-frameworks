@@ -22,7 +22,6 @@ typedef NS_ENUM(NSUInteger, MTLBinaryArchiveError)
     MTLBinaryArchiveErrorInvalidFile = 1,
     MTLBinaryArchiveErrorUnexpectedElement = 2,
     MTLBinaryArchiveErrorCompilationFailure = 3,
-    MTLBinaryArchiveErrorInternalError API_AVAILABLE(macos(13.0), ios(16.0)) = 4,
 } API_AVAILABLE(macos(11.0), ios(14.0));
 
 /*!
@@ -97,7 +96,7 @@ API_AVAILABLE(macos(11.0), ios(14.0))
  @param error If the function fails, this will be set to describe the failure. This can be (but is not required to be) an error from the MTLBinaryArchiveDomain domain.
  @return Whether or not the addition succeeded. Functions referenced multiple times are silently accepted.
  */
-- (BOOL) addTileRenderPipelineFunctionsWithDescriptor:(MTLTileRenderPipelineDescriptor*)descriptor error:(NSError**)error API_AVAILABLE(tvos(14.5));
+- (BOOL) addTileRenderPipelineFunctionsWithDescriptor:(MTLTileRenderPipelineDescriptor*)descriptor error:(NSError**)error;
 
 /*!
  @method serializeToURL:error:
@@ -108,16 +107,6 @@ API_AVAILABLE(macos(11.0), ios(14.0))
  @return Whether or not the writing the file succeeded.
  */
 - (BOOL) serializeToURL:(NSURL*)url error:(NSError**)error;
-
-/*!
- @method addFunctionWithDescriptor:library:error:
- @abstract Add a `visible` or `intersection` function to the archive.
- @param descriptor The descriptor from which the function will be added.
- @param library Library of functions to add the function from.
- @param error If the function fails, this will be set to describe the failure. This can be (but is not required to be) an error from the MTLBinaryArchiveDomain domain. Other possible errors can be file access or I/O related.
- @return Whether or not the addition succeeded. Functions referenced multiple times are silently accepted.
- */
-- (BOOL) addFunctionWithDescriptor:(MTLFunctionDescriptor *)descriptor library:(id<MTLLibrary>)library error:(NSError **)error API_AVAILABLE(macos(12.0), ios(15.0));
 
 @end
 

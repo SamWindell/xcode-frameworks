@@ -8,7 +8,7 @@
 
 @class NSString, NSArray<ObjectType>, NSDictionary<KeyType, ObjectType>, NSDate, NSTimeZone, NSOrthography, NSURL, NSRegularExpression;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /* NSTextCheckingResult is a class used to describe items located by text checking.  Each of these objects represents something that has been found during checking--a misspelled word, a sentence with grammatical issues, a detected URL, a straight quote to be replaced with curly quotes, and so forth. */
 
@@ -35,7 +35,7 @@ NS_ENUM(NSTextCheckingTypes) {
     NSTextCheckingAllTypes          = (NSTextCheckingAllSystemTypes | NSTextCheckingAllCustomTypes)
 };
 
-typedef NSString *NSTextCheckingKey NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSString *NSTextCheckingKey NS_EXTENSIBLE_STRING_ENUM;
 
 API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0))
 @interface NSTextCheckingResult : NSObject <NSCopying, NSSecureCoding>
@@ -108,5 +108,5 @@ FOUNDATION_EXPORT NSTextCheckingKey const NSTextCheckingFlightKey API_AVAILABLE(
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 

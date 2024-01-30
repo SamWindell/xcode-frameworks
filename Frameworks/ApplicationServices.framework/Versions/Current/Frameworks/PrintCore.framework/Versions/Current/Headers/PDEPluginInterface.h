@@ -17,51 +17,44 @@
 #ifndef __PDEPLUGININTERFACE__
 #define __PDEPLUGININTERFACE__
 
-#ifdef __OBJC__
 
-#import <Foundation/Foundation.h>
-#import <PrintCore/PMDefinitions.h>
+
+#import <cups/cups.h>
 #import <cups/ppd.h>
-
-API_UNAVAILABLE_BEGIN(ios)
-
-@class NSView;
-@protocol PDEPanel;
-@protocol PDEPlugInCallbackProtocol;
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class NSView;
+
 /*!
  * @name	PDEPlugIn
- * @abstract	An instance implementing methods in the PDEPlugIn protocol
+ * @abstract	An instance implementing methods in the PDEPlugIn informal protocol protocol
  *				acts as a factory for PDEPanels. The factory is provided with the type
  *				of printer panel needed (page setup or print dialog) as well as
  *				the current printer. It can use this information to determine which
  *				PDEPanels should be created.
  *
  */
-@protocol PDEPlugIn <NSObject>
+@interface NSObject(PDEPlugIn)
 
 /*!
  * @method		initWithBundle:
- * @abstract	Called to instantiate the principal class of the PDE plug-in.
- *
- * @discussion	Prior to macOS 13, PDE plug-ins were instantiated with -init, and after
- *				that -initWithBundle: was called expecting a BOOL return. In macOS 13
- *				and later, PDE plug-ins that conform to the PDEPlugIn protocol will be
- *				instantiated with -initWithBundle: as the sole initializer method, returning
- *				the usual instancetype. PDE plug-ins that do not conform to PDEPlugIn
- *				will be instantiated in the old two step way.
+ * @abstract	Called once when the PDE plug-in is loaded. When using a sandbox
+ *				application, if the PDE plug-in does not declare itself sandbox-compatible, 
+ *				the PDE is loaded to get its name and is then unloaded. The PDE is reloaded when 
+ *				it is selected in the PDE menu or when the user selects the print button.
  *
  * @param theBundle		The plug-in's bundle.
  *
- * @result	Return a valid instance if initialization succeeded and nil otherwise.
+ * @result	Returns YES if initialization succeeded and NO otherwise.
  */
-- (nullable instancetype)initWithBundle:(NSBundle*)theBundle; /* NS_DESIGNATED_INITIALIZER */
+- (BOOL)initWithBundle:(NSBundle*)theBundle;
 
 /*!
  * @method		PDEPanelsForType:withHostInfo:
- * @abstract	Returns an array of instances conforming to the PDEPanel protocol.
+ * @abstract	Returns an array of instances conforming to the PDEPanel informal protocol.
  *
  * @param		pdeType	The type of print panels that should be returned. These kinds are
  *				defined in PMPrintingDialogExtensions.h and include:
@@ -70,16 +63,16 @@ NS_ASSUME_NONNULL_BEGIN
  *					kGeneralPrintDialogTypeIDStr
  *						- Panels that should be shown in the print dialog.
  *
- * @param	host	A print system provided instance that implements methods from the protocol
+ * @param	host	A print system provided instance that implements methods from the informal protocol
  *					PDEPlugInCallbackProtocol. The PDEPlugIn can use this parameter to
  *					obtain the current printer or print setting in order to filter the
  *					available panels if there are printer specific PDEPanels in the PDEPlugIn.	
  *
- * @result	An array of instances implementing methods from the PDEPanel protocol.
+ * @result	An array of instances implementing methods from the PDEPanel informal protocol.
  *			Each instance represents a panel that will be shown in the printer dialog.
  *			The method may return either nil or an empty array if no panels should be used.
  */
-- (nullable NSArray<id<PDEPanel>>*)PDEPanelsForType:(NSString*)pdeType withHostInfo:(id<PDEPlugInCallbackProtocol>)host;
+- (nullable NSArray*)PDEPanelsForType:(NSString*)pdeType withHostInfo:(id)host;
 
 @end
 
@@ -87,13 +80,11 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  * @name	PDEPanel
  * @abstract	A print dialog plugin should have an instance implementing methods
- *				from the PDEPanel protocol. Each such instance handles a single
+ *				from the PDEPanel informal protocol. Each such instance handles a single
  *				print dialog panel.
  *
  */
-@protocol PDEPanel <NSObject>
-
-@required
+@interface NSObject(PDEPanel)
 
 /*!
  * @method		willShow
@@ -154,8 +145,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)restoreValuesAndReturnError:(NSError**)error;
 
-@optional
-
 /*!
  * @method		supportedPPDOptionKeys
  * @abstract	The panel takes responsability for displaying user interface elements for the
@@ -164,9 +153,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @discussion	Any PPD option keys not claimed by a PDEPanel are provided with a dynamically built
  *				user interface in the Printer Features panel.
  */
-- (nullable NSArray<NSString *>*)supportedPPDOptionKeys;
-
-@required
+- (nullable NSArray*)supportedPPDOptionKeys;
 
 /*!
  * @method		PPDOptionKeyValueDidChange
@@ -236,9 +223,7 @@ NS_ASSUME_NONNULL_BEGIN
  *				current user. For example a key in the dictionary for the copies and
  *				pages panel might have the key 'Page Range' and the value 'All'.
  */
-- (NSDictionary<NSString *, NSString *> * _Nullable)summaryInfo;
-
-@optional
+- (NSDictionary * _Nullable)summaryInfo;
 
 /*!
  * @method		shouldShowHelp
@@ -303,11 +288,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  * @name	PDEPlugInCallbackProtocol
- * @abstract	A protocol implemented by the print system so
+ * @abstract	An informal protocol implemented by the print system so
  *				that printing dialog extensions can obtain information
  *				about the current printer and print job.
  *
- * @discussion	An print system created instance implementing the protocol,
+ * @discussion	An print system created instance implementing the informal protocol,
  *				PDEPlugInCallbackProtocol, is passed to PDEPlugin as part of the PDEPlugIn's
  *				PDEPanelsForType:withHostInfo: message. The PDEPlugIn is expected to
  *				hold on to the passed in instance and to use this PDEPlugInCallbackProtocol
@@ -315,7 +300,7 @@ NS_ASSUME_NONNULL_BEGIN
  *				pass the instance implementing PDEPlugInCallbackProtocol to PDEPanels
  *				as needed.
  */
-@protocol PDEPlugInCallbackProtocol
+@interface NSObject(PDEPlugInCallbackProtocol)
 
 /*!
  * @method		printSession
@@ -365,7 +350,7 @@ NS_ASSUME_NONNULL_BEGIN
  *				A description of some of the CUPS PPD functions is here:
  *				http://127.0.0.1:631/spm.html#3_3
  */
-- (nullable struct ppd_file_s*) ppdFile;
+- (nullable ppd_file_t*) ppdFile;
 
 /*!
  * @method		changePPDOptionKeyValue:ppdChoiceKey:
@@ -401,10 +386,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-
-API_UNAVAILABLE_END //ios
-
-#endif /* __OBJC__ */
 
 #endif /* __PDEPLUGININTERFACE__ */
 

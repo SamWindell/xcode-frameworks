@@ -3,11 +3,6 @@
  Copyright (c) 2015 Apple, Inc.
    All rights reserved. */
 
-#ifndef CIFILTERGENERATOR_H
-#define CIFILTERGENERATOR_H
-
-#ifdef __OBJC__
-
 #import <CoreImage/CoreImageDefines.h>
 #import <CoreImage/CIFilterConstructor.h>
 
@@ -155,6 +150,3 @@ NS_CLASS_AVAILABLE_MAC(10_5)
 
 NS_ASSUME_NONNULL_END
 
-#endif /* __OBJC__ */
-
-#endif /* CIFILTERGENERATOR_H */

@@ -1,7 +1,7 @@
 /*
 	NSTokenField.h
 	Application Kit
-	Copyright (c) 2004-2023, Apple Inc.
+	Copyright (c) 2004-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -11,7 +11,7 @@
 #import <AppKit/AppKitDefines.h>
 #import <Foundation/Foundation.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSTokenField;
@@ -21,39 +21,36 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @optional
 
-/// Allows the delegate to provide an array of appropriate completions for the contents of the receiver
-/// @param tokenField The token field where editing is occurring
-/// @param substring The partial string that is being completed
-/// @param tokenIndex The index of the token being completed
-/// @param selectedIndex Optionally, you can return by reference an index into the returned array that specifies which of the completions should be initially selected. If none are to be selected, return by reference `-1`.
-/// @return An array of strings (`NSString`) that are possible completions, or `nil` to provide no completions
-/// @discussion If the delegate does not implement this method, no completions are provided
-- (nullable NSArray *)tokenField:(NSTokenField *)tokenField completionsForSubstring:(NSString *)substring indexOfToken:(NSInteger)tokenIndex indexOfSelectedItem:(nullable NSInteger *)selectedIndex NS_SWIFT_UI_ACTOR;
+// Each element in the array should be an NSString or an array of NSStrings.
+// substring is the partial string that is being completed.  tokenIndex is the index of the token being completed.
+// selectedIndex allows you to return by reference an index specifying which of the completions should be selected initially.
+// The default behavior is not to have any completions.
+- (nullable NSArray *)tokenField:(NSTokenField *)tokenField completionsForSubstring:(NSString *)substring indexOfToken:(NSInteger)tokenIndex indexOfSelectedItem:(nullable NSInteger *)selectedIndex;
 
 // return an array of represented objects you want to add.
 // If you want to reject the add, return an empty array.
 // returning nil will cause an error.
-- (NSArray *)tokenField:(NSTokenField *)tokenField shouldAddObjects:(NSArray *)tokens atIndex:(NSUInteger)index NS_SWIFT_UI_ACTOR;
+- (NSArray *)tokenField:(NSTokenField *)tokenField shouldAddObjects:(NSArray *)tokens atIndex:(NSUInteger)index;
 
 // If you return nil or don't implement these delegate methods, we will assume
 // editing string = display string = represented object
-- (nullable NSString *)tokenField:(NSTokenField *)tokenField displayStringForRepresentedObject:(id)representedObject NS_SWIFT_UI_ACTOR;
-- (nullable NSString *)tokenField:(NSTokenField *)tokenField editingStringForRepresentedObject:(id)representedObject NS_SWIFT_UI_ACTOR;
-- (nullable id)tokenField:(NSTokenField *)tokenField representedObjectForEditingString:(NSString *)editingString NS_SWIFT_UI_ACTOR;
+- (nullable NSString *)tokenField:(NSTokenField *)tokenField displayStringForRepresentedObject:(id)representedObject;
+- (nullable NSString *)tokenField:(NSTokenField *)tokenField editingStringForRepresentedObject:(id)representedObject;
+- (nullable id)tokenField:(NSTokenField *)tokenField representedObjectForEditingString:(NSString *)editingString;
 
 // We put the string on the pasteboard before calling this delegate method.
 // By default, we write the NSStringPboardType as well as an array of NSStrings.
-- (BOOL)tokenField:(NSTokenField *)tokenField writeRepresentedObjects:(NSArray *)objects toPasteboard:(NSPasteboard *)pboard NS_SWIFT_UI_ACTOR;
+- (BOOL)tokenField:(NSTokenField *)tokenField writeRepresentedObjects:(NSArray *)objects toPasteboard:(NSPasteboard *)pboard;
 
 // Return an array of represented objects to add to the token field.
-- (nullable NSArray *)tokenField:(NSTokenField *)tokenField readFromPasteboard:(NSPasteboard *)pboard NS_SWIFT_UI_ACTOR;
+- (nullable NSArray *)tokenField:(NSTokenField *)tokenField readFromPasteboard:(NSPasteboard *)pboard;
 
 // By default the tokens have no menu.
-- (nullable NSMenu *)tokenField:(NSTokenField *)tokenField menuForRepresentedObject:(id)representedObject NS_SWIFT_UI_ACTOR;
-- (BOOL)tokenField:(NSTokenField *)tokenField hasMenuForRepresentedObject:(id)representedObject NS_SWIFT_UI_ACTOR;
+- (nullable NSMenu *)tokenField:(NSTokenField *)tokenField menuForRepresentedObject:(id)representedObject;
+- (BOOL)tokenField:(NSTokenField *)tokenField hasMenuForRepresentedObject:(id)representedObject;
 
 // This method allows you to change the style for individual tokens as well as have mixed text and tokens.
-- (NSTokenStyle)tokenField:(NSTokenField *)tokenField styleForRepresentedObject:(id)representedObject NS_SWIFT_UI_ACTOR;
+- (NSTokenStyle)tokenField:(NSTokenField *)tokenField styleForRepresentedObject:(id)representedObject;
 
 
 @end
@@ -77,4 +74,4 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

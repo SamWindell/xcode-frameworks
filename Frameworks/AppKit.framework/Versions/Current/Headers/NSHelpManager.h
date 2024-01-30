@@ -1,7 +1,7 @@
 /*
 	NSHelpManager.h
 	Application Kit
-	Copyright (c) 1995-2023, Apple Inc.
+	Copyright (c) 1995-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -13,7 +13,7 @@
 #import <AppKit/NSApplication.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSAttributedString, NSWindow;
@@ -22,7 +22,6 @@ typedef NSString * NSHelpBookName NS_SWIFT_BRIDGED_TYPEDEF;
 typedef NSString * NSHelpAnchorName NS_SWIFT_BRIDGED_TYPEDEF;
 typedef NSString * NSHelpManagerContextHelpKey NS_SWIFT_BRIDGED_TYPEDEF;
 
-NS_SWIFT_UI_ACTOR
 @interface NSHelpManager : NSObject
 
 @property (class, readonly, strong) NSHelpManager *sharedHelpManager;
@@ -68,4 +67,4 @@ APPKIT_EXTERN NSNotificationName NSContextHelpModeDidDeactivateNotification;
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

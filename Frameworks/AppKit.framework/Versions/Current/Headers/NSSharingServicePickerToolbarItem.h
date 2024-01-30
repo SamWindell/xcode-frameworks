@@ -1,7 +1,7 @@
 /*
  NSSharingServicePickerToolbarItem.h
  Application Kit
- Copyright (c) 2019-2023, Apple Inc.
+ Copyright (c) 2019, Apple Inc.
  All rights reserved.
  */
 #import <TargetConditionals.h>
@@ -12,7 +12,7 @@
 @protocol NSSharingServicePickerToolbarItemDelegate;
 #endif
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 API_AVAILABLE(macos(10.15), ios(10.13))
 @interface NSSharingServicePickerToolbarItem : NSToolbarItem
@@ -27,9 +27,9 @@ API_AVAILABLE(macos(10.15), ios(10.13))
 @protocol NSSharingServicePickerToolbarItemDelegate <NSSharingServicePickerDelegate>
 @required
 /* Return the items that represent the objects to be shared. They must conform to the <NSPasteboardWriting> protocol or be an NSItemProvider. (e.g. NSString, NSImage, NSURL, etc.). */
-- (NSArray *)itemsForSharingServicePickerToolbarItem:(NSSharingServicePickerToolbarItem *)pickerToolbarItem NS_SWIFT_UI_ACTOR;
+- (NSArray *)itemsForSharingServicePickerToolbarItem:(NSSharingServicePickerToolbarItem *)pickerToolbarItem;
 
 @end
 #endif
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

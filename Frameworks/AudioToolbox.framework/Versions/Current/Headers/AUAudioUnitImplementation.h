@@ -116,8 +116,7 @@ typedef NS_ENUM(uint8_t, AURenderEventType) {
 	AURenderEventParameter		= 1,
 	AURenderEventParameterRamp	= 2,
 	AURenderEventMIDI			= 8,
-	AURenderEventMIDISysEx		= 9,
-	AURenderEventMIDIEventList  = 10
+	AURenderEventMIDISysEx		= 9
 };
 
 #pragma pack(4)
@@ -157,17 +156,6 @@ typedef struct AUMIDIEvent {
 	uint8_t					data[3];			//!< The bytes of the MIDI event. Running status will not be used.
 } AUMIDIEvent;
 
-/// Describes a single scheduled MIDIEventList.
-typedef struct AUMIDIEventList {
-	union AURenderEvent *__nullable next;		//!< The next event in a linked list of events.
-	AUEventSampleTime		eventSampleTime;	//!< The sample time at which the event is scheduled to occur.
-	AURenderEventType		eventType;			//!< AURenderEventMIDI or AURenderEventMIDISysEx.
-	uint8_t					reserved;			//!< Must be 0.
-	uint8_t					cable;				//!< The virtual cable number.
-	MIDIEventList			eventList;			//!< A structure containing UMP packets.
-} AUMIDIEventList;
-
-
 /*!	@brief	A union of the various specific render event types.
 	@discussion
 		Determine which variant to use via head.eventType. AURenderEventParameter and
@@ -178,7 +166,6 @@ typedef union AURenderEvent {
 	AURenderEventHeader		head;
 	AUParameterEvent		parameter;
 	AUMIDIEvent				MIDI;
-	AUMIDIEventList			MIDIEventsList;
 } AURenderEvent;
 #pragma pack()
 
@@ -242,17 +229,13 @@ typedef AUAudioUnitStatus (^AUInternalRenderBlock)(
         If the plug-in produces more MIDI output data than the default size of the allocated buffer,
         then the plug-in can provide this property to increase the size of this buffer.
 
-        The value represents the number of 3-byte Legacy MIDI messages that fit into the buffer or
-		a single MIDIEventList containing 1 MIDIEventPacket of 2 words when using MIDI 2.0 (MIDIEventList based API's).
- 
+        The value represents the number of 3-byte MIDI 1.0 messages that fit into the buffer.
         This property is set to the default value by the framework.
 
         In case of kAudioUnitErr_MIDIOutputBufferFull errors caused by producing too much MIDI
         output in one render call, set this property to increase the buffer.
 
         This only provides a recommendation to the framework.
- 
-        Bridged to kAudioUnitProperty_MIDIOutputBufferSizeHint.
 */
 @property (NS_NONATOMIC_IOSONLY) NSInteger MIDIOutputBufferSizeHint API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0));
 
@@ -430,20 +413,6 @@ typedef NSString *__nonnull (^AUImplementorDisplayNameWithLengthCallback)(AUPara
 */
 API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0))
 @interface AUAudioUnitV2Bridge : AUAudioUnit
-
-/*! @property audioUnit
-    @brief	  The underlying v2 AudioUnit
-	@discussion
-		We generally discourage interacting with the underlying v2 AudioUnit directly and
-		recommend using the v3 equivalent methods and properties from AUAudioUnitV2Bridge.
-		
-		In some rare cases it may be desirable to interact with the v2 AudioUnit.
-		For example, a v2 plugin may define custom properties that are not bridged to v3.
-		Implementors can sublcass AUAudioUnitV2Bridge and call the v2 API methods
-		AudioUnitGetProperty / AudioUnitSetProperty with the v2 AudioUnit.
-*/
-@property (nonatomic, readonly) AudioUnit audioUnit API_AVAILABLE(macos(11.0), ios(14.0), watchos(7.0), tvos(14.0));
-
 @end
 
 // =================================================================================================

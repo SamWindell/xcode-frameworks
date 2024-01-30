@@ -1,7 +1,7 @@
 /*
     CoreData.h
     Core Data
-    Copyright (c) 2004-2023, Apple Inc.
+    Copyright (c) 2004-2020, Apple Inc.
     All rights reserved.
 */
 
@@ -12,7 +12,6 @@
 
 #import <CoreData/NSAttributeDescription.h>
 #import <CoreData/NSDerivedAttributeDescription.h>
-#import <CoreData/NSCompositeAttributeDescription.h>
 #import <CoreData/NSEntityDescription.h>
 #import <CoreData/NSFetchedPropertyDescription.h>
 #import <CoreData/NSPropertyDescription.h>
@@ -64,11 +63,5 @@
 #import <CoreData/NSPersistentCloudKitContainerOptions.h>
 #import <CoreData/NSPersistentCloudKitContainerEvent.h>
 #import <CoreData/NSPersistentCloudKitContainerEventRequest.h>
-
-#import <CoreData/NSStagedMigrationManager.h>
-#import <CoreData/NSMigrationStage.h>
-#import <CoreData/NSCustomMigrationStage.h>
-#import <CoreData/NSLightweightMigrationStage.h>
-#import <CoreData/NSManagedObjectModelReference.h>
 
 #import <CoreData/NSCoreDataCoreSpotlightDelegate.h>

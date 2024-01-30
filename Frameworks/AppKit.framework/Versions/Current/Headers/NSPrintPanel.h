@@ -1,7 +1,7 @@
 /*
 	NSPrintPanel.h
 	Application Kit
-	Copyright (c) 1994-2023, Apple Inc.
+	Copyright (c) 1994-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -12,16 +12,10 @@
 #import <Foundation/NSSet.h>
 #import <AppKit/NSHelpManager.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSPrintInfo, NSSet, NSView, NSViewController, NSWindow, NSWindowController;
-
-API_AVAILABLE(macos(14.0))
-typedef NS_ENUM(NSInteger, NSPrintPanelResult) {
-    NSPrintPanelResultCancelled = 0,
-    NSPrintPanelResultPrinted,
-} NS_SWIFT_NAME(NSPrintPanel.Result) API_AVAILABLE(macos(14.0));
 
 typedef NS_OPTIONS(NSUInteger, NSPrintPanelOptions) {
 
@@ -42,7 +36,7 @@ typedef NS_OPTIONS(NSUInteger, NSPrintPanelOptions) {
     NSPrintPanelShowsPageSetupAccessory = 1 << 8,
 
     /* Whether the print panel has a built-in preview. Setting this option in a print panel that's not being presented by an NSPrintOperation is not useful. Two things you need to be aware of when this option is set:
-     1) the NSPrintInfo passed into -beginSheetUsingPrintInfo:onWindow:completionHandler: or -runModalWithPrintInfo: will be retained instead of copied. This is so that the NSPrintOperation that is presenting the panel can respond to -printInfo messages by returning the NSPrintInfo that the user is actually looking at and manipulating, which is the most useful thing for it to return. The result is that the passed-in NSPrintInfo can be mutated even when the user cancels the print panel, but that's OK; the factory methods that you use to create NSPrintOperations do the copying that's appropriate in that case.
+     1) the NSPrintInfo passed into -beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo: or -runModalWithPrintInfo: will be retained instead of copied. This is so that the NSPrintOperation that is presenting the panel can respond to -printInfo messages by returning the NSPrintInfo that the user is actually looking at and manipulating, which is the most useful thing for it to return. The result is that the passed-in NSPrintInfo can be mutated even when the user cancels the print panel, but that's OK; the factory methods that you use to create NSPrintOperations do the copying that's appropriate in that case.
      2) The presenting NSPrintOperation will send the printing view more messages that it would otherwise, so that it can do pagination right away, draw the preview on screen, etc.
     */
     NSPrintPanelShowsPreview = 1 << 17
@@ -66,17 +60,17 @@ APPKIT_EXTERN NSPrintPanelAccessorySummaryKey const NSPrintPanelAccessorySummary
 
 /* Return the text that summarizes the settings that the user has chosen using this print panel accessory view and that should appear in the summary pane of the print panel. It must be an array of dictionaries (not nil), each of which has an NSPrintPanelAccessorySummaryItemNameKey entry and an NSPrintPanelAccessorySummaryItemDescriptionKey entry whose values are strings. A print panel accessory view must be KVO-compliant for "localizedSummaryItems" because NSPrintPanel observes it to keep what it displays in its Summary view up to date. (In Mac OS 10.5 there is no way for the user to see your accessory view and the Summary view at the same time, but that might not always be true in the future.)
 */
-- (NSArray<NSDictionary<NSPrintPanelAccessorySummaryKey, NSString *> *> *)localizedSummaryItems NS_SWIFT_UI_ACTOR;
+- (NSArray<NSDictionary<NSPrintPanelAccessorySummaryKey, NSString *> *> *)localizedSummaryItems;
 
 @optional
 
 /* Return the key paths for properties whose values affect what is drawn in the print panel's built-in preview. NSPrintPanel observes these key paths and redraws the preview when the values for any of them change. For example, if you write an accessory view that lets the user change document margins in the print panel you might provide an implementation of this method that returns a set that includes strings like @"representedObject.leftMargin", @"representedObject.rightMargin", etc. (because the representedObject would be an NSPrintInfo, which is KVO-compliant for "leftMargin," "rightMargin," etc.). This protocol method is optional because it's not necessary if you're not using NSPrintPanel's built-in preview, but if you use preview you almost certainly have to implement this method properly too.
 */
-- (NSSet<NSString *> *)keyPathsForValuesAffectingPreview NS_SWIFT_UI_ACTOR;
+- (NSSet<NSString *> *)keyPathsForValuesAffectingPreview;
 
 @end
 
-NS_SWIFT_UI_ACTOR
+
 @interface NSPrintPanel : NSObject
 
 /* Create a new NSPrintPanel.
@@ -108,17 +102,12 @@ NS_SWIFT_UI_ACTOR
 // Set or get a string that provides a hint about the type of print job in which this print panel is being used. This controls the set of items that appear in the Presets menu. The string must be one of the job style hint strings declared above, or nil to show general presets.
 @property (nullable, copy) NSPrintPanelJobStyleHint jobStyleHint;
 
-/* Displays the print panel as a sheet on a window.
-    This method returns immediately.
-    When the print panel is dismissed, calls the completion handler with NSPrintPanelResult as the argument.
-*/
-- (void)beginSheetUsingPrintInfo:(NSPrintInfo *)printInfo onWindow:(NSWindow *)parentWindow completionHandler:(void (^_Nullable)(NSPrintPanelResult result))handler API_AVAILABLE(macos(14.0));
 
 /* Present a print panel to the user, document-modally. When the user has dismissed it, send the message selected by didEndSelector to the delegate, with the contextInfo as the last argument. The method selected by didEndSelector must have the same signature as:
 
     - (void)printPanelDidEnd:(NSPrintPanel *)printPanel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 */
-- (void)beginSheetWithPrintInfo:(NSPrintInfo *)printInfo modalForWindow:(NSWindow *)docWindow delegate:(nullable id)delegate didEndSelector:(nullable SEL)didEndSelector contextInfo:(nullable void *)contextInfo API_DEPRECATED_WITH_REPLACEMENT("This method will be deprecated in a future release. Use -[NSPrintPanel beginSheetUsingPrintInfo:onWindow:completionHandler:] instead.", macos(10.0, API_TO_BE_DEPRECATED));
+- (void)beginSheetWithPrintInfo:(NSPrintInfo *)printInfo modalForWindow:(NSWindow *)docWindow delegate:(nullable id)delegate didEndSelector:(nullable SEL)didEndSelector contextInfo:(nullable void *)contextInfo;
 
 /* Present a print panel to the user, application-modally, and return either NSOKButton or NSCancelButton. The default implementation of -runModal just invokes [self runModalWithPrintInfo:[[NSPrintOperation currentOperation] printInfo]].
 */
@@ -126,7 +115,7 @@ NS_SWIFT_UI_ACTOR
 - (NSInteger)runModal;
 
 
-/* Returns the printInfo passed to `beginSheetUsingPrintInfo:onWindow:completionHandler:`.
+/* A simple accessor. Your -beginSheetWithPrintInfo:... delegate can use this so it doesn't have to keep a pointer to the NSPrintInfo elsewhere while waiting for the user to dismiss the print panel.
 */
 @property (readonly, strong) NSPrintInfo *printInfo API_AVAILABLE(macos(10.5));
 
@@ -144,4 +133,4 @@ NS_SWIFT_UI_ACTOR
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

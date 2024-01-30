@@ -1,7 +1,7 @@
 /*
 	NSComboBox.h
 	Application Kit
-	Copyright (c) 1996-2023, Apple Inc.
+	Copyright (c) 1996-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -9,7 +9,7 @@
 #import <AppKit/NSTextField.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 APPKIT_EXTERN NSNotificationName NSComboBoxWillPopUpNotification;
@@ -22,21 +22,21 @@ APPKIT_EXTERN NSNotificationName NSComboBoxSelectionIsChangingNotification;
 @protocol NSComboBoxDataSource <NSObject>
 @optional
 /* These two methods are required when not using bindings */
-- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)comboBox NS_SWIFT_UI_ACTOR;
-- (nullable id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(NSInteger)index NS_SWIFT_UI_ACTOR;
+- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)comboBox;
+- (nullable id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(NSInteger)index;
 
-- (NSUInteger)comboBox:(NSComboBox *)comboBox indexOfItemWithStringValue:(NSString *)string NS_SWIFT_UI_ACTOR;
-- (nullable NSString *)comboBox:(NSComboBox *)comboBox completedString:(NSString *)string NS_SWIFT_UI_ACTOR;
+- (NSUInteger)comboBox:(NSComboBox *)comboBox indexOfItemWithStringValue:(NSString *)string;
+- (nullable NSString *)comboBox:(NSComboBox *)comboBox completedString:(NSString *)string;
 @end
 
 @protocol NSComboBoxDelegate <NSTextFieldDelegate>
 @optional
 
 /* Notifications */
-- (void)comboBoxWillPopUp:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
-- (void)comboBoxWillDismiss:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
-- (void)comboBoxSelectionDidChange:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
-- (void)comboBoxSelectionIsChanging:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
+- (void)comboBoxWillPopUp:(NSNotification *)notification;
+- (void)comboBoxWillDismiss:(NSNotification *)notification;
+- (void)comboBoxSelectionDidChange:(NSNotification *)notification;
+- (void)comboBoxSelectionIsChanging:(NSNotification *)notification;
 
 @end
 
@@ -85,4 +85,4 @@ APPKIT_EXTERN NSNotificationName NSComboBoxSelectionIsChangingNotification;
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

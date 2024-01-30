@@ -10,8 +10,6 @@
 #if !defined(__COREFOUNDATION_CFBASE__)
 #define __COREFOUNDATION_CFBASE__ 1
 
-#include <stddef.h>
-
 #if __has_include(<CoreFoundation/TargetConditionals.h>)
 #include <CoreFoundation/TargetConditionals.h>
 #else
@@ -66,7 +64,7 @@
 #define __has_extension(x) 0
 #endif
 
-#if defined(__GNUC__) || TARGET_OS_WIN32
+#if defined(__GNUC__) || 0
 #include <stdint.h>
 #include <stdbool.h>
 #endif
@@ -135,25 +133,11 @@
 #endif
 #endif
 
-#if TARGET_OS_WIN32
-    #if defined(__cplusplus)
-        #define _CF_EXTERN extern "C"
-    #else
-        #define _CF_EXTERN extern
-    #endif
 
-    #if defined(_WINDLL)
-        #if defined(CoreFoundation_EXPORTS) || defined(CF_BUILDING_CF)
-            #define CF_EXPORT _CF_EXTERN __declspec(dllexport)
-        #else
-            #define CF_EXPORT _CF_EXTERN __declspec(dllimport)
-        #endif
-    #else
-        #define CF_EXPORT _CF_EXTERN
-    #endif
-#else
 #define CF_EXPORT extern
-#endif
+
+
+CF_EXTERN_C_BEGIN
 
 #if !defined(NULL)
 #if defined(__GNUG__)
@@ -182,8 +166,6 @@
 	#define CF_INLINE static inline
     #elif defined(_MSC_VER)
         #define CF_INLINE static __inline
-    #elif TARGET_OS_WIN32
-	#define CF_INLINE static __inline__
     #endif
 #endif
 
@@ -312,12 +294,6 @@
 # define CF_SWIFT_NAME(_name)
 #endif
 
-#if __has_attribute(__swift_attr__)
-#  define CF_SWIFT_UNAVAILABLE_FROM_ASYNC(msg) __attribute__((__swift_attr__("@_unavailableFromAsync(message: \"" msg "\")")))
-#else
-#  define CF_SWIFT_UNAVAILABLE_FROM_ASYNC(msg)
-#endif
-
 #if __has_attribute(noescape)
 #define CF_NOESCAPE __attribute__((noescape))
 #else
@@ -336,12 +312,6 @@
 #define CF_WARN_UNUSED_RESULT
 #endif
 
-#if __has_attribute(fallthrough)
-#define CF_FALLTHROUGH __attribute__((fallthrough))
-#else
-#define CF_FALLTHROUGH
-#endif
-
 #if !__has_feature(objc_generics_variance)
 #ifndef __covariant
 #define __covariant
@@ -351,8 +321,6 @@
 #endif
 #endif
 
-
-CF_EXTERN_C_BEGIN
 
 CF_EXPORT double kCFCoreFoundationVersionNumber;
 
@@ -709,8 +677,6 @@ CF_IMPLICIT_BRIDGING_DISABLED
 CF_EXPORT
 CFTypeRef CFMakeCollectable(CFTypeRef cf) CF_AUTOMATED_REFCOUNT_UNAVAILABLE;
 
-CF_EXTERN_C_END
-
 #if DEPLOYMENT_RUNTIME_SWIFT
 
 #define _CF_SWIFT_RC_PINNED_FLAG (0x1)
@@ -733,6 +699,8 @@ CF_EXTERN_C_END
 #else
 #define __ptrauth_cf_objc_isa_pointer
 #endif
+
+CF_EXTERN_C_END
 
 #endif /* ! __COREFOUNDATION_CFBASE__ */
 

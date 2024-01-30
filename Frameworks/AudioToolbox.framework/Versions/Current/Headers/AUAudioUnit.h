@@ -12,9 +12,7 @@
 #ifdef __OBJC2__
 
 #import <AudioToolbox/AUParameters.h>
-#import <AudioToolbox/AudioUnitProperties.h>
 #import <Foundation/NSExtensionRequestHandling.h>
-#import <CoreMIDI/MIDIServices.h>
 
 #if !TARGET_OS_IPHONE
 typedef UInt32 AUAudioObjectID; // AudioObjectID
@@ -33,8 +31,6 @@ typedef uint8_t MIDIChannelNumber;
 
 @protocol AUAudioUnitFactory;
 
-@protocol AUMessageChannel;
-
 // =================================================================================================
 
 /*!	@typedef	AUAudioUnitStatus
@@ -42,10 +38,18 @@ typedef uint8_t MIDIChannelNumber;
 */
 typedef OSStatus AUAudioUnitStatus;
 
+/*!	@typedef	AUEventSampleTime
+	@brief		Expresses time as a sample count.
+	@discussion
+		Sample times are normally positive, but hosts can propagate HAL sample times through audio
+		units, and HAL sample times can be small negative numbers.
+*/
+typedef int64_t AUEventSampleTime;
+
 /*!	@var		AUEventSampleTimeImmediate
 	@brief		A special value of AUEventSampleTime indicating "immediately."
 	@discussion
-		Callers of AUScheduleParameterBlock, AUMIDIEventListBlock, and AUScheduleMIDIEventBlock can pass
+		Callers of AUScheduleParameterBlock and AUScheduleMIDIEventBlock can pass
 		AUEventSampleTimeImmediate to indicate that the event should be rendered as soon as
 		possible, in the next cycle. A caller may also add a small (less than 4096) sample frame
 		offset to this constant. The base AUAudioUnit implementation translates this constant to a
@@ -155,9 +159,6 @@ typedef void (^AURenderObserver)(AudioUnitRenderActionFlags actionFlags, const A
 	@brief		Block to schedule parameter changes.
 	@discussion
 		Not all parameters are rampable; check the parameter's flags.
-		Note: If the parameter is not rampable, a rampDuration of zero will result in an immediate change to
-		the target value, however, if rampDuration is non-zero, the parameter will not change.
- 
 	@param eventSampleTime
 		The sample time (timestamp->mSampleTime) at which the parameter is to begin changing. When
 		scheduling parameters during the render cycle (e.g. via a render observer) this time can be
@@ -244,7 +245,7 @@ typedef BOOL (^AUHostMusicalContextBlock)(double * __nullable currentTempo, doub
 	@param enabled
 		YES if the profile was enabled, NO if the profile was disabled.
 */
-typedef void (^AUMIDICIProfileChangedBlock)(uint8_t cable, MIDIChannelNumber channel, MIDICIProfile *profile, BOOL enabled) API_AVAILABLE(macos(10.14), ios(12.0)) __WATCHOS_PROHIBITED __TVOS_PROHIBITED;
+typedef void (^AUMIDICIProfileChangedBlock)(uint8_t cable, MIDIChannelNumber channel, MIDICIProfile *profile, BOOL enabled);
 
 /*!	@enum		AUHostTransportStateFlags
 	@brief		Flags describing the host's transport state.
@@ -480,8 +481,8 @@ API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0))
 /*!	@property	scheduleParameterBlock
 	@brief		Block which hosts use to schedule parameters.
 	@discussion
-		As with renderBlock, a host should fetch and cache this block before calling
-		allocateRenderResources, if it intends to schedule parameters.
+		As with renderBlock, a host should fetch and cache this block before beginning to render,
+		if it intends to schedule parameters.
 				
 		The block is safe to call from any thread context, including realtime audio render
 		threads.
@@ -591,56 +592,24 @@ API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0))
 /*!	@property	scheduleMIDIEventBlock
 	@brief		Block used to schedule MIDI events.
 	@discussion
-		As with renderBlock, a host should fetch and cache this block before calling
-		allocateRenderResources if it intends to schedule MIDI events.
+		As with renderBlock, a host should fetch and cache this block before beginning to render,
+		if it intends to schedule MIDI events.
 
 		This is implemented in the base class. It is nil when musicDeviceOrEffect is NO.
 
-		Subclasses should not override. When hosts schedule events via this block, they are
-		sent to the Audio Unit via the list of AURenderEvents delivered to
+		Subclassers should not override. When hosts schedule events via this block, they are
+		delivered to the audio unit via the list of AURenderEvents delivered to
 		internalRenderBlock.
- 
-		All events sent via this block will be delivered to the internalRenderBlock in the MIDI
-		protocol returned by the AudioUnitMIDIProtocol property. For example, if AudioUnitMIDIProtocol
-		returns kMIDIProtocol_2_0, incoming events will be translated to MIDI 2.0 if necessary.
-		If AudioUnitMIDIProtocol is not set, events will be delivered as legacy MIDI.
 		
 		This bridged to the v2 API MusicDeviceMIDIEvent.
 */
 @property (NS_NONATOMIC_IOSONLY, readonly, nullable) AUScheduleMIDIEventBlock scheduleMIDIEventBlock;
 
-/*! @property	scheduleMIDIEventListBlock
-	@brief		Block used to schedule MIDIEventLists.
-	@discussion
-		As with renderBlock, a host should fetch and cache this block before calling
-		allocateRenderResources, if it intends to schedule MIDI events.
-
-		When scheduling events during the render cycle (e.g. via a render observer) eventSampleTime can be
-		AUEventSampleTimeImmediate plus an optional buffer offset, in which case the event is
-		scheduled at the provided offset position within the current render cycle.
-
-		This is implemented in the base class. It is nil when musicDeviceOrEffect is NO.
-
-		Subclassers should not override. When hosts schedule events via this block, they are
-		delivered to the Audio Unit via the list of AURenderEvents delivered to
-		internalRenderBlock.
- 
-		All events sent via this block will be delivered to the internalRenderBlock in the MIDI protocol returned by
-		the AudioUnitMIDIProtocol property. For example, if this block is called with MIDI-1.0 events but
-		AudioUnitMIDIProtocol returns kMIDIProtocol_2_0, incoming events will be translated to MIDI 2.0.
-		If AudioUnitMIDIProtocol is not set, events will be delivered as legacy MIDI.
- 
-		Note: This block should be preferred over scheduleMIDIEventBlock going forward.
-
-		This bridged to the v2 API MusicDeviceMIDIEventList.
-*/
-@property (NS_NONATOMIC_IOSONLY, readonly, nullable) AUMIDIEventListBlock scheduleMIDIEventListBlock API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos);
-
 /*!	@property	MIDIOutputNames
 	@brief		Count, and names of, a plug-in's MIDI outputs.
 	@discussion
 		A plug-in may override this method to inform hosts about its MIDI outputs. The size of the
-		array is the number of outputs the Audio Unit supports. Each item in the array is the name
+		array is the number of outputs the audio unit supports. Each item in the array is the name
 		of the MIDI output at that index.
 
 		This is bridged to the v2 API property kAudioUnitProperty_MIDIOutputCallbackInfo.
@@ -662,90 +631,21 @@ API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0))
 // These properties and methods are generally optional.
 
 /*!	@property	MIDIOutputEventBlock
-	@brief		Block used by the host to access the MIDI output generated by an Audio Unit.
+	@brief		Block used by the host to access the MIDI output generated by an audio unit.
 	@discussion
  		The host can set this block and the plug-in can call it in its renderBlock to provide to the
  		host the MIDI data associated with the current render cycle.
- 
-		All events sent via this block will be delivered to the host in the MIDI protocol returned by
-		the hostMIDIProtocol property. For example, if hostMIDIProtocol is set to
-		kMIDIProtocol_2_0, incoming events will be translated to MIDI 2.0. If hostMIDIProtocol
-		is not set, events will be delivered as legacy MIDI.
 
-		Note: AUMIDIEventListBlock should be preferred over this block going forward.
-
-		This is bridged to the v2 API property kAudioUnitProperty_MIDIOutputCallback.
- */
+ 		This is bridged to the v2 API property kAudioUnitProperty_MIDIOutputCallback.
+*/
 @property (NS_NONATOMIC_IOSONLY, copy, nullable) AUMIDIOutputEventBlock MIDIOutputEventBlock API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0));
 
-/*! @property	MIDIOutputEventListBlock
-	@brief		Block used by the host to access the MIDIEventList output generated by an Audio Unit.
-	@discussion
-		The host can set this block and the plug-in can call it in its renderBlock to provide to the
-		host the MIDIEventList data associated with the current render cycle.
-
-		All events sent via this block will be delivered to the host in the MIDI protocol returned by
-		the hostMIDIProtocol property. For example, if hostMIDIProtocol is set to
-		kMIDIProtocol_2_0, incoming events will be translated to MIDI 2.0. If hostMIDIProtocol
-		is not set, events will be delivered as legacy MIDI.
-
-		Note: This block is cross-compatible with Audio Units using MIDIOutputEventBlock and should be
-		preferred over MIDIOutputEventBlock by hosts going forward. The framework will provide the Audio Unit
-		with both a MIDIOutputEventBlock and MIDIOutputEventListBlock, the Audio Unit is free to call either
-		block as all messages will be translated as described above.
- 
-		Host should setup in the following order:
-		 - Set hostMIDIProtocol
-		 - Set MIDIOutputEventListBlock
-		 - Call allocateRenderResourcesAndReturnError
- 
-		This is bridged to the v2 API property kAudioUnitProperty_MIDIOutputEventListCallback.
-*/
-@property (NS_NONATOMIC_IOSONLY, copy, nullable) AUMIDIEventListBlock MIDIOutputEventListBlock API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos);
-
-/*! @property	AudioUnitMIDIProtocol
-	@brief		The MIDI protocol used by the Audio Unit for receiving MIDIEventList data.
-	@discussion
-		Subclassers should override to return the desired protocol in which the Audio Unit wants
-		to receive input MIDI data, otherwise the Audio Unit will default to receiving legacy MIDI.
-		
-		All translatable messages will be converted (if necessary) to this protocol prior to delivery
-		to the Audio Unit.
- 
-		This is bridged to the v2 API property kAudioUnitProperty_AudioUnitMIDIProtocol.
-*/
-@property (NS_NONATOMIC_IOSONLY, readonly) MIDIProtocolID AudioUnitMIDIProtocol API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos);
-
-/*! @property	hostMIDIProtocol
-	@brief		The MIDI protocol to be used by the host for receiving MIDIEventList data.
-	@discussion
-		Hosts should set this property to the protocol they wish to receive MIDIEventList data
-		from the Audio Unit. This should be set prior to initialization, all translatable messages
-		will be converted  (if necessary) to this property's protocol prior to delivery to the host.
- 
-		Host should setup in the following order:
-		- Set hostMIDIProtocol
-		- Set MIDIOutputEventListBlock
-		- Call allocateRenderResourcesAndReturnError
-
-		This is bridged to the v2 API property kAudioUnitProperty_HostMIDIProtocol.
- 
-		Notes:
-		- If overriding this property, subclassers must call [super setHostMIDIProtocol:]
-		- hostMIDIProtocol should be set before attempting to query AudioUnitMIDIProtocol
-		or calling allocateRenderResourcesAndReturnError to allow Audio Units to
-		optionally match their input MIDI protocol to the desired host protocol and prevent
-		protocol conversion.
-
-*/
-@property (NS_NONATOMIC_IOSONLY) MIDIProtocolID hostMIDIProtocol API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos);
-
 /*!	@property	fullState
-	@brief		A persistable snapshot of the Audio Unit's properties and parameters, suitable for
+	@brief		A persistable snapshot of the audio unit's properties and parameters, suitable for
 				saving as a user preset.
 	@discussion
-		Hosts may use this property to save and restore the state of an Audio Unit being used in a
-		user preset or document. The Audio Unit should not persist transitory properties such as
+		Hosts may use this property to save and restore the state of an audio unit being used in a
+		user preset or document. The audio unit should not persist transitory properties such as
 		stream formats, but should save and restore all parameters and custom properties.
 		
 		The base class implementation of this property saves the values of all parameters 
@@ -1160,21 +1060,6 @@ API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0))
 */
 @property (nonatomic, nullable) AUMIDICIProfileChangedBlock profileChangedBlock API_AVAILABLE(macos(10.14), ios(12.0)) __WATCHOS_PROHIBITED __TVOS_PROHIBITED;
 
-/*!	@method		messageChannelFor:
-	@brief		Returns an object for bidirectional communication between an Audio Unit and its host.
-	@discussion
-		Message channels provide a flexible way for custom data exchange between an Audio Unit and its host.
-		An Audio Unit can support multiple message channels which are identified by the `channelName`.
-		The message channel object's lifetime is managed by the host. Message channel objects should be designed
-		in such a way that they could outlive the AU that vended them.
-		For further details see discussion for `AUMessageChannel`.
-	@param	channelName
-		The name of the message channel to be returned by the Audio Unit if supported.
-	@return
-		An object that conforms to the `AUMessageChannel` protocol.
-*/
-- (id<AUMessageChannel>)messageChannelFor:(NSString *)channelName API_AVAILABLE(macos(13.0), ios(16.0)) __WATCHOS_PROHIBITED __TVOS_PROHIBITED;
-
 @end
 
 // =================================================================================================
@@ -1516,57 +1401,6 @@ API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0))
 @property (NS_NONATOMIC_IOSONLY, copy) NSString *name;
 
 @end
-
-
-// =================================================================================================
-
-
-/*!	@typedef	CallHostBlock
-	@brief		Block that hosts provide to AU message channels to be called back by the AU.
-	@param	message
-		An NSDictionary with custom data. The allowed classes for key and value types are
-		NSArray, NSDictionary, NSOrderedSet, NSSet, NSString, NSData, NSNull, NSNumber, NSDate
-	@return
-		An NSDictionary with custom data. The allowed classes for key and value types are
-		NSArray, NSDictionary, NSOrderedSet, NSSet, NSString, NSData, NSNull, NSNumber, NSDate
-*/
-typedef NSDictionary * _Nonnull (^CallHostBlock)(NSDictionary *message);
-
-
-/*!	@protocol	AUMessageChannel
-	@brief		The protocol which objects returned from `[AUAudioUnit messageChannelFor:]` have to conform to.
-	@discussion
-		Audio Units and hosts that have special needs of communication, e.g. to exchange musical context required for better audio processing,
-		can implement a communication object to exchange messages in form of NSDictionaries. An Audio Unit would need to implement
-		a class conforming to the AUMessageChannel protocol and return an instance via `[AUAudioUnit messageChannelFor:]`. A host can query
-		the instance via the channel name.
-		The protocol offers a method to send messages to the AU and a block to send messages to the host.
-*/
-API_AVAILABLE(macos(13.0), ios(16.0)) __WATCHOS_PROHIBITED __TVOS_PROHIBITED
-@protocol AUMessageChannel
-
-@optional
-
-/*!	@method		callAudioUnit:
-	@brief		Calls the Audio Unit with custom data message.
-	@param	message
-		An NSDictionary with custom data. The allowed classes for key and value types are
-		NSArray, NSDictionary, NSOrderedSet, NSSet, NSString, NSData, NSNull, NSNumber, NSDate
-	@return
-		An NSDictionary with custom data. The allowed classes for key and value types are
-		NSArray, NSDictionary, NSOrderedSet, NSSet, NSString, NSData, NSNull, NSNumber, NSDate
-*/
-- (NSDictionary *)callAudioUnit:(NSDictionary *)message;
-
-/*!	@property	sendMessageToHostBlock
-	@brief		A callback for the AU to send a message to the host.
-	@discussion
-		The host has to set a block on this property.
-*/
-@property (NS_NONATOMIC_IOSONLY, copy, nullable) CallHostBlock callHostBlock;
-
-@end
-
 
 NS_ASSUME_NONNULL_END
 

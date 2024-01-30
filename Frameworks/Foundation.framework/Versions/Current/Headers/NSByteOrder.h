@@ -5,8 +5,6 @@
 #import <Foundation/NSObjCRuntime.h>
 #import <CoreFoundation/CFByteOrder.h>
 
-NS_HEADER_AUDIT_BEGIN(sendability)
-
 enum {
     NS_UnknownByteOrder = CFByteOrderUnknown,
     NS_LittleEndian = CFByteOrderLittleEndian,
@@ -118,8 +116,8 @@ NS_INLINE unsigned long long NSSwapHostLongLongToLittle(unsigned long long x) {
 }
 
 
-typedef struct NS_SWIFT_SENDABLE {unsigned int v;} NSSwappedFloat;
-typedef struct NS_SWIFT_SENDABLE {unsigned long long v;} NSSwappedDouble;
+typedef struct {unsigned int v;} NSSwappedFloat;
+typedef struct {unsigned long long v;} NSSwappedDouble;
 
 NS_INLINE NSSwappedFloat NSConvertHostFloatToSwapped(float x) {
     union fconv {
@@ -235,4 +233,3 @@ NS_INLINE NSSwappedFloat NSSwapHostFloatToLittle(float x) {
 #error Do not know the endianess of this architecture
 #endif
 
-NS_HEADER_AUDIT_END(sendability)

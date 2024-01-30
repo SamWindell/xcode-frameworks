@@ -117,7 +117,7 @@ enum {
 	kOSAsyncRefCount    = 8,
 	kOSAsyncRefSize     = 32
 };
-typedef natural_t OSAsyncReference[kOSAsyncRefCount] __kernel_ptr_semantics;
+typedef natural_t OSAsyncReference[kOSAsyncRefCount];
 
 struct OSNotificationHeader {
 	mach_msg_size_t     size;       /* content size */

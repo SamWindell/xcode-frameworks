@@ -1,13 +1,13 @@
 /*
 	NSAccessibilityConstants.h
 	Application Kit
-	Copyright (c) 2001-2023, Apple Inc.
+	Copyright (c) 2001-2019, Apple Inc.
 	All rights reserved.
 */
 #import <AppKit/AppKitDefines.h>
 #import <Foundation/Foundation.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 /*** Exception Constants ***/
@@ -591,4 +591,4 @@ typedef id<NSSecureCoding, NSObject> NSAccessibilityLoadingToken;
 APPKIT_EXTERN NSAccessibilityRole const NSAccessibilitySortButtonRole API_DEPRECATED("", macos(10.4,10.6));
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

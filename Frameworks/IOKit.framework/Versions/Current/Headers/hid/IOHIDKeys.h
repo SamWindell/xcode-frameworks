@@ -43,8 +43,8 @@ __BEGIN_DECLS
 
 /*!
     @defined HID Device Property Keys
-    @abstract Keys that represent properties of a particular device.
-    @discussion Keys that represent properties of a particular device.  Can be added
+    @abstract Keys that represent properties of a paticular device.
+    @discussion Keys that represent properties of a paticular device.  Can be added
         to your matching dictionary when refining searches for HID devices.
         <br><br>
         <b>Please note:</b><br>
@@ -67,7 +67,7 @@ __BEGIN_DECLS
         These usage pairs describe all application type collections (behaviors) defined 
         by the device.
         <br><br>
-        An application interested in only matching on one criteria would only add the 
+        An application intersted in only matching on one criteria would only add the 
         kIOHIDDeviceUsageKey and kIOHIDDeviceUsagePageKey keys to the matching dictionary.
         If it is interested in a device that has multiple behaviors, the application would
         instead add an array or dictionaries referenced by kIOHIDDeviceUsagePairsKey to his 
@@ -100,7 +100,6 @@ __BEGIN_DECLS
 #define kIOHIDTransportAirPlayValue             "AirPlay"
 #define kIOHIDTransportSPUValue                 "SPU"
 #define kIOHIDTransportBTAACPValue              "BT-AACP"
-#define kIOHIDTransportFIFOValue                "FIFO"
 
 
 #define kIOHIDCategoryAutomotiveValue       "Automotive"
@@ -109,7 +108,7 @@ __BEGIN_DECLS
     @define kIOHIDElementKey
     @abstract Keys that represents an element property.
     @discussion Property for a HID Device or element dictionary.
-        Elements can be hierarchical, so they can contain other elements.
+        Elements can be heirarchical, so they can contain other elements.
 */
 #define kIOHIDElementKey                    "Elements"
 
@@ -178,7 +177,7 @@ __BEGIN_DECLS
 
 /*!
     @defined kIOHIDElementCalibrationSaturationMinKey
-    @abstract The minimum tolerance to be used when calibrating a logical element value. 
+    @abstract The mininum tolerance to be used when calibrating a logical element value. 
     @discussion The saturation property is used to allow for slight differences in the minimum and maximum value returned by an element. 
 */
 #define kIOHIDElementCalibrationSaturationMinKey    "CalibrationSaturationMin"
@@ -214,16 +213,9 @@ __BEGIN_DECLS
 /*!
     @defined kIOHIDKeyboardSupportsEscKey
     @abstract Describe if keyboard device supports esc key.
-    @discussion Keyboard devices having full HID keyboard descriptor can specify if esc key is actually supported or not. For new macs with TouchBar this is ideal scenario where keyboard descriptor by default specifies presence of esc key but through given property client can check if key is present or not
+    @discussion Keyboard devices having full HID keyboard descriptor can specify if esc key is actually supported or not. For new macs with TouchBar this is ideal scenario where keyboard descriptor by defaultspecifies presence of esc key but through given property client can check if key is present or not
  */
 #define kIOHIDKeyboardSupportsEscKey                 "HIDKeyboardSupportsEscKey"
-
-/*!
-    @defined kIOHIDKeyboardSupportsDoNotDisturbKey
-    @abstract Describe if keyboard device supports a do not disturb key.
-    @discussion Keyboards reporting this usage are capable of triggering the do not disturb mode, it does not guarantee that the keyboard will have a button available to the user to use.
- */
-#define kIOHIDKeyboardSupportsDoNotDisturbKey                 "HIDKeyboardSupportsDoNotDisturbKey"
 
 /*!
   @typedef IOHIDOptionsType
@@ -232,12 +224,10 @@ __BEGIN_DECLS
   @constant kIOHIDOptionsTypeSeizeDevice Used to open exclusive
     communication with the device.  This will prevent the system
     and other clients from receiving events from the device.
-  @constant kIOHIDOptionsTypeMaskPrivate Mask for reserved internal usage values.
 */
 enum {
     kIOHIDOptionsTypeNone     = 0x00,
-    kIOHIDOptionsTypeSeizeDevice = 0x01,
-    kIOHIDOptionsTypeMaskPrivate = 0xff0000,
+    kIOHIDOptionsTypeSeizeDevice = 0x01
 };
 typedef uint32_t IOHIDOptionsType;
 
@@ -271,28 +261,6 @@ enum {
 };
 typedef uint32_t IOHIDStandardType;
 
-/*!
-  @typedef kIOHIDDigitizerGestureCharacterStateKey
-  @abstract Type to define what physical layout the device is referencing.
-  @constant kIOHIDKeyboardPhysicalLayoutTypeUnknown Unknown.
-  @constant kIOHIDKeyboardPhysicalLayoutType101 ANSI.
-  @constant kIOHIDKeyboardPhysicalLayoutType103 Korean.
-  @constant kIOHIDKeyboardPhysicalLayoutType102 ISO.
-  @constant kIOHIDKeyboardPhysicalLayoutType104 ABNT Brazil.
-  @constant kIOHIDKeyboardPhysicalLayoutType106 JIS.
-  @constant kIOHIDKeyboardPhysicalLayoutTypeVendor Vendor specific layout.
-*/
-enum {
-    kIOHIDKeyboardPhysicalLayoutTypeUnknown  = 0x0,
-    kIOHIDKeyboardPhysicalLayoutType101      = 0x1,
-    kIOHIDKeyboardPhysicalLayoutType103      = 0x2,
-    kIOHIDKeyboardPhysicalLayoutType102      = 0x3,
-    kIOHIDKeyboardPhysicalLayoutType104      = 0x4,
-    kIOHIDKeyboardPhysicalLayoutType106      = 0x5,
-    kIOHIDKeyboardPhysicalLayoutTypeVendor   = 0x6,
-};
-typedef uint32_t IOHIDKeyboardPhysicalLayoutType;
-
 #define kIOHIDDigitizerGestureCharacterStateKey "DigitizerCharacterGestureState"
 
 /* 
@@ -318,7 +286,7 @@ typedef uint32_t IOHIDKeyboardPhysicalLayoutType;
 
 /*!
     @defined kFnKeyboardUsageMapKey
-    @abstract top row key remapping for consumer usages
+    @abstract top row key reampping for consumer usages
     @discussion string of comma separated uint64_t value representing (usagePage<<32) | usage pairs
  
  */
@@ -352,39 +320,7 @@ typedef uint32_t IOHIDKeyboardPhysicalLayoutType;
  */
 #define kIOHIDDeviceSuspendKey              "IOHIDDeviceSuspend"
 
-/*!
- * @define     kIOHIDMaxReportBufferCountKey
- * @abstract   Number property published for an IOHIDDevice that contains the
- *             report buffer count.
- * @discussion IOHIDLibUserClient connections to an IOHIDDevice created
- *             using IOKit/hid/IOHIDDevice.h/IOHIDDeviceCreate have a report
- *             buffer, where reports can be enqueued and dispatched in quick succession.
- *             A report buffer count can be published to help determine the
- *             correct queue size that will be able to handle incoming report
- *             rates. The queue size is determined by report buffer count
- *             multiplied by the report buffer's entry size, this total size is
- *             limited to 131072 bytes. This property can be set in the
- *             IOHIDDevice's IOKit property table, or on the individual
- *             IOHIDLibUserClient connection using IOHIDDeviceSetProperty.
- *             (See kIOHIDReportBufferEntrySizeKey).
- */
-#define kIOHIDMaxReportBufferCountKey "MaxReportBufferCount"
 
-/*!
- * @define     kIOHIDReportBufferEntrySizeKey
- * @abstract   Number property published on an IOHIDDevice that contains
- *             the report buffer's entry size.
- * @discussion This key describes the entry size of the reports (in bytes)
- *             in the report buffer between an IOHIDLibUserClient and its
- *             associated IOHIDDevice. The queue size is determined by the
- *             report buffer's report count multiplied by the entry size. The
- *             buffer entry size is currently limited to 8167 bytes, exceeding
- *             this value will result in a minimum queue size. This property
- *             can be set in the IOHIDDevice's IOKit property table, or on the individual
- *             IOHIDLibUserClient connection using IOHIDDeviceSetProperty.
- *             (See kIOHIDMaxReportBufferCountKey).
- */
-#define kIOHIDReportBufferEntrySizeKey "ReportBufferEntrySize"
 
 /*!
     @defined    kIOHIDSensorPropertyReportIntervalKey
@@ -434,61 +370,24 @@ typedef uint32_t IOHIDKeyboardPhysicalLayoutType;
 
 #define kIOHIDDigitizerSurfaceSwitchKey "DigitizerSurfaceSwitch"
 
+
 /*!
-     @defined    kIOHIDKeyboardLayoutValueKey
-     @abstract   Property to report the value read from the device used to determine the keyboard layout
-     @discussion Property value if set represents the raw value recieved from the device.
-                    Supported usages and their value's meaning:
-                        * Usage: kHIDPage_Consumer/kHIDUsage_Csmr_KeyboardPhysicalLayout
-                            - 0: Unknown Layout - kIOHIDStandardTypeUnspecified
-                            - 1: 101 (e.g. US) - kIOHIDStandardTypeANSI
-                            - 2: 103 (Korea) - kIOHIDStandardTypeUnspecified
-                            - 3: 102 (e.g. German) - kIOHIDStandardTypeISO
-                            - 4: 104 (e.g. ABNT Brazil) - kIOHIDStandardTypeUnspecified
-                            - 5: 106 (DOS/V Japan) - kIOHIDStandardTypeJIS
-                            - 6: Vendor-specific - kIOHIDStandardTypeUnspecified
+     @defined    kIOHIDPointerAccelerationSupportKey
+     @abstract   Property to turn enable/disable acceleration of relative pointer events
+     @discussion A boolean value to enable devices that report movement precisely but using relative positions,
+                    if false the events from the device will not have acceleration applied to the event value calculation.
+                    If the key is not set then the device will have acceleration applied to it's events by default.
  */
-#define kIOHIDKeyboardLayoutValueKey "HIDKeyboardLayoutValue"
+#define kIOHIDPointerAccelerationSupportKey    "HIDSupportsPointerAcceleration"
 
 /*!
-     @defined    kIOHIDPointerAccelerationAlgorithmKey
-     @abstract   Property to determine if the pointer acceleration algorithm should be overridden.
-     @discussion Property value if set represents desired acceleration algorithm for pointer events.
-                 See kIOHIDAccelerationAlgorithmType for supported values.
+     @defined    kIOHIDScrollAccelerationSupportKey
+     @abstract   Property to turn enable/disable acceleration of scroll events
+     @discussion A boolean value to enable devices that report scroll precisely but using relative positions,
+                    if false the events from the device will not have acceleration applied to the event value calculation.
+                    If the key is not set then the device will have acceleration applied to it's events by default.
  */
-#define kIOHIDPointerAccelerationAlgorithmKey "HIDPointerAccelerationAlgorithm"
-
-/*!
-     @defined    kIOHIDScrollAccelerationAlgorithmKey
-     @abstract   Property to determine if the scroll acceleration algorithm should be overridden.
-     @discussion Property value if set represents desired acceleration algorithm for scroll events.
-                 See kIOHIDAccelerationAlgorithmType for supported values.
- */
-#define kIOHIDScrollAccelerationAlgorithmKey  "HIDScrollAccelerationAlgorithm"
-
-
-/*!
-  @typedef IOHIDAccelerationAlgorithmType
-  @abstract Type to define what acceleration algorithm should be used.
-  @constant kIOHIDAccelerationAlgorithmTypeTable Apple Acceleration Tables, not recommended.
-  @constant kIOHIDAccelerationAlgorithmTypeParametric Acceleration Curves, defined by a set of points.
-  @constant kIOHIDAccelerationAlgorithmTypeDefault Use the default acceleration algorithm resolution.
-*/
-enum {
-    kIOHIDAccelerationAlgorithmTypeTable,
-    kIOHIDAccelerationAlgorithmTypeParametric,
-    kIOHIDAccelerationAlgorithmTypeDefault,
-};
-typedef uint8_t IOHIDAccelerationAlgorithmType;
-
-
-/*!
-     @defined    kIOHIDPointerAccelerationMinimumKey
-     @abstract   Property set the minimum pointer acceleration when linear acceleration is used.
-     @discussion Property value is expected to be in 16.16 fixed point floating number when sent to
-                 clients and converted as needed.
- */
-#define kIOHIDPointerAccelerationMinimumKey  "HIDPointerAccelerationMinimum"
+#define kIOHIDScrollAccelerationSupportKey     "HIDSupportsScrollAcceleration"
 
 __END_DECLS
 

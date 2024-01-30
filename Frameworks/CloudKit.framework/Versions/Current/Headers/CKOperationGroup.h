@@ -6,12 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import <CloudKit/CKDefines.h>
 
 @class CKOperationConfiguration;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /*! @enum CKOperationGroupTransferSize
  *  @abstract Valid values for expectedSendSize and expectedReceiveSize
@@ -47,8 +46,6 @@ typedef NS_ENUM(NSInteger, CKOperationGroupTransferSize) {
  *  You associate @c CKOperationGroup s with@c  CKOperation s by setting the @c CKOperation.group property.  Create a new @c CKOperationGroup instance for each distinct user action.
  */
 API_AVAILABLE(macos(10.13), ios(11.0), tvos(11.0), watchos(4.0))
-CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
-// NS_SWIFT_SENDABLE on macos(13.3), macCatalyst(16.4), ios(16.4), tvos(16.4), watchos(9.4)
 @interface CKOperationGroup : NSObject <NSSecureCoding>
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
@@ -58,13 +55,13 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
  *
  *  @discussion This value is chosen by the system, and will be unique to this instance of a @c CKOperationGroup.  This identifier will be sent to Apple's servers, and can be used to identify any server-side logging associated with this operation group.
  */
-@property (readonly, copy, nonatomic) NSString *operationGroupID;
+@property (nonatomic, readonly, copy) NSString *operationGroupID;
  
 /*! @abstract This is the default configuration applied to operations in this operation group.
  *
  *  @discussion If an operation associated with this operation group has its own configuration, then any explicitly-set properties in that operation's configuration will override these default configuration values.  See the example in CKOperation.h
  */
-@property (null_resettable, copy) CKOperationConfiguration *defaultConfiguration;
+@property (atomic, copy, null_resettable) CKOperationConfiguration *defaultConfiguration;
 
 /*! @abstract Describes the user action attributed to the operation group.
  *
@@ -74,13 +71,13 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
  *  "Saving User-Entered Record"
  *  This string will be sent to Apple servers to provide aggregate reporting for @c CKOperationGroup s and therefore must not include personally identifying data.
  */
-@property (nullable, copy) NSString *name;
+@property (atomic, copy, nullable) NSString *name;
 
 /*! @abstract Describes an application-specific "number of elements" associated with the operation group.
  *
  *  @discussion @c quantity is intended to show the app-specific count of items contained within the operation group.  It is your job to assign meaning to this value.  For example, if an app created an operation group to save 3 calendar events the user had created, the app might want to set this to "3".  This value is not shown to your users, it's meant to aid your development and debugging.  This value will be reported in the CloudKit Dashboard's log entries for all operations associated with this operation group.
  */
-@property (assign) NSUInteger quantity;
+@property (atomic, assign) NSUInteger quantity;
 
 /*! @abstract Estimated size of traffic being uploaded to the CloudKit Server
  *
@@ -90,7 +87,7 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
  *  You may update after the @c CKOperationGroup is created.  If it is increased, then subsequent @c CKOperation s associated with this operation group may be delayed until network conditions are good.
  *  Defaults to @c CKOperationGroupTransferSizeUnknown
  */
-@property (assign) CKOperationGroupTransferSize expectedSendSize;
+@property (atomic, assign) CKOperationGroupTransferSize expectedSendSize;
 
 /*! @abstract Estimated size of traffic being downloaded from the CloudKit Server
  *
@@ -100,8 +97,8 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
  *  You may update after the @c CKOperationGroup is created.  If it is increased, then subsequent @c CKOperation s associated with this operation group may be delayed until network conditions are good.
  *  Defaults to @c CKOperationGroupTransferSizeUnknown
  */
-@property (assign) CKOperationGroupTransferSize expectedReceiveSize;
+@property (atomic, assign) CKOperationGroupTransferSize expectedReceiveSize;
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

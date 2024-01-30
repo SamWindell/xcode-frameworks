@@ -20,17 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol MTLAccelerationStructure;
 @protocol MTLIntersectionFunctionTable;
 
-/*
- @brief
-     When calling functions with an `attributeStrides:` parameter on a render
-     or compute command encoder, this value must be provided for the binding
-     points that are either not part of the set of MTLBufferLayoutDescriptor,
-     or whose stride values in the descriptor is not set to
-     `MTLBufferLayoutStrideDynamic`
-*/
-API_AVAILABLE(macos(14.0), ios(17.0))
-static const NSUInteger MTLAttributeStrideStatic = NSUIntegerMax;
-
 /*!
  * @protocol MTLArgumentEncoder
  * @discussion MTLArgumentEncoder encodes buffer, texture, sampler, and constant data into a buffer.
@@ -134,13 +123,13 @@ API_AVAILABLE(macos(10.13), ios(11.0))
  * @method setComputePipelineState:atIndex
  * @brief Sets a compute pipeline state at a given bind point index
  */
-- (void)setComputePipelineState:(nullable id <MTLComputePipelineState>)pipeline atIndex:(NSUInteger)index API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(13.0));
+- (void)setComputePipelineState:(nullable id <MTLComputePipelineState>)pipeline atIndex:(NSUInteger)index API_AVAILABLE(ios(13.0),macos(11.0));
 
 /*!
  * @method setComputePipelineStates:withRange
  * @brief Set an array of compute pipeline states at a given bind point index range
  */
-- (void)setComputePipelineStates:(const id <MTLComputePipelineState> __nullable [__nonnull])pipelines withRange:(NSRange)range API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(13.0));
+- (void)setComputePipelineStates:(const id <MTLComputePipelineState> __nullable [__nonnull])pipelines withRange:(NSRange)range API_AVAILABLE(ios(13.0),macos(11.0));
 
 /*!
  * @method setIndirectCommandBuffer:atIndex

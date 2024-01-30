@@ -5,11 +5,13 @@
 
 #import <Foundation/NSObject.h>
 #import <Foundation/NSDate.h>
-#import <CoreServices/CoreServices.h>
+#if !TARGET_OS_MACCATALYST
+#import <ApplicationServices/ApplicationServices.h>
+#endif
 
 @class NSData;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_OPTIONS(NSUInteger, NSAppleEventSendOptions) {
     NSAppleEventSendNoReply        = kAENoReply, /* sender doesn't want a reply to event */
@@ -134,4 +136,4 @@ typedef NS_OPTIONS(NSUInteger, NSAppleEventSendOptions) {
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

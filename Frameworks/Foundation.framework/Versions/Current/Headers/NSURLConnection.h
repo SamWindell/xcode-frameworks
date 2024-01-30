@@ -24,7 +24,7 @@
 
 @protocol NSURLConnectionDelegate;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /*** DEPRECATED: The NSURLConnection class should no longer be used.  NSURLSession is the replacement for NSURLConnection ***/
 
@@ -50,7 +50,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
         A terminal condition produced by the loader will result in a
         connection:didFailWithError: in the case of an error, or
-        connectionDidFinishLoading: or connectionDidFinishDownloading:
+        connectiondidFinishLoading: or connectionDidFinishDownloading:
         delegate message.<p>
 
         The -cancel message hints to the loader that a resource load
@@ -192,12 +192,12 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
                     of authentication challenges.
 
                     connection:canAuthenticateAgainstProtectionSpace:
-                    connection:didReceiveAuthenticationChallenge:
+                    connection:didReciveAuthenticationChallenge:
                     connection:didCancelAuthenticationChallenge: are
-                    deprecated and new code should adopt
+                    deprected and new code should adopt
                     connection:willSendRequestForAuthenticationChallenge.
                     The older delegates will still be called for
-                    compatibility, but incur more latency in dealing
+                    compatability, but incur more latency in dealing
                     with the authentication challenge.
 */
 API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
@@ -430,7 +430,7 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 
     @discussion
                   This is a convenience routine that allows for
-                  asynchronous loading of a url-based resource.  If
+                  asynchronous loading of an url based resource.  If
                   the resource load is successful, the data parameter
                   to the callback will contain the resource data and
                   the error parameter will be nil.  If the resource
@@ -457,4 +457,4 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
            
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

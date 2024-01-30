@@ -221,13 +221,13 @@ typedef struct AudioServerPlugInClientInfo  AudioServerPlugInClientInfo;
     @field          mOutputTime
                         The time stamp that indicates from where in the device's time line the output
                         data for the new IO cycle will start at.
-    @field          mMainHostTicksPerFrame
+    @field          mMasterHostTicksPerFrame
                         The number of host ticks per frame that the Host's clock is measuring for
-                        the main device.
+                        the master device.
     @field          mDeviceHostTicksPerFrame
                         The number of host ticks per frame that the Host's clock is measuring for
-                        this device. Note that this value will be equal to the main value for
-                        clockless devices or when the device is the main device in an aggregate.
+                        this device. Note that this value will be equal to the master value for
+                        clockless devices or when the device is the master device in an aggregate.
 */
 struct AudioServerPlugInIOCycleInfo
 {
@@ -236,11 +236,7 @@ struct AudioServerPlugInIOCycleInfo
     AudioTimeStamp  mCurrentTime;
     AudioTimeStamp  mInputTime;
     AudioTimeStamp  mOutputTime;
-    union
-    {
-		Float64		mMainHostTicksPerFrame;
-		Float64		mMasterHostTicksPerFrame API_DEPRECATED_WITH_REPLACEMENT("mMainHostTicksPerFrame", macos(10.0, 12.0), ios(2.0, 15.0), watchos(1.0, 8.0), tvos(9.0, 15.0));
-	};
+    Float64         mMasterHostTicksPerFrame;
     Float64         mDeviceHostTicksPerFrame;
 };
 typedef struct AudioServerPlugInIOCycleInfo AudioServerPlugInIOCycleInfo;
@@ -427,14 +423,14 @@ typedef CF_ENUM(UInt32, AudioDeviceClockAlgorithmSelector)
     @discussion     The AudioDevice class is a subclass of the AudioObjectClass. The class has four
                     scopes, kAudioObjectPropertyScopeGlobal, kAudioObjectPropertyScopeInput,
                     kAudioObjectPropertyScopeOutput, and kAudioObjectPropertyScopePlayThrough. The
-                    class has a main element and an element for each channel in each stream
+                    class has a master element and an element for each channel in each stream
                     numbered according to the starting channel number of each stream.
     @constant       kAudioDevicePropertyZeroTimeStampPeriod
                         A UInt32 whose value indicates the number of sample frames the host can
                         expect between successive time stamps returned from GetZeroTimeStamp(). In
                         other words, if GetZeroTimeStamp() returned a sample time of X, the host can
                         expect that the next valid time stamp that will be returned will be X plus
-                        the value of this property. The minimum allowed value for this is 10923 sample frames.
+                        the value of this property.
     @constant       kAudioDevicePropertyClockAlgorithm
                         A UInt32 whose value indicates to the Host what smoothing algorithm to use
                         for a device's clock. The only legal values for this property are specified

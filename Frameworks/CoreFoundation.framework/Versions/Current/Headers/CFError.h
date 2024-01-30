@@ -35,6 +35,7 @@
 #define __COREFOUNDATION_CFERROR__ 1
 
 #include <CoreFoundation/CFBase.h>
+#include <CoreFoundation/CFString.h>
 #include <CoreFoundation/CFDictionary.h>
 
 CF_IMPLICIT_BRIDGING_ENABLED

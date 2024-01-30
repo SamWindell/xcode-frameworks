@@ -1,7 +1,7 @@
 /*
     NSSharingServicePickerTouchBarItem.h
     Application Kit
-    Copyright (c) 2016-2023, Apple Inc.
+    Copyright (c) 2016-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -18,7 +18,7 @@
 
 @protocol NSSharingServicePickerTouchBarItemDelegate;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 API_AVAILABLE(macos(10.12.2), ios(10.13))
@@ -47,10 +47,10 @@ API_AVAILABLE(macos(10.12.2), ios(10.13))
 @protocol NSSharingServicePickerTouchBarItemDelegate <NSSharingServicePickerDelegate>
 @required
 /* Return the items that represent the objects to be shared. They must conform to the <NSPasteboardWriting> protocol or be an NSItemProvider. (e.g. NSString, NSImage, NSURL, etc.). */
-- (NSArray *)itemsForSharingServicePickerTouchBarItem:(NSSharingServicePickerTouchBarItem *)pickerTouchBarItem NS_SWIFT_UI_ACTOR;
+- (NSArray *)itemsForSharingServicePickerTouchBarItem:(NSSharingServicePickerTouchBarItem *)pickerTouchBarItem;
 
 @end
 #endif
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

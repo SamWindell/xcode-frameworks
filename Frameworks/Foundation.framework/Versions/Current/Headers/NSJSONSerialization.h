@@ -7,18 +7,12 @@
 
 @class NSError, NSOutputStream, NSInputStream, NSData;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_OPTIONS(NSUInteger, NSJSONReadingOptions) {
     NSJSONReadingMutableContainers = (1UL << 0),
     NSJSONReadingMutableLeaves = (1UL << 1),
     NSJSONReadingFragmentsAllowed = (1UL << 2),
-
-#if !0
-    NSJSONReadingJSON5Allowed API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0)) = (1UL << 3),
-#endif
-    NSJSONReadingTopLevelDictionaryAssumed API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0)) = (1UL << 4),
-
     NSJSONReadingAllowFragments API_DEPRECATED_WITH_REPLACEMENT("NSJSONReadingFragmentsAllowed", macos(10.7, API_TO_BE_DEPRECATED), ios(5.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED)) = NSJSONReadingFragmentsAllowed,
 } API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
 
@@ -41,7 +35,10 @@ typedef NS_OPTIONS(NSUInteger, NSJSONWritingOptions) {
     - NSNumbers are not NaN or infinity
 */
 API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0))
-@interface NSJSONSerialization : NSObject
+@interface NSJSONSerialization : NSObject {
+@private
+    void *reserved[6];
+}
 
 /* Returns YES if the given object can be converted to JSON data, NO otherwise. The object must have the following properties:
     - Top level object is an NSArray or NSDictionary
@@ -61,7 +58,6 @@ API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0))
  */
 + (nullable id)JSONObjectWithData:(NSData *)data options:(NSJSONReadingOptions)opt error:(NSError **)error;
 
-#if !0
 /* Write JSON data into a stream. The stream should be opened and configured. The return value is the number of bytes written to the stream, or 0 on error. All other behavior of this method is the same as the dataWithJSONObject:options:error: method.
  */
 + (NSInteger)writeJSONObject:(id)obj toStream:(NSOutputStream *)stream options:(NSJSONWritingOptions)opt error:(NSError **)error;
@@ -69,7 +65,7 @@ API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0))
 /* Create a JSON object from JSON data stream. The stream should be opened and configured. All other behavior of this method is the same as the JSONObjectWithData:options:error: method.
  */
 + (nullable id)JSONObjectWithStream:(NSInputStream *)stream options:(NSJSONReadingOptions)opt error:(NSError **)error;
-#endif
+
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

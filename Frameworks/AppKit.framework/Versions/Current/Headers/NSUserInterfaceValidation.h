@@ -1,7 +1,7 @@
 /*
 	NSUserInterfaceValidation.h
 	Application Kit
-	Copyright (c) 1999-2023, Apple Inc.
+	Copyright (c) 1999-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -65,18 +65,18 @@ You can extend this functionality by introducing a new set of protocols that are
 */
 
 /* Protocol implemented by validated objects */
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @protocol NSValidatedUserInterfaceItem
-@property (readonly, nullable) SEL action NS_SWIFT_UI_ACTOR;
-@property (readonly) NSInteger tag NS_SWIFT_UI_ACTOR;
+@property (readonly, nullable) SEL action;
+@property (readonly) NSInteger tag;
 @end
 
 /* Protocol implemented by validator objects */
 @protocol NSUserInterfaceValidations
-- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item NS_SWIFT_UI_ACTOR;
+- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item;
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

@@ -1,7 +1,7 @@
 /*
     NSLevelIndicator.h
     Application Kit
-    Copyright (c) 2004-2023, Apple Inc.
+    Copyright (c) 2004-2019, Apple Inc.
     All rights reserved.
 */
 

@@ -15,9 +15,12 @@
 #import <Metal/MTLFence.h>
 #import <Metal/MTLRenderPass.h>
 #import <Metal/MTLBlitPass.h>
-#import <Metal/MTLCounters.h>
 
 NS_ASSUME_NONNULL_BEGIN
+/*!
+ @header MTLBlitCommandEncoder.h
+ @discussion Header file for MTLBlitCommandEncoder
+ */
 
 /*!
  @enum MTLBlitOption
@@ -102,6 +105,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  */
 - (void)fillBuffer:(id<MTLBuffer>)buffer range:(NSRange)range value:(uint8_t)value;
 
+
 /*!
  @method copyFromTexture:sourceSlice:sourceLevel:toTexture:destinationSlice:destinationLevel:sliceCount:levelCount:
  @abstract Copy whole surfaces between textures.
@@ -150,7 +154,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
 /*!
  @method waitForFence:
  @abstract Prevent further GPU work until the fence is reached.
- @discussion The fence is evaluated at kernel submission to maintain global order and prevent deadlock.
+ @discussion The fence is evaluated at kernel submision to maintain global order and prevent deadlock.
  Drivers may delay fence updates until the end of the encoder. Drivers may also wait on fences at the beginning of an encoder. It is therefore illegal to wait on a fence after it has been updated in the same encoder.
  */
 - (void)waitForFence:(id <MTLFence>)fence API_AVAILABLE(macos(10.13), ios(10.0));
@@ -207,10 +211,10 @@ API_AVAILABLE(macos(10.11), ios(8.0))
 
 
 /*!
- @method resetCommandsInBuffer:withRange:
+ @method resetCommandsInBuffer:buffer:withRange:
  @abstract reset commands in a indirect command buffer using the GPU
  */
-- (void) resetCommandsInBuffer:(id<MTLIndirectCommandBuffer>)buffer withRange:(NSRange)range API_AVAILABLE(macos(10.14), ios(12.0));
+- (void) resetCommandsInBuffer: (id<MTLIndirectCommandBuffer>)buffer withRange:(NSRange)range API_AVAILABLE(macos(10.14), ios(12.0));
 
 /*!
  @method copyIndirectCommandBuffer:source:sourceRange:destination:destinationIndex
@@ -220,7 +224,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
                       destination:(id <MTLIndirectCommandBuffer>)destination destinationIndex:(NSUInteger)destinationIndex API_AVAILABLE(macos(10.14), ios(12.0));
 
 /*!
- @method optimizeIndirectCommandBuffer:withRange:
+ @method optimizeIndirectCommandBuffer:indirectCommandBuffer:range:
  @abstract Optimizes a subset of the texture data to ensure the best possible performance when accessing content on the CPU at the expense of GPU-access performance.
  */
 - (void)optimizeIndirectCommandBuffer:(id <MTLIndirectCommandBuffer>)indirectCommandBuffer withRange:(NSRange)range API_AVAILABLE(macos(10.14), ios(12.0));

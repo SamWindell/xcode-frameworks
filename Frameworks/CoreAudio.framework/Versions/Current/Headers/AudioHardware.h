@@ -467,7 +467,7 @@ typedef CF_ENUM(UInt32, AudioHardwarePowerHint)
     @enum           AudioSystemObject Properties
     @abstract       AudioObjectPropertySelector values provided by the AudioSystemObject class.
     @discussion     The AudioSystemObject class is a subclass of the AudioObject class. the class
-                    has just the global scope, kAudioObjectPropertyScopeGlobal, and only a main element.
+                    has just the global scope, kAudioObjectPropertyScopeGlobal, and only a master element.
     @constant       kAudioHardwarePropertyDevices
                         An array of the AudioObjectIDs that represent all the devices currently
                         available to the system.
@@ -530,9 +530,9 @@ typedef CF_ENUM(UInt32, AudioHardwarePowerHint)
                         as the property's data. Note that an error is not returned if the UID doesn't
                         refer to any AudioClockDevice. Rather, this property will return 
                         kAudioObjectUnknown as the value of the property.
-    @constant       kAudioHardwarePropertyProcessIsMain
-                        A UInt32 where 1 means that the current process contains the main instance
-                        of the HAL. The main instance of the HAL is the only instance in which
+    @constant       kAudioHardwarePropertyProcessIsMaster
+                        A UInt32 where 1 means that the current process contains the master instance
+                        of the HAL. The master instance of the HAL is the only instance in which
                         plug-ins should save/restore their devices' settings.
     @constant       kAudioHardwarePropertyIsInitingOrExiting
                         A UInt32 whose value will be non-zero if the HAL is either in the midst of
@@ -544,10 +544,6 @@ typedef CF_ENUM(UInt32, AudioHardwarePowerHint)
                         user preferences such as the default devices. The value of this property is
                         a UInt32, but its value has no currently defined meaning and clients may
                         pass any value when setting it to trigger the cache flush.
-    @constant       kAudioHardwarePropertyProcessInputMute
-                        A UInt32 where a non-zero value indicates that all data coming into the process
-                        for all devices will be silent. A value of 0 indicates that input data will be
-                        received normally.
     @constant       kAudioHardwarePropertyProcessIsAudible
                         A UInt32 where a non-zero value indicates that the audio of the process will
                         be heard. A value of 0 indicates that all audio in the process will not be
@@ -600,17 +596,16 @@ CF_ENUM(AudioObjectPropertySelector)
     kAudioHardwarePropertyTranslateUIDToBox                     = 'uidb',
     kAudioHardwarePropertyClockDeviceList                       = 'clk#',
     kAudioHardwarePropertyTranslateUIDToClockDevice             = 'uidc',
-    kAudioHardwarePropertyProcessIsMain							= 'main',
+    kAudioHardwarePropertyProcessIsMaster                       = 'mast',
     kAudioHardwarePropertyIsInitingOrExiting                    = 'inot',
     kAudioHardwarePropertyUserIDChanged                         = 'euid',
-    kAudioHardwarePropertyProcessInputMute                      = 'pmin',
     kAudioHardwarePropertyProcessIsAudible                      = 'pmut',
     kAudioHardwarePropertySleepingIsAllowed                     = 'slep',
     kAudioHardwarePropertyUnloadingIsAllowed                    = 'unld',
     kAudioHardwarePropertyHogModeIsAllowed                      = 'hogr',
     kAudioHardwarePropertyUserSessionIsActiveOrHeadless         = 'user',
     kAudioHardwarePropertyServiceRestarted                      = 'srst',
-    kAudioHardwarePropertyPowerHint                             = 'powh',
+    kAudioHardwarePropertyPowerHint                             = 'powh'
 };
 
 //==================================================================================================
@@ -664,7 +659,7 @@ AudioHardwareDestroyAggregateDevice(AudioObjectID inDeviceID)                   
     @enum           AudioPlugIn Properties
     @abstract       AudioObjectPropertySelector values provided by the AudioPlugIn class.
     @discussion     The AudioPlugIn class is a subclass of the AudioObject class. the class has just
-                    the global scope, kAudioObjectPropertyScopeGlobal, and only a main element.
+                    the global scope, kAudioObjectPropertyScopeGlobal, and only a master element.
     @constant       kAudioPlugInCreateAggregateDevice
                         This property is used to tell a plug-in to create a new
                         AudioAggregateDevice. Its value is only read. The qualifier data for this
@@ -693,7 +688,7 @@ CF_ENUM(AudioObjectPropertySelector)
     @abstract       AudioObjectPropertySelector values provided by the AudioTransportManager class.
     @discussion     The AudioTransportManager class is a subclass of the AudioPlugIn class. The
                     class has just the global scope, kAudioObjectPropertyScopeGlobal, and only a
-                    main element.
+                    master element.
     @constant       kAudioTransportManagerCreateEndPointDevice
                         This property is used to tell a transport manager to create a new
                         AudioDevice. Its value is only read. The qualifier data for this
@@ -878,7 +873,7 @@ CF_ENUM(UInt32)
     @discussion     The AudioDevice class is a subclass of the AudioObjectClass. The class has four
                     scopes, kAudioObjectPropertyScopeGlobal, kAudioObjectPropertyScopeInput,
                     kAudioObjectPropertyScopeOutput, and kAudioObjectPropertyScopePlayThrough. The
-                    class has a main element and an element for each channel in each stream
+                    class has a master element and an element for each channel in each stream
                     numbered according to the starting channel number of each stream.
     @constant       kAudioDevicePropertyPlugIn
                         An OSStatus that contains any error codes generated by loading the IOAudio
@@ -959,16 +954,12 @@ CF_ENUM(UInt32)
                         as measured by its time stamps.
     @constant       kAudioDevicePropertyClockDevice
                         A CFString that contains the UID for the AudioClockDevice that is currently
-                        serving as the main time base of the device. The caller is responsible
+                        serving as the master time base of the device. The caller is responsible
                         for releasing the returned CFObject.
-    @constant       kAudioDevicePropertyIOThreadOSWorkgroup
-                        An os_workgroup_t that represents the thread workgroup the AudioDevice's
-                        IO thread belongs to. The caller is responsible for releasing the returned
-                        object.
-	@constant		kAudioDevicePropertyProcessMute
-						A UInt32 where a non-zero value indicates that the current process's audio
-						will be zeroed out by the system. Note that this property does not apply to
-						aggregate devices, just real, physical devices.
+	@constant		kAudioDevicePropertyIOThreadOSWorkgroup
+						An os_workgroup_t that represents the thread workgroup the AudioDevice's
+						IO thread belongs to. The caller is responsible for releasing the returned
+						object.
 */
 CF_ENUM(AudioObjectPropertySelector)
 {
@@ -986,8 +977,7 @@ CF_ENUM(AudioObjectPropertySelector)
     kAudioDevicePropertyIOProcStreamUsage               = 'suse',
     kAudioDevicePropertyActualSampleRate                = 'asrt',
     kAudioDevicePropertyClockDevice                     = 'apcd',
-    kAudioDevicePropertyIOThreadOSWorkgroup             = 'oswg',
-    kAudioDevicePropertyProcessMute						= 'appm'
+    kAudioDevicePropertyIOThreadOSWorkgroup				= 'oswg'
 };
 
 /*!
@@ -1251,17 +1241,6 @@ CF_ENUM(AudioObjectPropertySelector)
                         A UInt32 where a value of 1 means that mute is enabled making the LFE on
                         that element inaudible. The property is implemented by an AudioControl
                         object that is a subclass of AudioLFEMuteControl.
-    @constant       kAudioDevicePropertyVoiceActivityDetectionEnable
-                        A UInt32 where 0 disables voice activity detection process and non-zero enables it.
-                        Voice activity detection can be used with input audio and has echo cancellation.
-                        Detection works when a process mute is used, but not with hardware mute.
-    @constant       kAudioDevicePropertyVoiceActivityDetectionState
-                        A read-only UInt32 where 0 indicates no voice currently detected and 1 indicates voice.
-                        Used in conjunction with kAudioDevicePropertyVoiceActivityDetectionEnable.
-                        A client would normally register to listen to this property for changes and then query
-                        the state rather than continuously poll the value.
-                        NOTE: If input audio is not active/runnning or the voice activity detection is disabled,
-                        then it is not analyzed and this will provide 0.
 */
 CF_ENUM(AudioObjectPropertySelector)
 {
@@ -1311,10 +1290,7 @@ CF_ENUM(AudioObjectPropertySelector)
     kAudioDevicePropertySubVolumeRangeDecibels                          = 'svd#',
     kAudioDevicePropertySubVolumeScalarToDecibels                       = 'sv2d',
     kAudioDevicePropertySubVolumeDecibelsToScalar                       = 'sd2v',
-    kAudioDevicePropertySubMute                                         = 'smut',
-    kAudioDevicePropertyVoiceActivityDetectionEnable                    = 'vAd+',
-    kAudioDevicePropertyVoiceActivityDetectionState                     = 'vAdS'
-
+    kAudioDevicePropertySubMute                                         = 'smut'
 };
 
 //==================================================================================================
@@ -1551,21 +1527,21 @@ CF_ENUM(AudioClassID)
 #define kAudioAggregateDeviceSubDeviceListKey   "subdevices"
 
 /*!
-    @defined        kAudioAggregateDeviceMainSubDeviceKey
+    @defined        kAudioAggregateDeviceMasterSubDeviceKey
     @discussion     The key used in a CFDictionary that describes the composition of an
                     AudioAggregateDevice. The value for this key is a CFString that contains the
-                    UID for the sub-device that is the time source for the
+                    UID for the sub-device that is the master time source for the
                     AudioAggregateDevice.
 */
-#define kAudioAggregateDeviceMainSubDeviceKey "master"
+#define kAudioAggregateDeviceMasterSubDeviceKey "master"
 
 /*!
     @defined        kAudioAggregateDeviceClockDeviceKey
     @discussion     The key used in a CFDictionary that describes the composition of an
                     AudioAggregateDevice. The value for this key is a CFString that contains the
-                    UID for the clock device that is the time source for the
-                    AudioAggregateDevice. If the aggregate device includes both a main audio
-                    device and a clock device, the clock device will control the time base.
+                    UID for the clock device that is the master time source for the
+                    AudioAggregateDevice. If the aggregate device includes both a master audio
+                    device and a clock device, the clock device will control the master time base.
 */
 #define kAudioAggregateDeviceClockDeviceKey     "clock"
 
@@ -1589,7 +1565,7 @@ CF_ENUM(AudioClassID)
                     the output streams are all fed the same data.
  */
 #define kAudioAggregateDeviceIsStackedKey       "stacked"
-
+    
 //==================================================================================================
 #pragma mark AudioAggregateDevice Properties
 
@@ -1612,15 +1588,15 @@ CF_ENUM(AudioClassID)
                         The keys for this CFDicitionary are defined in the AudioAggregateDevice
                         Constants section. The caller is responsible for releasing the returned
                         CFObject.
-    @constant       kAudioAggregateDevicePropertyMainSubDevice
+    @constant       kAudioAggregateDevicePropertyMasterSubDevice
                         A CFString that contains the UID for the AudioDevice that is currently
-                        serving as the time base of the aggregate device. The caller is
+                        serving as the master time base of the aggregate device. The caller is
                         responsible for releasing the returned CFObject.
     @constant       kAudioAggregateDevicePropertyClockDevice
                         A CFString that contains the UID for the AudioClockDevice that is currently
-                        serving as the time base of the aggregate device. If the aggregate
-                        device includes both a main audio device and a clock device, the clock
-                        device will control the time base. Setting this property will enable
+                        serving as the master time base of the aggregate device. If the aggregate
+                        device includes both a master audio device and a clock device, the clock
+                        device will control the master time base. Setting this property will enable
                         drift correction for all subdevices in the aggregate device. The caller is
                         responsible for releasing the returned CFObject.
 */
@@ -1629,28 +1605,8 @@ CF_ENUM(AudioObjectPropertySelector)
     kAudioAggregateDevicePropertyFullSubDeviceList      = 'grup',
     kAudioAggregateDevicePropertyActiveSubDeviceList    = 'agrp',
     kAudioAggregateDevicePropertyComposition            = 'acom',
-    kAudioAggregateDevicePropertyMainSubDevice          = 'amst',
-    kAudioAggregateDevicePropertyClockDevice            = 'apcd',
-};
-
-//==================================================================================================
-#pragma mark -
-#pragma mark AudioAggregateDriftCompensation Constants
-/*!
-	@enum           AudioSubDevice and AudioSubTap Clock Drift Compensation Methods
-	@abstract       Constants that describe the range of values the property
-					kAudioSubTapPropertyDriftCompensation. It is a continuous range from
-					kAudioSubTapDriftCompensationMinQuality to
-					kAudioSubTapDriftCompensationMaxQuality, with some commonly used settings
-					called out.
-*/
-CF_ENUM(UInt32)
-{
-	kAudioAggregateDriftCompensationMinQuality      = 0,
-	kAudioAggregateDriftCompensationLowQuality      = 0x20,
-	kAudioAggregateDriftCompensationMediumQuality   = 0x40,
-	kAudioAggregateDriftCompensationHighQuality     = 0x60,
-	kAudioAggregateDriftCompensationMaxQuality      = 0x7F
+    kAudioAggregateDevicePropertyMasterSubDevice        = 'amst',
+    kAudioAggregateDevicePropertyClockDevice            = 'apcd'
 };
 
 //==================================================================================================
@@ -1678,11 +1634,11 @@ CF_ENUM(AudioClassID)
 */
 CF_ENUM(UInt32)
 {
-    kAudioSubDeviceDriftCompensationMinQuality      API_DEPRECATED_WITH_REPLACEMENT("kAudioAggregateDriftCompensationMinQuality", macos(13.0, API_TO_BE_DEPRECATED), ios(16.0, API_TO_BE_DEPRECATED)) = 0,
-    kAudioSubDeviceDriftCompensationLowQuality      API_DEPRECATED_WITH_REPLACEMENT("kAudioAggregateDriftCompensationLowQuality", macos(13.0, API_TO_BE_DEPRECATED), ios(16.0, API_TO_BE_DEPRECATED)) = 0x20,
-    kAudioSubDeviceDriftCompensationMediumQuality   API_DEPRECATED_WITH_REPLACEMENT("kAudioAggregateDriftCompensationMediumQuality", macos(13.0, API_TO_BE_DEPRECATED), ios(16.0, API_TO_BE_DEPRECATED)) = 0x40,
-    kAudioSubDeviceDriftCompensationHighQuality     API_DEPRECATED_WITH_REPLACEMENT("kAudioAggregateDriftCompensationHighQuality", macos(13.0, API_TO_BE_DEPRECATED), ios(16.0, API_TO_BE_DEPRECATED)) = 0x60,
-    kAudioSubDeviceDriftCompensationMaxQuality      API_DEPRECATED_WITH_REPLACEMENT("kAudioAggregateDriftCompensationMaxQuality", macos(13.0, API_TO_BE_DEPRECATED), ios(16.0, API_TO_BE_DEPRECATED)) = 0x7F
+    kAudioSubDeviceDriftCompensationMinQuality      = 0,
+    kAudioSubDeviceDriftCompensationLowQuality      = 0x20,
+    kAudioSubDeviceDriftCompensationMediumQuality   = 0x40,
+    kAudioSubDeviceDriftCompensationHighQuality     = 0x60,
+    kAudioSubDeviceDriftCompensationMaxQuality      = 0x7F
 };
 
 /*!
@@ -1746,7 +1702,7 @@ CF_ENUM(UInt32)
 /*!
     @defined        kAudioSubDeviceDriftCompensationQualityKey
     @discussion     The key used in a CFDictionary that describes the state of an AudioSubDevice.
-                    The value for this key is a CFNumber that indicates the quality of the drift
+                    The value for this key is a CFNumber that indicates the quality of the drifty
                     compensation for the AudioSubDevice
 */
 #define kAudioSubDeviceDriftCompensationQualityKey  "drift quality"
@@ -1779,7 +1735,6 @@ CF_ENUM(AudioObjectPropertySelector)
     kAudioSubDevicePropertyDriftCompensation        = 'drft',
     kAudioSubDevicePropertyDriftCompensationQuality = 'drfq'
 };
-
 
 //==================================================================================================
 

@@ -1,9 +1,7 @@
 /* CoreAnimation - CAShapeLayer.h
 
-   Copyright (c) 2008-2022, Apple Inc.
+   Copyright (c) 2008-2018, Apple Inc.
    All rights reserved. */
-
-#ifdef __OBJC__
 
 #import <QuartzCore/CALayer.h>
 
@@ -131,5 +129,3 @@ CA_EXTERN CAShapeLayerLineCap const kCALineCapSquare
     API_AVAILABLE(macos(10.6), ios(3.0), watchos(2.0), tvos(9.0));
 
 NS_ASSUME_NONNULL_END
-
-#endif

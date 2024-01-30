@@ -7,13 +7,13 @@
 
 @class NSArray<ObjectType>, NSOrthography, NSValue;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /* NSLinguisticTagger is a class used to automatically segment natural-language text and tag the tokens with information such as language, script, lemma, and part of speech.  An instance of this class is assigned a string to tag, and clients can then obtain tags and ranges for tokens in that string appropriate to a given tag scheme and unit.
 */
 
 /* Tag schemes */
-typedef NSString *NSLinguisticTagScheme NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSString *NSLinguisticTagScheme NS_EXTENSIBLE_STRING_ENUM;
 
 FOUNDATION_EXPORT NSLinguisticTagScheme const NSLinguisticTagSchemeTokenType API_DEPRECATED("All NSLinguisticTagger API should be replaced with NaturalLanguage.framework API", macos(10.7, API_TO_BE_DEPRECATED), ios(5.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED));              /* This tag scheme classifies tokens according to their broad general type:  word, punctuation, whitespace, etc. */
 FOUNDATION_EXPORT NSLinguisticTagScheme const NSLinguisticTagSchemeLexicalClass API_DEPRECATED("All NSLinguisticTagger API should be replaced with NaturalLanguage.framework API", macos(10.7, API_TO_BE_DEPRECATED), ios(5.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED));              /* This tag scheme classifies tokens according to class:  part of speech for words, type of punctuation or whitespace, etc. */
@@ -23,7 +23,7 @@ FOUNDATION_EXPORT NSLinguisticTagScheme const NSLinguisticTagSchemeLemma API_DEP
 FOUNDATION_EXPORT NSLinguisticTagScheme const NSLinguisticTagSchemeLanguage API_DEPRECATED("All NSLinguisticTagger API should be replaced with NaturalLanguage.framework API", macos(10.7, API_TO_BE_DEPRECATED), ios(5.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED));              /* This tag scheme tags tokens according to their most likely language (if known). */
 FOUNDATION_EXPORT NSLinguisticTagScheme const NSLinguisticTagSchemeScript API_DEPRECATED("All NSLinguisticTagger API should be replaced with NaturalLanguage.framework API", macos(10.7, API_TO_BE_DEPRECATED), ios(5.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED));              /* This tag scheme tags tokens according to their script. */
 
-typedef NSString *NSLinguisticTag NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSString *NSLinguisticTag NS_EXTENSIBLE_STRING_ENUM;
 
 /* Tags for NSLinguisticTagSchemeTokenType */
 FOUNDATION_EXPORT NSLinguisticTag const NSLinguisticTagWord API_DEPRECATED("All NSLinguisticTagger API should be replaced with NaturalLanguage.framework API", macos(10.7, API_TO_BE_DEPRECATED), ios(5.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED));                                     /* Tokens considered to be words or word-like linguistic items. */
@@ -165,4 +165,4 @@ API_DEPRECATED("All NSLinguisticTagger API should be replaced with NaturalLangua
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

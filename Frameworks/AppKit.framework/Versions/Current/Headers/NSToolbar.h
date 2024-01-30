@@ -1,20 +1,17 @@
 /*
 	NSToolbar.h
 	Application Kit
-	Copyright (c) 2000-2023, Apple Inc.
+	Copyright (c) 2000-2019, Apple Inc.
 	All rights reserved.
 */
 
 #import <AppKit/AppKitDefines.h>
 #import <Foundation/Foundation.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NSString * NSToolbarIdentifier NS_SWIFT_BRIDGED_TYPEDEF API_AVAILABLE(ios(13.0));
 typedef NSString * NSToolbarItemIdentifier NS_TYPED_EXTENSIBLE_ENUM API_AVAILABLE(ios(13.0));
-
-typedef NSString * NSToolbarUserInfoKey NS_TYPED_ENUM;
-APPKIT_EXTERN NSToolbarUserInfoKey const NSToolbarItemKey API_AVAILABLE(macos(13.0));
 
 @class NSToolbarItem, NSWindow, NSView;
 @protocol NSToolbarDelegate;
@@ -31,9 +28,9 @@ typedef NS_ENUM(NSUInteger, NSToolbarSizeMode) {
     NSToolbarSizeModeDefault,
     NSToolbarSizeModeRegular,
     NSToolbarSizeModeSmall
-} API_DEPRECATED("NSToolbarSizeMode is no longer recommended and will be ignored in the future", macos(10.0, API_TO_BE_DEPRECATED));
+};
 
-API_AVAILABLE(ios(13.0)) NS_SWIFT_UI_ACTOR
+API_AVAILABLE(ios(13.0))
 @interface NSToolbar : NSObject
 
 /* The identifier is used to form the toolbar's autosave name.  Also, toolbars with the same identifier are implicitly synchronized so that they maintain the same state. */
@@ -42,14 +39,14 @@ API_AVAILABLE(ios(13.0)) NS_SWIFT_UI_ACTOR
 /* Calls through to -initWithIdentifier: with an empty string identifier.  Customizable toolbars should use -initWithIdentifier: with a unique identifier instead. */
 - (instancetype)init API_AVAILABLE(macos(10.13));
 
-/* Primitives for explicitly adding and removing items.  Any change made will be propagated immediately to all other toolbars with the same identifier. */
+/* Primitives for explicitly adding and removing items.  Any change made will be propogated immediately to all other toolbars with the same identifier. */
 - (void)insertItemWithItemIdentifier:(NSToolbarItemIdentifier)itemIdentifier atIndex:(NSInteger)index;
 - (void)removeItemAtIndex:(NSInteger)index;
 
 /* Customizable toolbars must have a delegate, and must implement the required NSToolbarDelegate methods. */
 @property (nullable, weak) id<NSToolbarDelegate> delegate;
 
-/* toggles the visibility of the toolbar. This property is KVO compliant on macOS 14.0 and higher. */
+/* toggles the visibliity of the toolbar. */
 @property (getter=isVisible) BOOL visible;
 
 /* Customizable toolbars (those with delegates) can show a palette which allows users to populate the toolbar with individual items or to reset the toolbar to some default set of items.  The items and item sets in the palette are specified by the delegate (-toolbarAllowedItemIdentifiers: and -toolbarDefaultItemIdentifiers:).  When the user is done configuring, they will dismiss the palette. */
@@ -64,7 +61,7 @@ API_AVAILABLE(ios(13.0)) NS_SWIFT_UI_ACTOR
 /* Sets the toolbar's selected item by identifier.  Use this to force an item identifier to be selected.  Toolbar manages selection of image items automatically.  This method can be used to select identifiers of custom view items, or to force a selection change.  (see toolbarSelectableItemIdentifiers: delegate method for more details). */
 @property (nullable, copy) NSToolbarItemIdentifier selectedItemIdentifier;
 
-@property NSToolbarSizeMode sizeMode API_UNAVAILABLE(ios) API_DEPRECATED("NSToolbarSizeMode is no longer recommended and will be ignored in the future", macos(10.0, API_TO_BE_DEPRECATED));
+@property NSToolbarSizeMode sizeMode API_UNAVAILABLE(ios);
 
 /* Use this API to hide the baseline NSToolbar draws between itself and the main window contents.  The default is YES.  This method should only be used before the toolbar is attached to its window (-[NSWindow setToolbar:]).
 */
@@ -85,19 +82,12 @@ API_AVAILABLE(ios(13.0)) NS_SWIFT_UI_ACTOR
 /* Allows you to access the current visible items (non clipped). */
 @property (nullable, readonly, copy) NSArray<__kindof NSToolbarItem *> *visibleItems;
 
-/**
- Items with centered identifiers will be centered together in the Toolbar relative to the window assuming space allows. The order of items is initially defined by the default set of identifiers, but may be customized by the user. Centered items may not be moved outside of the center set of items by the user.
- 
- This property is archived.
- */
-@property (copy) NSSet<NSToolbarItemIdentifier> *centeredItemIdentifiers API_AVAILABLE(macos(13.0), ios(16.0));
-
 /*
  The item with the specified identifier will be positioned in the absolute center of the Toolbar relative to the window assuming space allows. When the window shrinks, the highest priority is to have the most items visible. Thus, centering is broken first (it'll be pushed off to the left/right as necessary). Next, items will be shrunk down a little at a time towards their min size, at the same rate. Finally, items will be removed based on their visibility priority.
  
  This property is archived.
  */
-@property (nullable, copy) NSToolbarItemIdentifier centeredItemIdentifier API_DEPRECATED("Use the centeredItemIdentifiers property instead", macos(10.14, API_TO_BE_DEPRECATED));
+@property (nullable, copy) NSToolbarItemIdentifier centeredItemIdentifier API_AVAILABLE(macos(10.14));
 
 
 // ----- Autosaving The Configuration -----
@@ -113,8 +103,7 @@ API_AVAILABLE(ios(13.0)) NS_SWIFT_UI_ACTOR
 // ----- Validation of the items -----
 
 /* Typically you should not invoke this method.  This method is called on window updates with the purpose of validating 
- each of the visible items.  The toolbar will iterate through the list of visible items, sending each a -validate message.
- If this method is invoked directly, all visible items including those with autovalidates disabled will get a -validate message. */
+ each of the visible items.  The toolbar will iterate through the list of visible items, sending each a -validate message. */
 - (void)validateVisibleItems API_UNAVAILABLE(ios);
 
 // ----- Extension toolbar items -----
@@ -131,32 +120,26 @@ API_AVAILABLE(ios(13.0))
 @optional
 
 /* Given an item identifier, this method returns an item.  Note that, it is expected that each toolbar receives its own distinct copies.   If the item has a custom view, that view should be in place when the item is returned.  Finally, do not assume the returned item is going to be added as an active item in the toolbar.  In fact, the toolbar may ask for items here in order to construct the customization palette (it makes copies of the returned items).  if willBeInsertedIntoToolbar is YES, the returned item will be inserted, and you can expect toolbarWillAddItem: is about to be posted.  */
-- (nullable NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSToolbarItemIdentifier)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag NS_SWIFT_UI_ACTOR;
+- (nullable NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSToolbarItemIdentifier)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag;
     
 /* Returns the ordered list of items to be shown in the toolbar by default.   If during initialization, no overriding values are found in the user defaults, or if the user chooses to revert to the default items this set will be used. */
-- (NSArray<NSToolbarItemIdentifier> *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar NS_SWIFT_UI_ACTOR;
+- (NSArray<NSToolbarItemIdentifier> *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar;
 
 /* Returns the list of all allowed items by identifier.  By default, the toolbar does not assume any items are allowed, even the separator.  So, every allowed item must be explicitly listed.  The set of allowed items is used to construct the customization palette.  The order of items does not necessarily guarantee the order of appearance in the palette.  At minimum, you should return the default item list.*/
-- (NSArray<NSToolbarItemIdentifier> *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar NS_SWIFT_UI_ACTOR;
+- (NSArray<NSToolbarItemIdentifier> *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar;
 
 @optional
 
 /* Optional method. Those wishing to indicate item selection in a toolbar should implement this method to return a non-empty array of selectable item identifiers.  If implemented, the toolbar will remember and display the selected item with a special highlight.  A selected item is one whose item identifier matches the current selected item identifier.  Clicking on an item whose identifier is selectable will automatically update the toolbar's selectedItemIdentifier when possible. (see setSelectedItemIdentifier: for more details) */
-- (NSArray<NSToolbarItemIdentifier> *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar NS_SWIFT_UI_ACTOR;
-
-/// Items in this set cannot be dragged or removed by the user
-- (NSSet<NSToolbarItemIdentifier> *)toolbarImmovableItemIdentifiers:(NSToolbar *)toolbar NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(13.0), ios(16.0));
-
-/// Whether or not an item can be moved to a specified position in the toolbar. If implemented, this method will be called during a user drag and does not necessarily indicate the final position of an item. An index of NSNotFound indicates the item would be removed from the toolbar
-- (BOOL)toolbar:(NSToolbar *)toolbar itemIdentifier:(NSToolbarItemIdentifier)itemIdentifier canBeInsertedAtIndex:(NSInteger)index NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(13.0), ios(16.0));
+- (NSArray<NSToolbarItemIdentifier> *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar;
 
     /* Notifications */
 
-/* Before a new item is added to the toolbar, this notification is posted.  This is the best place to notice a new item is going into the toolbar.  For instance, if you need to cache a reference to the toolbar item or need to set up some initial state, this is the best place to do it.   The notification object is the toolbar to which the item is being added.  The item being added is found by referencing the NSToolbarItemKey in the userInfo.  */
-- (void)toolbarWillAddItem:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
+/* Before an new item is added to the toolbar, this notification is posted.  This is the best place to notice a new item is going into the toolbar.  For instance, if you need to cache a reference to the toolbar item or need to set up some initial state, this is the best place to do it.   The notification object is the toolbar to which the item is being added.  The item being added is found by referencing the @"item" key in the userInfo.  */
+- (void)toolbarWillAddItem:(NSNotification *)notification;
 
-/* After an item is removed from a toolbar the notification is sent.  This allows the chance to tear down information related to the item that may have been cached.  The notification object is the toolbar from which the item is being removed.  The item being removed is found by referencing the NSToolbarItemKey in the userInfo.  */
-- (void)toolbarDidRemoveItem:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
+/* After an item is removed from a toolbar the notification is sent.  This allows the chance to tear down information related to the item that may have been cached.  The notification object is the toolbar from which the item is being removed.  The item being removed is found by referencing the @"item" key in the userInfo.  */
+- (void)toolbarDidRemoveItem:(NSNotification *)notification;
 
 @end
 
@@ -186,4 +169,4 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

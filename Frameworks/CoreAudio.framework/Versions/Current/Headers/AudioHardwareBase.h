@@ -82,7 +82,7 @@ typedef UInt32  AudioObjectPropertyScope;
                     information about an AudioObject.
     @discussion     The element selects one of possibly many items in the section of the object in
                     which to look for the property. Elements are number sequentially where 0
-                    represents the main element. Elements are particular to an instance of a
+                    represents the master element. Elements are particular to an instance of a
                     class, meaning that two instances can have different numbers of elements in the
                     same scope. There is no inheritance of elements.
 */
@@ -141,8 +141,6 @@ typedef struct AudioObjectPropertyAddress   AudioObjectPropertyAddress;
                         The AudioObjectID passed to the function doesn't map to a valid AudioStream.
     @constant       kAudioHardwareUnsupportedOperationError
                         The AudioObject doesn't support the requested operation.
-    @constant       kAudioHardwareNotReadyError
-                        The AudioObject isn't ready to do the requested operation.
     @constant       kAudioDeviceUnsupportedFormatError
                         The AudioStream doesn't support the requested format.
     @constant       kAudioDevicePermissionsError
@@ -161,7 +159,6 @@ CF_ENUM(OSStatus)
     kAudioHardwareBadDeviceError            = '!dev',
     kAudioHardwareBadStreamError            = '!str',
     kAudioHardwareUnsupportedOperationError = 'unop',
-	kAudioHardwareNotReadyError             = 'nrdy',
     kAudioDeviceUnsupportedFormatError      = '!dat',
     kAudioDevicePermissionsError            = '!hog'
 };
@@ -192,11 +189,9 @@ CF_ENUM(AudioObjectID)
     @constant       kAudioObjectPropertyScopePlayThrough
                         The AudioObjectPropertyScope for properties that apply to the play through
                         side of an object.
-    @constant       kAudioObjectPropertyElementMain
-                        The AudioObjectPropertyElement value for properties that apply to the main
-                        element or to the entire scope.
     @constant       kAudioObjectPropertyElementMaster
-						The deprecated synonym for kAudioObjectPropertyElementMain
+                        The AudioObjectPropertyElement value for properties that apply to the master
+                        element or to the entire scope.
 */
 CF_ENUM(AudioObjectPropertyScope)
 {
@@ -204,8 +199,7 @@ CF_ENUM(AudioObjectPropertyScope)
     kAudioObjectPropertyScopeInput          = 'inpt',
     kAudioObjectPropertyScopeOutput         = 'outp',
     kAudioObjectPropertyScopePlayThrough    = 'ptru',
-    kAudioObjectPropertyElementMain			= 0,
-    kAudioObjectPropertyElementMaster API_DEPRECATED_WITH_REPLACEMENT("kAudioObjectPropertyElementMain", macos(10.0, 12.0), ios(2.0, 15.0), watchos(1.0, 8.0), tvos(9.0, 15.0))	= kAudioObjectPropertyElementMain
+    kAudioObjectPropertyElementMaster       = 0
 };
 
 /*!
@@ -365,7 +359,7 @@ CF_ENUM(AudioClassID)
     @enum           AudioPlugIn Properties
     @abstract       AudioObjectPropertySelector values provided by the AudioPlugIn class.
     @discussion     The AudioPlugIn class is a subclass of the AudioObject class. The class has just
-                    the global scope, kAudioObjectPropertyScopeGlobal, and only a main element.
+                    the global scope, kAudioObjectPropertyScopeGlobal, and only a master element.
     @constant       kAudioPlugInPropertyBundleID
                         A CFString that contains the bundle identifier for the AudioPlugIn. The
                         caller is responsible for releasing the returned CFObject.
@@ -440,7 +434,7 @@ CF_ENUM(AudioClassID)
     @abstract       AudioObjectPropertySelector values provided by the AudioTransportManager class.
     @discussion     The AudioTransportManager class is a subclass of the AudioPlugIn class. The
                     class has just the global scope, kAudioObjectPropertyScopeGlobal, and only a
-                    main element.
+                    master element.
     @constant       kAudioTransportManagerPropertyEndPointList
                         An array of AudioObjectIDs for all the AudioEndPoint objects the transport
                         manager is tracking.
@@ -486,7 +480,7 @@ CF_ENUM(AudioClassID)
     @enum           AudioBox Properties
     @abstract       AudioObjectPropertySelector values provided by the AudioBox class.
     @discussion     The AudioBox class is a subclass of the AudioObject class. The class has just
-                    the global scope, kAudioObjectPropertyScopeGlobal, and only a main element.
+                    the global scope, kAudioObjectPropertyScopeGlobal, and only a master element.
                     An AudioBox is a container for other objects (typically AudioDevice objects). An
                     AudioBox publishes identifying information about itself and can be enabled or
                     disabled. A box's contents are only available to the system when the box is
@@ -591,38 +585,23 @@ CF_ENUM(AudioClassID)
                         The transport type ID for AudioDevices connected via AVB.
     @constant       kAudioDeviceTransportTypeThunderbolt
                         The transport type ID for AudioDevices connected via Thunderbolt.
-    @constant       kAudioDeviceTransportTypeContinuityCaptureWired
-                        The transport type ID for Continuity Capture AudioDevices connected via a
-                        cable.
-    @constant       kAudioDeviceTransportTypeContinuityCaptureWireless
-                        The transport type ID for Continuity Capture AudioDevices connected
-                        via wireless networking.
-    @constant       kAudioDeviceTransportTypeContinuityCapture
-                        The transport type ID for AudioDevices connected via the Continuity Capture
-                        feature. This constant is deprecated. Please use
-                        kAudioDeviceTransportTypeContinuityCaptureWired and
-                        kAudioDeviceTransportTypeContinuityCaptureWireless to describe Continuity
-                        Capture devices.
 */
 CF_ENUM(UInt32)
 {
-    kAudioDeviceTransportTypeUnknown                    = 0,
-    kAudioDeviceTransportTypeBuiltIn                    = 'bltn',
-    kAudioDeviceTransportTypeAggregate                  = 'grup',
-    kAudioDeviceTransportTypeVirtual                    = 'virt',
-    kAudioDeviceTransportTypePCI                        = 'pci ',
-    kAudioDeviceTransportTypeUSB                        = 'usb ',
-    kAudioDeviceTransportTypeFireWire                   = '1394',
-    kAudioDeviceTransportTypeBluetooth                  = 'blue',
-    kAudioDeviceTransportTypeBluetoothLE                = 'blea',
-    kAudioDeviceTransportTypeHDMI                       = 'hdmi',
-    kAudioDeviceTransportTypeDisplayPort                = 'dprt',
-    kAudioDeviceTransportTypeAirPlay                    = 'airp',
-    kAudioDeviceTransportTypeAVB                        = 'eavb',
-    kAudioDeviceTransportTypeThunderbolt                = 'thun',
-    kAudioDeviceTransportTypeContinuityCaptureWired     = 'ccwd',
-    kAudioDeviceTransportTypeContinuityCaptureWireless  = 'ccwl',
-    kAudioDeviceTransportTypeContinuityCapture          API_DEPRECATED("Please use kAudioDeviceTransportTypeContinuityCaptureWired and kAudioDeviceTransportTypeContinuityCaptureWireless to describe Continuity Capture devices.", macos(13.0, 13.0), ios(16.0, 16.0)) = 'ccap'
+    kAudioDeviceTransportTypeUnknown        = 0,
+    kAudioDeviceTransportTypeBuiltIn        = 'bltn',
+    kAudioDeviceTransportTypeAggregate      = 'grup',
+    kAudioDeviceTransportTypeVirtual        = 'virt',
+    kAudioDeviceTransportTypePCI            = 'pci ',
+    kAudioDeviceTransportTypeUSB            = 'usb ',
+    kAudioDeviceTransportTypeFireWire       = '1394',
+    kAudioDeviceTransportTypeBluetooth      = 'blue',
+    kAudioDeviceTransportTypeBluetoothLE    = 'blea',
+    kAudioDeviceTransportTypeHDMI           = 'hdmi',
+    kAudioDeviceTransportTypeDisplayPort    = 'dprt',
+    kAudioDeviceTransportTypeAirPlay        = 'airp',
+    kAudioDeviceTransportTypeAVB            = 'eavb',
+    kAudioDeviceTransportTypeThunderbolt    = 'thun'
 };
 
 //==================================================================================================
@@ -634,7 +613,7 @@ CF_ENUM(UInt32)
     @discussion     The AudioDevice class is a subclass of the AudioObjectClass. The class has four
                     scopes, kAudioObjectPropertyScopeGlobal, kAudioObjectPropertyScopeInput,
                     kAudioObjectPropertyScopeOutput, and kAudioObjectPropertyScopePlayThrough. The
-                    class has a main element and an element for each channel in each stream
+                    class has a master element and an element for each channel in each stream
                     numbered according to the starting channel number of each stream.
     @constant       kAudioDevicePropertyConfigurationApplication
                         A CFString that contains the bundle ID for an application that provides a
@@ -774,7 +753,7 @@ CF_ENUM(AudioObjectPropertySelector)
     @enum           AudioClockDevice Properties
     @abstract       AudioObjectPropertySelector values provided by the AudioClockDevice class.
     @discussion     The AudioClockDevice class is a subclass of the AudioObject class. The class has just
-                    the global scope, kAudioObjectPropertyScopeGlobal, and only a main element.
+                    the global scope, kAudioObjectPropertyScopeGlobal, and only a master element.
     @constant       kAudioClockDevicePropertyDeviceUID
                         A CFString that contains a persistent identifier for the AudioClockDevice.
                         An AudioClockDevice's UID is persistent across boots. The content of the UID
@@ -868,17 +847,11 @@ CF_ENUM(AudioClassID)
 #define kAudioEndPointDeviceEndPointListKey "endpoints"
 
 /*!
-    @defined        kAudioEndPointDeviceMainEndPointKey
+    @defined        kAudioEndPointDeviceMasterEndPointKey
     @discussion     The key used in a CFDictionary that describes the composition of an
                     AudioEndPointDevice. The value for this key is a CFString that contains the UID
-                    for the AudioEndPoint that is the time source for the
+                    for the AudioEndPoint that is the master time source for the
                     AudioEndPointDevice.
-*/
-#define kAudioEndPointDeviceMainEndPointKey   "main"
-
-/*!
-    @defined        kAudioEndPointDeviceMasterEndPointKey
-    @discussion     The deprecated synonym for kAudioEndPointDeviceMainEndPointKey
 */
 #define kAudioEndPointDeviceMasterEndPointKey   "master"
 
@@ -1074,7 +1047,7 @@ CF_ENUM(UInt32)
     @enum           AudioStream Properties
     @abstract       AudioObjectPropertySelector values provided by the AudioStream class.
     @discussion     AudioStream is a subclass of AudioObject and has only the single scope,
-                    kAudioObjectPropertyScopeGlobal. They have a main element and an element for
+                    kAudioObjectPropertyScopeGlobal. They have a master element and an element for
                     each channel in the stream numbered upward from 1.
     @constant       kAudioStreamPropertyIsActive
                         A UInt32 where a non-zero value indicates that the stream is enabled and
@@ -1143,7 +1116,7 @@ CF_ENUM(AudioClassID)
     @enum           AudioControl Property Selectors
     @abstract       AudioObjectPropertySelector values provided by the AudioControl class.
     @discussion     The AudioControl class is a subclass of the AudioObject class. The class has
-                    just the global scope, kAudioObjectPropertyScopeGlobal, and only a main
+                    just the global scope, kAudioObjectPropertyScopeGlobal, and only a master
                     element.
     @constant       kAudioControlPropertyScope
                         An AudioServerPlugIn_PropertyScope that indicates which part of a device the

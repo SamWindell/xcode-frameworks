@@ -4,7 +4,7 @@
 
 #import <Foundation/NSObject.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 @interface NSScriptCoercionHandler : NSObject {
     @private
@@ -20,4 +20,4 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

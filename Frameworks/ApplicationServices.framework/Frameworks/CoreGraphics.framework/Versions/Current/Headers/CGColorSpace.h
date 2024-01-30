@@ -9,7 +9,7 @@
 #include <CoreFoundation/CFAvailability.h>
 #include <stdint.h>
 
-typedef struct CF_BRIDGED_TYPE(id) CGColorSpace *CGColorSpaceRef; /* Swift Sendable */
+typedef struct CF_BRIDGED_TYPE(id) CGColorSpace *CGColorSpaceRef;
 
 #include <CoreGraphics/CGBase.h>
 #include <CoreGraphics/CGDataProvider.h>
@@ -115,17 +115,8 @@ CG_AVAILABLE_STARTING(10.11, 9.0);
 CG_EXTERN const CFStringRef kCGColorSpaceITUR_709
 CG_AVAILABLE_STARTING(10.11, 9.0);
 
-CG_EXTERN const CFStringRef kCGColorSpaceITUR_709_PQ
-CG_AVAILABLE_STARTING(12.0, 15.1);
-
-CG_EXTERN const CFStringRef kCGColorSpaceITUR_709_HLG
-CG_AVAILABLE_STARTING(12.0, 15.1);
-
 CG_EXTERN const CFStringRef kCGColorSpaceITUR_2020
 CG_AVAILABLE_STARTING(10.11, 9.0);
-
-CG_EXTERN const CFStringRef kCGColorSpaceITUR_2020_sRGBGamma
-CG_AVAILABLE_STARTING(12.0, 15.1);
 
 CG_EXTERN const CFStringRef kCGColorSpaceROMMRGB
 CG_AVAILABLE_STARTING(10.11, 9.0);
@@ -133,17 +124,11 @@ CG_AVAILABLE_STARTING(10.11, 9.0);
 CG_EXTERN const CFStringRef kCGColorSpaceDCIP3
 CG_AVAILABLE_STARTING(10.11, 9.0);
 
-CG_EXTERN const CFStringRef kCGColorSpaceLinearITUR_2020
-CG_AVAILABLE_STARTING(12.0, 15.0);
-
 CG_EXTERN const CFStringRef kCGColorSpaceExtendedITUR_2020
 CG_AVAILABLE_STARTING(11.0, 14.0);
 
 CG_EXTERN const CFStringRef kCGColorSpaceExtendedLinearITUR_2020
 CG_AVAILABLE_STARTING(10.14.3, 12.3);
-
-CG_EXTERN const CFStringRef kCGColorSpaceLinearDisplayP3
-CG_AVAILABLE_STARTING(12.0, 15.0);
 
 CG_EXTERN const CFStringRef kCGColorSpaceExtendedDisplayP3
 CG_AVAILABLE_STARTING(11.0, 14.0);
@@ -315,16 +300,12 @@ CG_EXTERN CGColorSpaceRef __nullable CGColorSpaceCreateIndexed(CGColorSpaceRef c
 CG_EXTERN CGColorSpaceRef __nullable CGColorSpaceCreatePattern(CGColorSpaceRef __nullable baseSpace)
   CG_AVAILABLE_STARTING(10.0, 2.0);
 
-typedef const struct CF_BRIDGED_TYPE(id) ColorSyncProfile* ColorSyncProfileRef;
+/* Create a color space using `ref', a platform-specific color space
+   reference. For MacOS X, `ref' should be a ColorSyncProfileRef. */
 
-CG_EXTERN const CFStringRef kCGColorSpaceExtendedRange;
-
-/* Create a color space using ColorSyncProfileRef.
-   To create an extended color space include kCGColorSpaceExtendedRange/kCFBooleanTrue
-   key/value pair in `options' dictionary. */
-
-CG_EXTERN CGColorSpaceRef __nullable CGColorSpaceCreateWithColorSyncProfile(ColorSyncProfileRef __nullable, CFDictionaryRef __nullable options)
-CG_AVAILABLE_STARTING(12.0, 15.0);
+CG_EXTERN CGColorSpaceRef __nullable
+  CGColorSpaceCreateWithPlatformColorSpace(const void * cg_nullable ref)
+  CG_AVAILABLE_STARTING(10.0, 9.0);
 
 /* Create a color space using `name' as the identifier for the color
    space. */
@@ -426,21 +407,12 @@ CG_AVAILABLE_BUT_DEPRECATED(10.15, 10.15.4, 13.0, 13.4);
 CG_EXTERN bool CGColorSpaceUsesITUR_2100TF(CGColorSpaceRef)
 CG_AVAILABLE_STARTING(11.0, 14.0);
 
-CG_EXTERN bool CGColorSpaceIsPQBased(CGColorSpaceRef s)
-CG_AVAILABLE_STARTING(12.0, 15.0);
-
-CG_EXTERN bool CGColorSpaceIsHLGBased(CGColorSpaceRef s)
-CG_AVAILABLE_STARTING(12.0, 15.0);
-
-
 /* Return true if `space' can be used as a destination color space; false
  otherwise. */
 
 CG_EXTERN bool CGColorSpaceSupportsOutput(CGColorSpaceRef space)
 CG_AVAILABLE_STARTING(10.12, 10.0);
 
-/*  CGColorSpaceCopyPropertyList will return NULL for special color spaces
-    (e.g. kCGColorSpaceDeviceN or kCGColorSpacePattern), except Indexed Color Space */
 CG_EXTERN CFPropertyListRef __nullable
 CGColorSpaceCopyPropertyList(CGColorSpaceRef space)
 CG_AVAILABLE_STARTING(10.12, 10.0);
@@ -470,9 +442,6 @@ CG_AVAILABLE_STARTING(11.0, 14.0);
 CG_EXTERN CGColorSpaceRef  __nullable CGColorSpaceCreateExtendedLinearized(CGColorSpaceRef space)
 CG_AVAILABLE_STARTING(11.0, 14.0);
 
-/* Create a copy of the color space which uses standard range [0.0, 1.0]. */
-CG_EXTERN CGColorSpaceRef CGColorSpaceCreateCopyWithStandardRange(CGColorSpaceRef s)
-CG_AVAILABLE_STARTING(13.0, 16.0);
 
 /* Deprecated functions */
 
@@ -483,11 +452,6 @@ CG_EXTERN CGColorSpaceRef __nullable CGColorSpaceCreateWithICCProfile(CFDataRef 
 /* Please use `CGColorSpaceCopyICCData' */
 CG_EXTERN CFDataRef __nullable CGColorSpaceCopyICCProfile(CGColorSpaceRef cg_nullable space)
   CG_AVAILABLE_BUT_DEPRECATED(10.5, 10.13, 2.0, 11.0);
-
-/* Please use `CGColorSpaceCreateWithColorSyncProfile' */
-CG_EXTERN CGColorSpaceRef __nullable
-  CGColorSpaceCreateWithPlatformColorSpace(const void * cg_nullable ref)
-  CG_AVAILABLE_BUT_DEPRECATED(10.0, 12.0, 9.0, 15.0);
 
 
 CF_ASSUME_NONNULL_END

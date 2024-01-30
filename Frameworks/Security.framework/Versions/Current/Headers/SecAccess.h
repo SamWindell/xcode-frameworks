@@ -112,9 +112,7 @@ extern const CFStringRef kSecACLAuthorizationIntegrity
 	@abstract Returns the type identifier of SecAccess instances.
 	@result The CFTypeID of SecAccess instances.
 */
-CFTypeID SecAccessGetTypeID(void)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+CFTypeID SecAccessGetTypeID(void);
 
 /*!
 	@function SecAccessCreate
@@ -129,9 +127,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 	@param accessRef On return, a pointer to the new access reference.
 	@result A result code.  See "Security Error Codes" (SecBase.h).
 */
-OSStatus SecAccessCreate(CFStringRef descriptor, CFArrayRef __nullable trustedlist, SecAccessRef * __nonnull CF_RETURNS_RETAINED accessRef)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecAccessCreate(CFStringRef descriptor, CFArrayRef __nullable trustedlist, SecAccessRef * __nonnull CF_RETURNS_RETAINED accessRef) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecAccessCreateFromOwnerAndACL
@@ -158,8 +154,7 @@ OSStatus SecAccessCreateFromOwnerAndACL(const CSSM_ACL_OWNER_PROTOTYPE *owner, u
 */
 __nullable
 SecAccessRef SecAccessCreateWithOwnerAndACL(uid_t userId, gid_t groupId, SecAccessOwnerType ownerType, CFArrayRef __nullable acls, CFErrorRef *error)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.7, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+	__OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_NA);
 
 /*!
 	@function SecAccessGetOwnerAndACL
@@ -185,8 +180,7 @@ OSStatus SecAccessGetOwnerAndACL(SecAccessRef accessRef, CSSM_ACL_OWNER_PROTOTYP
 	@result A result code.  See "Security Error Codes" (SecBase.h).
  */
 OSStatus SecAccessCopyOwnerAndACL(SecAccessRef accessRef, uid_t * __nullable userId, gid_t * __nullable groupId, SecAccessOwnerType * __nullable ownerType, CFArrayRef * __nullable CF_RETURNS_RETAINED aclList)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.7, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+	__OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_NA);
 
 /*!
 	@function SecAccessCopyACLList
@@ -195,9 +189,7 @@ API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 	@param aclList On return, a pointer to a new created CFArray of SecACL instances.  The caller is responsible for calling CFRelease on this array.
 	@result A result code.  See "Security Error Codes" (SecBase.h).
 */
-OSStatus SecAccessCopyACLList(SecAccessRef accessRef, CFArrayRef * __nonnull CF_RETURNS_RETAINED aclList)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.2, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+OSStatus SecAccessCopyACLList(SecAccessRef accessRef, CFArrayRef * __nonnull CF_RETURNS_RETAINED aclList) API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
 
 /*!
 	@function SecAccessCopySelectedACLList
@@ -221,8 +213,7 @@ OSStatus SecAccessCopySelectedACLList(SecAccessRef accessRef, CSSM_ACL_AUTHORIZA
 */
 __nullable
 CFArrayRef SecAccessCopyMatchingACLList(SecAccessRef accessRef, CFTypeRef authorizationTag)
-API_DEPRECATED("SecKeychain is deprecated", macos(10.7, 10.10))
-API_UNAVAILABLE(ios, watchos, tvos, macCatalyst);
+	__OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_NA);
 
 CF_IMPLICIT_BRIDGING_DISABLED
 CF_ASSUME_NONNULL_END

@@ -7,14 +7,14 @@
 
 @class NSString;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT NSNotificationName const NSSystemClockDidChangeNotification API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
 
 typedef double NSTimeInterval;
 
 #define NSTimeIntervalSince1970  978307200.0
-NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
+
 @interface NSDate : NSObject <NSCopying, NSSecureCoding>
 
 @property (readonly) NSTimeInterval timeIntervalSinceReferenceDate;
@@ -65,4 +65,4 @@ NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

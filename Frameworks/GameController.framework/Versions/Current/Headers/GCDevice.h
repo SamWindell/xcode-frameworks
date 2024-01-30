@@ -5,10 +5,11 @@
 //  Copyright © 2020 Apple Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <GameController/GCProductCategories.h>
+#import <TargetConditionals.h>
 
 @class GCPhysicalInputProfile;
+
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,9 +36,7 @@ API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0))
 @property (nonatomic, readonly, copy, nullable) NSString *vendorName API_AVAILABLE(macos(10.9), ios(7.0), tvos(7.0));
 
 /**
- The product category the device belongs to. This is useful for setting appropriate UI elements based on what type of device is connected.
- 
- @see GCProductCategories.h
+ The product category the controller belongs to. This is useful for setting appropriate UI elements based on what type of device is connected.
  */
 @property (nonatomic, readonly) NSString *productCategory API_AVAILABLE(macos(10.15), ios(13.0), tvos(13.0));
 
@@ -45,10 +44,12 @@ API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0))
  Gets the physical input profile for the device.
 
  @note This is equivalent to the controller's gamepad, microGamepad, or extendedGamepad instance.
+ @see GCController.gamepad
  @see GCController.microGamepad
  @see GCController.extendedGamepad
 */
-@property (nonatomic, strong, readonly) GCPhysicalInputProfile *physicalInputProfile API_DEPRECATED("Use the physicalInputProfile property on GCController instead.  For GCKeyboard, use the keyboardInput property.  For GCMouse, use the mouseInput property.", macos(11.0, 13.0), ios(14.0, 16.0), tvos(14.0, 16.0));
+@property (nonatomic, strong, readonly) GCPhysicalInputProfile *physicalInputProfile API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
+
 
 @end
 

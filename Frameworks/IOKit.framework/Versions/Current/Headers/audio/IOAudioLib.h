@@ -32,9 +32,7 @@
 #ifndef _IOAUDIOLIB_H
 #define _IOAUDIOLIB_H
 
-#if TARGET_OS_OSX
 #include <IOKit/audio/IOAudioTypes.h>
-#endif
 
 #if 0
 

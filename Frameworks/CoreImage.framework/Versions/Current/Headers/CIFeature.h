@@ -3,11 +3,6 @@
    Copyright (c) 2011 Apple, Inc.
    All rights reserved. */
 
-#ifndef CIFEATURE_H
-#define CIFEATURE_H
-
-#ifdef __OBJC__
-
 #import <CoreImage/CoreImageDefines.h>
 #import <Foundation/Foundation.h>
 
@@ -159,7 +154,3 @@ NS_CLASS_AVAILABLE(10_11, 9_0)
 #endif // __OBJC2__
 
 NS_ASSUME_NONNULL_END
-
-#endif /* __OBJC__ */
-
-#endif /* CIFEATURE_H */

@@ -50,12 +50,12 @@ typedef struct __CFNetDiagnostic*	   CFNetDiagnosticRef;
 typedef CF_ENUM(int, CFNetDiagnosticStatusValues) {
 
   /*
-   * There is no status, but no error has occurred
+   * There is no status, but no error has occured
    */
   kCFNetDiagnosticNoErr	= 0,
 
   /*
-   * An error occurred that prevented the call from completing
+   * An error occured that prevented the call from completing
    */
   kCFNetDiagnosticErr = -66560L,
 

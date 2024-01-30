@@ -45,27 +45,23 @@
 
 #include <TargetConditionals.h>
 
-#define SEC_ASN1_API_DEPRECATED API_DEPRECATED("SecAsn1 is not supported", macos(10.0, 12.0)) API_UNAVAILABLE(ios, watchos, tvos)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 typedef struct cssm_data {
     size_t Length;
     uint8_t * __nullable Data;
-} SecAsn1Item SEC_ASN1_API_DEPRECATED, SecAsn1Oid SEC_ASN1_API_DEPRECATED;
+} SecAsn1Item, SecAsn1Oid;
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
-typedef struct SEC_ASN1_API_DEPRECATED {
+typedef struct {
     SecAsn1Oid algorithm;
     SecAsn1Item parameters;
-} SecAsn1AlgId SEC_ASN1_API_DEPRECATED;
+} SecAsn1AlgId;
 
-typedef struct SEC_ASN1_API_DEPRECATED {
+typedef struct {
     SecAsn1AlgId algorithm;
     SecAsn1Item subjectPublicKey;
-} SecAsn1PubKeyInfo SEC_ASN1_API_DEPRECATED;
-
-#pragma clang diagnostic pop
+} SecAsn1PubKeyInfo;
 
 CF_ASSUME_NONNULL_BEGIN
 
@@ -112,7 +108,7 @@ typedef struct SecAsn1Template_struct {
      * In all other cases, the value is ignored.
      */
     uint32_t size;
-} SecAsn1Template SEC_ASN1_API_DEPRECATED;
+} SecAsn1Template;
 
 
 /*
@@ -231,10 +227,12 @@ typedef const SecAsn1Template * SecAsn1TemplateChooser(
 	Boolean enc,
 	const char *buf,
 	size_t len,
-	void *dest) SEC_ASN1_API_DEPRECATED;
+	void *dest);
 
-typedef SecAsn1TemplateChooser * SecAsn1TemplateChooserPtr SEC_ASN1_API_DEPRECATED;
+typedef SecAsn1TemplateChooser * SecAsn1TemplateChooserPtr;
 
 CF_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop
 
 #endif /* _SEC_ASN1_TYPES_H_ */

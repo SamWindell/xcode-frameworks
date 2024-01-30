@@ -1,9 +1,7 @@
 /* CoreAnimation - CAScrollLayer.h
 
-   Copyright (c) 2006-2022, Apple Inc.
+   Copyright (c) 2006-2018, Apple Inc.
    All rights reserved. */
-
-#ifdef __OBJC__
 
 #import <QuartzCore/CALayer.h>
 
@@ -60,5 +58,3 @@ CA_EXTERN CAScrollLayerScrollMode const kCAScrollBoth
     API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
 
 NS_ASSUME_NONNULL_END
-
-#endif

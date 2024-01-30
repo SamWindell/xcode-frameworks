@@ -1,7 +1,7 @@
 /*
 	NSFontDescriptor.h
 	Application Kit
-	Copyright (c) 2003-2023, Apple Inc.
+	Copyright (c) 2003-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -12,7 +12,7 @@
 #import <Foundation/NSSet.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 /* Symbolic Font Traits */
@@ -53,7 +53,6 @@ typedef NSString * NSFontDescriptorTraitKey NS_TYPED_ENUM;
 typedef NSString * NSFontDescriptorVariationKey NS_TYPED_ENUM;
 typedef NSString * NSFontDescriptorFeatureKey NS_TYPED_EXTENSIBLE_ENUM;
 typedef CGFloat NSFontWeight NS_TYPED_EXTENSIBLE_ENUM;
-typedef CGFloat NSFontWidth NS_TYPED_EXTENSIBLE_ENUM;
 typedef NSString * NSFontDescriptorSystemDesign NS_TYPED_ENUM;
 typedef NSString * NSFontTextStyle NS_TYPED_ENUM API_AVAILABLE(macos(11.0));
 typedef NSString * NSFontTextStyleOptionKey NS_TYPED_ENUM API_AVAILABLE(macos(11.0));
@@ -174,14 +173,6 @@ APPKIT_EXTERN const NSFontWeight NSFontWeightBold API_AVAILABLE(macos(10.11));
 APPKIT_EXTERN const NSFontWeight NSFontWeightHeavy API_AVAILABLE(macos(10.11));
 APPKIT_EXTERN const NSFontWeight NSFontWeightBlack API_AVAILABLE(macos(10.11));
 
-/* Font width trait */
-/* Predefined symbolic width values used for NSFontWidthTrait and +[NSFont systemFontOfSize:weight:width:].
- */
-APPKIT_EXTERN const NSFontWidth NSFontWidthCompressed API_AVAILABLE(macos(13.0));
-APPKIT_EXTERN const NSFontWidth NSFontWidthCondensed API_AVAILABLE(macos(10.10));
-APPKIT_EXTERN const NSFontWidth NSFontWidthStandard API_AVAILABLE(macos(10.10));
-APPKIT_EXTERN const NSFontWidth NSFontWidthExpanded API_AVAILABLE(macos(10.10));
-
 APPKIT_EXTERN NSFontDescriptorSystemDesign const NSFontDescriptorSystemDesignDefault API_AVAILABLE(macos(10.15));
 APPKIT_EXTERN NSFontDescriptorSystemDesign const NSFontDescriptorSystemDesignSerif API_AVAILABLE(macos(10.15));
 APPKIT_EXTERN NSFontDescriptorSystemDesign const NSFontDescriptorSystemDesignMonospaced API_AVAILABLE(macos(10.15));
@@ -241,4 +232,4 @@ APPKIT_EXTERN NSString * NSFontColorAttribute 			API_DEPRECATED("", macos(10.3,1
 
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

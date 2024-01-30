@@ -8,9 +8,9 @@
 @class NSData, NSDictionary, NSError, NSHost, NSInputStream, NSOutputStream, NSRunLoop, NSString, NSURL;
 @protocol NSStreamDelegate;
 
-typedef NSString * NSStreamPropertyKey NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSString * NSStreamPropertyKey NS_EXTENSIBLE_STRING_ENUM;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, NSStreamStatus) {
     NSStreamStatusNotOpen = 0,
@@ -86,10 +86,10 @@ typedef NS_OPTIONS(NSUInteger, NSStreamEvent) {
 
 @interface NSStream (NSSocketStreamCreationExtensions)
 
-+ (void)getStreamsToHostWithName:(NSString *)hostname port:(NSInteger)port inputStream:(NSInputStream * _Nullable * _Nullable)inputStream outputStream:(NSOutputStream * _Nullable * _Nullable)outputStream API_DEPRECATED("Use nw_connection_t in Network framework instead", macos(10.10, API_TO_BE_DEPRECATED), ios(8.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED)) API_UNAVAILABLE(watchos);
++ (void)getStreamsToHostWithName:(NSString *)hostname port:(NSInteger)port inputStream:(NSInputStream * _Nullable * _Nullable)inputStream outputStream:(NSOutputStream * _Nullable * _Nullable)outputStream API_AVAILABLE(macos(10.10), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 #if TARGET_OS_OSX
-+ (void)getStreamsToHost:(NSHost *)host port:(NSInteger)port inputStream:(NSInputStream * _Nullable * _Nullable)inputStream outputStream:(NSOutputStream * _Nullable * _Nullable)outputStream API_DEPRECATED("Use nw_connection_t in Network framework instead", macos(10.3,10.10)) API_UNAVAILABLE(ios, watchos, tvos);
++ (void)getStreamsToHost:(NSHost *)host port:(NSInteger)port inputStream:(NSInputStream * _Nullable * _Nullable)inputStream outputStream:(NSOutputStream * _Nullable * _Nullable)outputStream API_DEPRECATED("Please use getStreamsToHostWithName:port:inputStream:outputStream: instead", macos(10.3,10.10)) API_UNAVAILABLE(ios, watchos, tvos);
 #endif
 
 @end
@@ -126,7 +126,7 @@ typedef NS_OPTIONS(NSUInteger, NSStreamEvent) {
 // String constants for the setting of the socket security level.
 FOUNDATION_EXPORT NSStreamPropertyKey const NSStreamSocketSecurityLevelKey		API_AVAILABLE(macos(10.3), ios(2.0), watchos(2.0), tvos(9.0));	// use this as the key for setting one of the following values for the security level of the target stream.
 
-typedef NSString * NSStreamSocketSecurityLevel NS_TYPED_ENUM;
+typedef NSString * NSStreamSocketSecurityLevel NS_STRING_ENUM;
 
 FOUNDATION_EXPORT NSStreamSocketSecurityLevel const NSStreamSocketSecurityLevelNone		API_AVAILABLE(macos(10.3), ios(2.0), watchos(2.0), tvos(9.0));
 FOUNDATION_EXPORT NSStreamSocketSecurityLevel const NSStreamSocketSecurityLevelSSLv2		API_AVAILABLE(macos(10.3), ios(2.0), watchos(2.0), tvos(9.0));
@@ -136,7 +136,7 @@ FOUNDATION_EXPORT NSStreamSocketSecurityLevel const NSStreamSocketSecurityLevelN
 
 FOUNDATION_EXPORT NSStreamPropertyKey const NSStreamSOCKSProxyConfigurationKey		API_AVAILABLE(macos(10.3), ios(2.0), watchos(2.0), tvos(9.0));	// Value is an NSDictionary containing the key/value pairs below. The dictionary returned from SystemConfiguration for SOCKS proxies will work without alteration.
 
-typedef NSString * NSStreamSOCKSProxyConfiguration NS_TYPED_ENUM;
+typedef NSString * NSStreamSOCKSProxyConfiguration NS_STRING_ENUM;
 
 FOUNDATION_EXPORT NSStreamSOCKSProxyConfiguration const NSStreamSOCKSProxyHostKey			API_AVAILABLE(macos(10.3), ios(2.0), watchos(2.0), tvos(9.0));
     // Value is an NSString
@@ -149,7 +149,7 @@ FOUNDATION_EXPORT NSStreamSOCKSProxyConfiguration const NSStreamSOCKSProxyUserKe
 FOUNDATION_EXPORT NSStreamSOCKSProxyConfiguration const NSStreamSOCKSProxyPasswordKey		API_AVAILABLE(macos(10.3), ios(2.0), watchos(2.0), tvos(9.0));
     // Value is an NSString
 
-typedef NSString * NSStreamSOCKSProxyVersion NS_TYPED_ENUM;
+typedef NSString * NSStreamSOCKSProxyVersion NS_STRING_ENUM;
 
 FOUNDATION_EXPORT NSStreamSOCKSProxyVersion const NSStreamSOCKSProxyVersion4			API_AVAILABLE(macos(10.3), ios(2.0), watchos(2.0), tvos(9.0));
     // Value for NSStreamSOCKProxyVersionKey
@@ -174,7 +174,7 @@ FOUNDATION_EXPORT NSErrorDomain const NSStreamSOCKSErrorDomain			API_AVAILABLE(m
 // are documented below.
 FOUNDATION_EXPORT NSStreamPropertyKey const NSStreamNetworkServiceType		    API_AVAILABLE(macos(10.7), ios(4.0), watchos(2.0), tvos(9.0));
 
-typedef NSString * NSStreamNetworkServiceTypeValue NS_TYPED_ENUM;
+typedef NSString * NSStreamNetworkServiceTypeValue NS_STRING_ENUM;
 
 // Supported network service types:
 FOUNDATION_EXPORT NSStreamNetworkServiceTypeValue const NSStreamNetworkServiceTypeVoIP	    API_AVAILABLE(macos(10.7), ios(4.0), watchos(2.0), tvos(9.0));
@@ -183,4 +183,4 @@ FOUNDATION_EXPORT NSStreamNetworkServiceTypeValue const NSStreamNetworkServiceTy
 FOUNDATION_EXPORT NSStreamNetworkServiceTypeValue const NSStreamNetworkServiceTypeVoice	    API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
 FOUNDATION_EXPORT NSStreamNetworkServiceTypeValue const NSStreamNetworkServiceTypeCallSignaling    API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

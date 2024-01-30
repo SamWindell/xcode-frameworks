@@ -1,9 +1,7 @@
 /* CoreAnimation - CARemoteLayerServer.h
 
-   Copyright (c) 2010-2022, Apple Inc.
+   Copyright (c) 2010-2018, Apple Inc.
    All rights reserved. */
-
-#ifdef __OBJC__
 
 #import <QuartzCore/CALayer.h>
 #import <Foundation/NSObject.h>
@@ -39,5 +37,3 @@ API_AVAILABLE(macos(10.7))
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif

@@ -1,7 +1,7 @@
 /*
     NSCollectionViewFlowLayout.h
     Application Kit
-    Copyright (c) 2015-2023, Apple Inc.
+    Copyright (c) 2015-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger, NSCollectionViewScrollDirection) {
     NSCollectionViewScrollDirectionHorizontal
 } API_AVAILABLE(macos(10.11));
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 APPKIT_EXTERN NSCollectionViewSupplementaryElementKind const NSCollectionElementKindSectionHeader API_AVAILABLE(macos(10.11));
@@ -31,16 +31,16 @@ API_AVAILABLE(macos(10.11))
 @protocol NSCollectionViewDelegateFlowLayout <NSCollectionViewDelegate>
 @optional
 
-- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath NS_SWIFT_UI_ACTOR;
-- (NSEdgeInsets)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section NS_SWIFT_UI_ACTOR;
-- (CGFloat)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section NS_SWIFT_UI_ACTOR;
-- (CGFloat)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section NS_SWIFT_UI_ACTOR;
-- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section NS_SWIFT_UI_ACTOR;
-- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section NS_SWIFT_UI_ACTOR;
+- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
+- (NSEdgeInsets)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section;
+- (CGFloat)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section;
+- (CGFloat)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
+- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section;
+- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section;
 
 @end
 
-APPKIT_EXTERN API_AVAILABLE(macos(10.11))
+API_AVAILABLE(macos(10.11))
 @interface NSCollectionViewFlowLayout : NSCollectionViewLayout
 
 @property CGFloat minimumLineSpacing;
@@ -75,4 +75,4 @@ APPKIT_EXTERN API_AVAILABLE(macos(10.11))
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

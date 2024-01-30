@@ -23,8 +23,6 @@
 
 
 #include <Availability.h>
-#include <TargetConditionals.h>
-#include <os/availability.h>
 
 #if PRAGMA_ONCE
 #pragma once
@@ -193,7 +191,6 @@ extern "C" {
    #endif
 #endif
 
-#if TARGET_OS_OSX
 /*
  *  Define the three inputs to AssertMacros.h
  */
@@ -208,10 +205,6 @@ extern "C" {
    #define DEBUG_ASSERT_MESSAGE(componentNameString, assertionString, exceptionLabelString, errorString, fileName, lineNumber, value) \
        DEBUGASSERTMSG(COMPONENT_SIGNATURE, DEBUG_NO_OPTIONS, componentNameString ": " assertionString, exceptionLabelString, errorString, fileName, lineNumber, value)
 #endif
-#endif
-/*
- *  Non-macOS targets use the default inputs in AssertMacros.h
- */
 
 /*
  *  Include AssertMacros.h where all of the check, verify, and require macros are defined
@@ -300,7 +293,7 @@ extern "C" {
  */
 enum {
   kBlessedBusErrorBait          = 0x68F168F1
-} API_DEPRECATED( "Deprecated", macos(10.0,10.8));
+};
 
 /*
  *  DebugAssert()
@@ -371,7 +364,7 @@ enum {
   kInDeferredTaskMask           = 0x00000020, /* Deferred tasks are executing */
   kInSecondaryIntHandlerMask    = 0x00000040, /* Secondary interrupt handlers are executing */
   kInNestedInterruptMask        = 0x00000080 /* The system is handling an interrupt */
-} API_DEPRECATED( "Deprecated", macos(10.0,10.8));
+};
 
 /*
  *  TaskLevel()
@@ -403,12 +396,12 @@ TaskLevel(void)                                               __OSX_AVAILABLE_BU
  */
 enum {
   kComponentDebugOption         = 0     /* optionSelectorNum to turn breaks for component On or Off*/
-} API_DEPRECATED( "Deprecated", macos(10.0,10.8));
+};
 
 enum {
   kGetDebugOption               = 1,    /* get current debug option setting*/
   kSetDebugOption               = 2     /* set debug option*/
-} API_DEPRECATED( "Deprecated", macos(10.0,10.8));
+};
 
 
 /*

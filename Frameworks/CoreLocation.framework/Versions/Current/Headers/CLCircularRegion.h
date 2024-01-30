@@ -20,10 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  *    A circular geographic area.
  */
 CL_EXTERN
-API_DEPRECATED_WITH_REPLACEMENT("Use CLCircularGeographicCondition", macos(10.10, API_TO_BE_DEPRECATED), ios(7.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED))
-#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-API_UNAVAILABLE(visionos)
-#endif
+API_AVAILABLE(macos(10.10), ios(7.0))
 @interface CLCircularRegion : CLRegion
 
 /*
@@ -44,7 +41,7 @@ API_UNAVAILABLE(visionos)
  *  Discussion:
  *    Returns the coordinate of the center of the region.
  */
-@property (readonly, atomic) CLLocationCoordinate2D center;
+@property (readonly, nonatomic) CLLocationCoordinate2D center;
 
 /*
  *  radius
@@ -52,7 +49,7 @@ API_UNAVAILABLE(visionos)
  *  Discussion:
  *    Returns the radius of the region.
  */
-@property (readonly, atomic) CLLocationDistance radius;
+@property (readonly, nonatomic) CLLocationDistance radius;
 
 /*
  *  containsCoordinate:

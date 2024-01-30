@@ -1,9 +1,11 @@
 /*
-     File:       ATSUI/ATSUnicodeTypes.h
+     File:       QD/ATSUnicodeTypes.h
  
      Contains:   ATSUI types and constants.
  
-     Copyright:  (c) 2003-2022 by Apple Inc. all rights reserved.
+     Version:    Quickdraw-291~1
+ 
+     Copyright:  � 2003-2008 by Apple Inc. all rights reserved.
  
      Bugs?:      For bug reports, consult the following page on
                  the World Wide Web:

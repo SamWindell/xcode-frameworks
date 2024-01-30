@@ -3,25 +3,13 @@
    Copyright (c) 2014 Apple, Inc.
    All rights reserved. */
 
-#ifndef CICONTEXT_H
-#define CICONTEXT_H
-
-#ifdef __OBJC__
-
 #import <CoreImage/CIImage.h>
 #import <CoreImage/CoreImageDefines.h>
 #import <CoreVideo/CoreVideo.h>
 
-#if TARGET_OS_IPHONE && !TARGET_OS_MACCATALYST
-  #define COREIMAGE_SUPPORTS_OPENGLES 1
-#else
-  #define COREIMAGE_SUPPORTS_OPENGLES 0
-#endif 
-
-#if COREIMAGE_SUPPORTS_OPENGLES
+#if TARGET_OS_IPHONE && (TARGET_OS_EMBEDDED || TARGET_OS_SIMULATOR || !TARGET_OS_MACCATALYST)
  #import <OpenGLES/EAGL.h>
-#endif 
-#if TARGET_OS_OSX
+#elif TARGET_OS_OSX
  #import <OpenGL/CGLTypes.h>
 #endif 
 
@@ -52,8 +40,8 @@ CORE_IMAGE_EXPORT CIContextOption const kCIContextWorkingColorSpace;
 
 /* An NSNumber with a CIFormat value defining the pixel format to use for intermediate buffers.
  * On iOS the supported values for this key are RGBA8 and RGBAh. If not specified:
- *   RGBA8 is used if app is linked against iOS 12 SDK or earlier.
- *   RGBAh is used if app is linked against iOS 13 SDK or later.
+ *   RGBA8 is used if app is linked against OSX 10.12 SDK or earlier.
+ *   RGBAh is used if app is linked against OSX 10.13 SDK or later.
  * On OSX the supported values for this key are RGBA8, RGBAh and RGBAf. If not specified, RGBAh is used. */
 CORE_IMAGE_EXPORT CIContextOption const kCIContextWorkingFormat NS_AVAILABLE(10_4,8_0);
 
@@ -162,7 +150,7 @@ NS_AVAILABLE(10_4,5_0);
  *
  * The [context drawImage:...] render methods will render to the EAGLContext.
  */
-#if COREIMAGE_SUPPORTS_OPENGLES
+#if TARGET_OS_IPHONE && (TARGET_OS_EMBEDDED || TARGET_OS_SIMULATOR || !TARGET_OS_MACCATALYST)
 + (CIContext *)contextWithEAGLContext:(EAGLContext *)eaglContext
     CI_GL_DEPRECATED_IOS(5_0,12_0);
 
@@ -202,10 +190,6 @@ NS_AVAILABLE(10_15,13_0);
 // The working pixel format of the CIContext used for intermediate buffers
 @property (nonatomic, readonly) CIFormat workingFormat NS_AVAILABLE(10_11,9_0);
 
-// A NSNumber that specifies the maximum memory footprint (in megabytes) that 
-// the CIContext allocates for render tasks.  Larger values could increase memory  
-// footprint while smaller values could reduce performance.
-CORE_IMAGE_EXPORT CIContextOption const kCIContextMemoryLimit NS_AVAILABLE(14_0, 17_0);
 
 #pragma mark - render methods
 
@@ -248,9 +232,10 @@ CF_RETURNS_RETAINED NS_DEPRECATED_MAC(10_4,10_11);
 
 #if COREIMAGE_SUPPORTS_IOSURFACE
 /* Render 'image' to the given IOSurface.
- * Point (0,0) in the image coordinate sysyem will align to the lower left corner of 'surface'.
- * The 'bounds' parameter acts as a clip rect to limit what region of 'surface' is modified.
- * If 'colorSpace' is nil, CI will not color match to the destination.
+ * The 'bounds' parameter has the following behavior:
+ *    The 'image' is rendered into 'surface' so that
+ *      point (0,0) of 'image' aligns to the lower left corner of 'surface'.
+ *      The 'bounds' acts like a clip rect to limit what region of 'surface' is modified.
  */
 - (void)render:(CIImage *)image
    toIOSurface:(IOSurfaceRef)surface
@@ -268,8 +253,12 @@ CF_RETURNS_RETAINED NS_DEPRECATED_MAC(10_4,10_11);
 toCVPixelBuffer:(CVPixelBufferRef)buffer NS_AVAILABLE(10_11,5_0);
 
 /* Render 'image' to the given CVPixelBufferRef.
- * Point (0,0) in the image coordinate sysyem will align to the lower left corner of 'buffer'.
- * The 'bounds' parameter acts as a clip rect to limit what region of 'buffer' is modified.
+ * The 'bounds' parameter has the following behavior:
+ *    In OS X and iOS 9 and later:  The 'image' is rendered into 'buffer' so that
+ *      point (0,0) of 'image' aligns to the lower left corner of 'buffer'.
+ *      The 'bounds' acts like a clip rect to limit what region of 'buffer' is modified.
+ *    In iOS 8 and earlier: The 'bounds' parameter acts to specify the region of 'image' to render.
+ *      This region (regardless of its origin) is rendered at upper-left corner of 'buffer'.
  * If 'colorSpace' is nil, CI will not color match to the destination.
  */
 - (void)render:(CIImage *)image
@@ -445,15 +434,6 @@ CORE_IMAGE_EXPORT CIImageRepresentationOption const kCIImageRepresentationSemant
                                     colorSpace:(CGColorSpaceRef)colorSpace
                                        options:(NSDictionary<CIImageRepresentationOption, id>*)options NS_AVAILABLE(10_13_4,11_0);
 
-/* Render a CIImage to HEIF data. Image must have a finite non-empty extent. */
-/* The CGColorSpace must be kCGColorSpaceModelRGB or kCGColorSpaceModelMonochrome. */
-/* Supported options keys are kCGImageDestinationLossyCompressionQuality, */
-/* and the depth, disparity, and matte options. */
-- (nullable NSData*) HEIF10RepresentationOfImage:(CIImage*)image
-                                      colorSpace:(CGColorSpaceRef)colorSpace
-                                         options:(NSDictionary<CIImageRepresentationOption, id>*)options
-                                           error:(NSError **)errorPtr NS_AVAILABLE(12_0,15_0);
-
 /* Render a CIImage to PNG data. Image must have a finite non-empty extent. */
 /* The CGColorSpace must be kCGColorSpaceModelRGB or kCGColorSpaceModelMonochrome */
 /* and must match the specified CIFormat. */
@@ -462,12 +442,6 @@ CORE_IMAGE_EXPORT CIImageRepresentationOption const kCIImageRepresentationSemant
                                        format:(CIFormat)format
                                    colorSpace:(CGColorSpaceRef)colorSpace
                                       options:(NSDictionary<CIImageRepresentationOption, id>*)options NS_AVAILABLE(10_13,11_0);
-
-/* Render a CIImage to OpenEXR data. Image must have a finite non-empty extent. */
-/* No options keys are supported at this time. */
-- (nullable NSData*) OpenEXRRepresentationOfImage:(CIImage*)image
-                                          options:(NSDictionary<CIImageRepresentationOption, id>*)options
-                                            error:(NSError **)errorPtr NS_AVAILABLE(14_0, 17_0);
 
 /* Render a CIImage to TIFF file. Image must have a finite non-empty extent. */
 /* The CGColorSpace must be kCGColorSpaceModelRGB or kCGColorSpaceModelMonochrome */
@@ -513,22 +487,6 @@ CORE_IMAGE_EXPORT CIImageRepresentationOption const kCIImageRepresentationSemant
                                 options:(NSDictionary<CIImageRepresentationOption, id>*)options
                                   error:(NSError **)errorPtr NS_AVAILABLE(10_13_4,11_0);
 
-/* Render a CIImage to 10-bit deep HEIF file. Image must have a finite non-empty extent. */
-/* The CGColorSpace must be kCGColorSpaceModelRGB or kCGColorSpaceModelMonochrome. */
-/* Supported options keys are kCGImageDestinationLossyCompressionQuality, */
-/* and the depth, disparity, and matte options. */
-- (BOOL) writeHEIF10RepresentationOfImage:(CIImage*)image
-                                    toURL:(NSURL*)url
-                               colorSpace:(CGColorSpaceRef)colorSpace
-                                  options:(NSDictionary<CIImageRepresentationOption, id>*)options
-                                    error:(NSError **)errorPtr NS_AVAILABLE(12_0,15_0);
-
-/* Render a CIImage to OpenEXR file. Image must have a finite non-empty extent. */
-/* No options keys are supported at this time. */
-- (BOOL) writeOpenEXRRepresentationOfImage:(CIImage*)image
-                                     toURL:(NSURL*)url
-                                   options:(NSDictionary<CIImageRepresentationOption, id>*)options
-                                     error:(NSError **)errorPtr NS_AVAILABLE(14_0, 17_0);
 
 @end
 
@@ -589,7 +547,3 @@ CORE_IMAGE_EXPORT CIImageRepresentationOption const kCIImageRepresentationSemant
 
 
 NS_ASSUME_NONNULL_END
-
-#endif /* __OBJC__ */
-
-#endif /* CICONTEXT_H */

@@ -1,7 +1,7 @@
 /*
     NSPathControl.h
     Application Kit
-    Copyright (c) 2005-2023, Apple Inc.
+    Copyright (c) 2005-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -12,7 +12,7 @@
 #import <AppKit/NSDragging.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSPathComponentCell, NSOpenPanel, NSPathControlItem;
@@ -99,40 +99,40 @@ API_AVAILABLE(macos(10.5))
 
 /* Optional dragging source support. These methods are called when a drag is about to begin. One of these two methods must be implemented to allow dragging from the control. You can refuse to allow the drag to happen by returning NO, and allow it by returning YES. By default, 'pasteboard' automatically has the following types on it: NSStringPboardType, NSURLPboardType (if there is a URL value for the item being dragged), and NSFilenamesPboardType (if the URL value returns YES from -isFileURL). You can customize the types placed on the pasteboard at this time, if desired.
 */
-- (BOOL)pathControl:(NSPathControl *)pathControl shouldDragItem:(NSPathControlItem *)pathItem withPasteboard:(NSPasteboard *)pasteboard NS_SWIFT_UI_ACTOR;
-- (BOOL)pathControl:(NSPathControl *)pathControl shouldDragPathComponentCell:(NSPathComponentCell *)pathComponentCell withPasteboard:(NSPasteboard *)pasteboard NS_SWIFT_UI_ACTOR;
+- (BOOL)pathControl:(NSPathControl *)pathControl shouldDragItem:(NSPathControlItem *)pathItem withPasteboard:(NSPasteboard *)pasteboard;
+- (BOOL)pathControl:(NSPathControl *)pathControl shouldDragPathComponentCell:(NSPathComponentCell *)pathComponentCell withPasteboard:(NSPasteboard *)pasteboard;
 
 /* Optional dragging destination support. This method is called when something is dragged over the control. This method can be implemented to allow dragging onto the control. The delegate method will be called even for instances that are "disabled" (ie: return NO from -isEnabled). Return NSDragOperationNone to refuse the drop, or anything else to accept it.
 
     If not implemented, and the control isEnabled and isEditable, the drop will be accepted if the pasteboard contains NSURLPboardType or NSFilenamesPboardType, and if the type of the referenced file conforms to the allowedTypes.
 */
-- (NSDragOperation)pathControl:(NSPathControl *)pathControl validateDrop:(id <NSDraggingInfo>)info NS_SWIFT_UI_ACTOR;
+- (NSDragOperation)pathControl:(NSPathControl *)pathControl validateDrop:(id <NSDraggingInfo>)info;
 
 /* Optional dragging destination support. In order to accept the dropped contents previously accepted from validateDrop:, you must implement this method. This method is called from -performDragOperation:. You should change the URL value based on the dragged information.
 
     If not implemented, and the control isEditable, the drop will be accepted if the pasteboard contains NSURLPboardType or NSFilenamesPboardType, and if the type of the referenced file conforms to the allowedTypes. The control's URL value will automatically be changed, and the action will be invoked.
 
 */
-- (BOOL)pathControl:(NSPathControl *)pathControl acceptDrop:(id <NSDraggingInfo>)info NS_SWIFT_UI_ACTOR;
+- (BOOL)pathControl:(NSPathControl *)pathControl acceptDrop:(id <NSDraggingInfo>)info;
 
 /* Called before the 'openPanel' is shown, but after the 'openPanel' has allowedFileTypes set to the control's allowedTypes. At this time, you can further customize the 'openPanel' as required. This is only ever called when the style is set to NSPathStylePopUp.
 */
-- (void)pathControl:(NSPathControl *)pathControl willDisplayOpenPanel:(NSOpenPanel *)openPanel NS_SWIFT_UI_ACTOR;
+- (void)pathControl:(NSPathControl *)pathControl willDisplayOpenPanel:(NSOpenPanel *)openPanel;
 
 /* Called before the 'menu' is shown. At this time, you can further customize the 'menu' as required, adding and removing items. This is only ever called when the style is set to NSPathStylePopUp.
 */
-- (void)pathControl:(NSPathControl *)pathControl willPopUpMenu:(NSMenu *)menu NS_SWIFT_UI_ACTOR;
+- (void)pathControl:(NSPathControl *)pathControl willPopUpMenu:(NSMenu *)menu;
 
 @end
 
 
 @interface NSPathControl (NSDeprecated)
 
-- (nullable NSPathComponentCell *)clickedPathComponentCell API_DEPRECATED("Use the clickedPathItem property instead", macos(10.0,10.14));
-- (NSArray<NSPathComponentCell *> *)pathComponentCells API_DEPRECATED("Use the pathItems property instead", macos(10.0,10.14));
-- (void)setPathComponentCells:(NSArray<NSPathComponentCell *> *)cells API_DEPRECATED("Use the pathItems property instead", macos(10.0,10.14));
+- (nullable NSPathComponentCell *)clickedPathComponentCell API_DEPRECATED("Use -clickedPathItem instead", macos(10.0,10.14));
+- (NSArray<NSPathComponentCell *> *)pathComponentCells API_DEPRECATED("Use -pathItems instead", macos(10.0,10.14));
+- (void)setPathComponentCells:(NSArray<NSPathComponentCell *> *)cells API_DEPRECATED("Use -setPathItems: instead", macos(10.0,10.14));
 
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

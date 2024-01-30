@@ -2,7 +2,7 @@
  *  CVMetalTexture.h
  *  CoreVideo
  *
- *  Copyright (c) 2011-2022 Apple Inc. All rights reserved.
+ *  Copyright (c) 2011-2015 Apple Inc. All rights reserved.
  *
  */
  
@@ -35,22 +35,21 @@ extern "C" {
 #pragma mark CVMetalTexture
 
 /*!
-    @typedef    CVMetalTextureRef
+    @typedef	CVMetalTextureRef
     @abstract   Metal texture based image buffer
-    @discussion IMPORTANT NOTE: Clients should retain CVMetalTexture objects until they are done using the images in them.
-                Retaining a CVMetalTexture is your way to indicate that you're still using the image in the buffer, and that it should not be recycled yet.
+
 */
-typedef CVImageBufferRef CVMetalTextureRef CV_SWIFT_NONSENDABLE;
+typedef CVImageBufferRef CVMetalTextureRef;
 	
-CV_EXPORT CFTypeID CVMetalTextureGetTypeID(void) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+CV_EXPORT CFTypeID CVMetalTextureGetTypeID(void) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) __WATCHOS_PROHIBITED;
 
 /*!
     @function   CVMetalTextureGetTexture
-    @abstract   Returns the Metal MTLTexture object of the CVMetalTextureRef
+    @abstract   Returns the Meta MTLTexture object of the CVMetalTextureRef
     @param      image Target CVMetalTexture
     @result     Metal texture
 */
-CV_EXPORT id <MTLTexture> CV_NULLABLE CVMetalTextureGetTexture( CVMetalTextureRef CV_NONNULL image ) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+CV_EXPORT id <MTLTexture> CV_NULLABLE CVMetalTextureGetTexture( CVMetalTextureRef CV_NONNULL image ) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) __WATCHOS_PROHIBITED;
 
 /*!
     @function   CVMetalTextureIsFlipped
@@ -58,7 +57,7 @@ CV_EXPORT id <MTLTexture> CV_NULLABLE CVMetalTextureGetTexture( CVMetalTextureRe
     @param      image Target CVMetalTexture
     @result     True if 0,0 in the texture is upper left, false if 0,0 is lower left
 */
-CV_EXPORT Boolean CVMetalTextureIsFlipped( CVMetalTextureRef CV_NONNULL image ) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+CV_EXPORT Boolean CVMetalTextureIsFlipped( CVMetalTextureRef CV_NONNULL image ) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) __WATCHOS_PROHIBITED;
 
 /*!
     @function   CVMetalTextureGetCleanTexCoords 
@@ -74,19 +73,19 @@ CV_EXPORT void CVMetalTextureGetCleanTexCoords( CVMetalTextureRef CV_NONNULL ima
                                                    float lowerLeft[CV_NONNULL 2],
                                                    float lowerRight[CV_NONNULL 2],
                                                    float upperRight[CV_NONNULL 2],
-                                                   float upperLeft[CV_NONNULL 2] ) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+                                                   float upperLeft[CV_NONNULL 2] ) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) __WATCHOS_PROHIBITED;
 #endif // defined(__OBJC__)
 	
 /*!
     @discussion kCVMetalTextureUsage is a property that can be placed on a CVMetalTextureCache to instruct the MTLTextureUsage of the created MTLTexture. Values for this can can be read from MTLTexture.h
  */
-CV_EXPORT const CFStringRef CV_NONNULL kCVMetalTextureUsage API_AVAILABLE(macosx(10.13), ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos);
+CV_EXPORT const CFStringRef CV_NONNULL kCVMetalTextureUsage API_AVAILABLE(macosx(10.13), ios(11.0), tvos(11.0)) __WATCHOS_PROHIBITED;
 	
 	
 /*!
  @discussion kCVMetalTextureStorageMode is a property that can be placed on a CVMetalTextureCache to instruct the MTLTextureStorageMode of the created MTLTexture. Values for this can can be read from MTLTexture.h
  */
-CV_EXPORT const CFStringRef CV_NONNULL kCVMetalTextureStorageMode API_AVAILABLE(macosx(10.15), ios(13.0), tvos(13.0)) API_UNAVAILABLE(watchos);
+CV_EXPORT const CFStringRef CV_NONNULL kCVMetalTextureStorageMode API_AVAILABLE(macosx(10.15), ios(13.0), tvos(13.0)) __WATCHOS_PROHIBITED;
 
 #endif // COREVIDEO_SUPPORTS_METAL
 	

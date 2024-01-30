@@ -1,7 +1,7 @@
 /*
     NSCandidateListTouchBarItem.h
     Application Kit
-    Copyright (c) 2016-2023, Apple Inc.
+    Copyright (c) 2016-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -13,7 +13,7 @@
 @protocol NSCandidateListTouchBarItemDelegate;
 @protocol NSTextInputClient;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 /* NSCandidateListTouchBarItem is an NSTouchBarItem that shows the word completion candidates for assisting users typing with text input capable views. In addition to candidates supplied by its client, the NSTouchBarItem can show candidates coming from the active input method. NSCandidateListTouchBarItem has two states: expanded and collapsed. When expanded, the item replaces any NSTouchBarItems occupying its location on the bar.
@@ -66,16 +66,16 @@ API_UNAVAILABLE(macCatalyst)
 @optional
 
 // Invoked when user touches down on a candidate in the bar.
-- (void)candidateListTouchBarItem:(NSCandidateListTouchBarItem *)anItem beginSelectingCandidateAtIndex:(NSInteger)index NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2)) API_UNAVAILABLE(macCatalyst);
+- (void)candidateListTouchBarItem:(NSCandidateListTouchBarItem *)anItem beginSelectingCandidateAtIndex:(NSInteger)index API_AVAILABLE(macos(10.12.2)) API_UNAVAILABLE(macCatalyst);
 
 // Invoked when user moves from touching one candidate in the bar to another.
-- (void)candidateListTouchBarItem:(NSCandidateListTouchBarItem *)anItem changeSelectionFromCandidateAtIndex:(NSInteger)previousIndex toIndex:(NSInteger)index NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2)) API_UNAVAILABLE(macCatalyst);
+- (void)candidateListTouchBarItem:(NSCandidateListTouchBarItem *)anItem changeSelectionFromCandidateAtIndex:(NSInteger)previousIndex toIndex:(NSInteger)index API_AVAILABLE(macos(10.12.2)) API_UNAVAILABLE(macCatalyst);
 
 // Invoked when user stops touching candidates in the bar. If index==NSNotFound, user didn't select any candidate.
-- (void)candidateListTouchBarItem:(NSCandidateListTouchBarItem *)anItem endSelectingCandidateAtIndex:(NSInteger)index NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2)) API_UNAVAILABLE(macCatalyst);
+- (void)candidateListTouchBarItem:(NSCandidateListTouchBarItem *)anItem endSelectingCandidateAtIndex:(NSInteger)index API_AVAILABLE(macos(10.12.2)) API_UNAVAILABLE(macCatalyst);
 
 // Invoked when -candidateListVisible changed the visibility state.
-- (void)candidateListTouchBarItem:(NSCandidateListTouchBarItem *)anItem changedCandidateListVisibility:(BOOL)isVisible NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12.2)) API_UNAVAILABLE(macCatalyst);
+- (void)candidateListTouchBarItem:(NSCandidateListTouchBarItem *)anItem changedCandidateListVisibility:(BOOL)isVisible API_AVAILABLE(macos(10.12.2)) API_UNAVAILABLE(macCatalyst);
 @end
 
 @interface NSView (NSCandidateListTouchBarItem)
@@ -87,4 +87,4 @@ API_UNAVAILABLE(macCatalyst)
 APPKIT_EXTERN NSTouchBarItemIdentifier const NSTouchBarItemIdentifierCandidateList API_AVAILABLE(macos(10.12.2)) API_UNAVAILABLE(macCatalyst);
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

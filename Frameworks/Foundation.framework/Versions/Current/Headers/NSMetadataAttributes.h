@@ -6,7 +6,7 @@
 
 @class NSString;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 // The following NSMetadataItem attributes are available on Mac OS and iOS.
 
@@ -221,4 +221,4 @@ FOUNDATION_EXPORT NSString * const NSMetadataItemApplicationCategoriesKey API_AV
 
 FOUNDATION_EXPORT NSString * const NSMetadataItemIsApplicationManagedKey API_AVAILABLE(macos(10.9)) API_UNAVAILABLE(ios, watchos, tvos); // boolean NSNumber
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

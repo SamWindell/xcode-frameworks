@@ -10,7 +10,7 @@
 
 @class CKShareMetadata, CKFetchShareMetadataOptions;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /*! @class CKFetchShareMetadataOperation
  *
@@ -24,14 +24,14 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithShareURLs:(NSArray<NSURL *> *)shareURLs;
 
-@property (nullable, copy, nonatomic) NSArray<NSURL *> *shareURLs;
+@property (nonatomic, copy, nullable) NSArray<NSURL *> *shareURLs;
 
 /*! @abstract If set to YES, the resulting @c CKShareMetadata will have a @c rootRecord object filled out.
  *
  *  @discussion Defaults to @c NO.
  *  The resulting @c CKShareMetadata will have a @c rootRecordID property regardless of the value of this property.
  */
-@property (assign, nonatomic) BOOL shouldFetchRootRecord;
+@property (nonatomic, assign) BOOL shouldFetchRootRecord;
 
 /*! @abstract Declares which user-defined keys should be fetched and added to the resulting @c rootRecord.
  *
@@ -39,28 +39,21 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
  *  If nil, declares the entire root record should be downloaded. If set to an empty array, declares that no user fields should be downloaded.
  *  Defaults to @c nil.
  */
-@property (nullable, copy, nonatomic) NSArray<CKRecordFieldKey> *rootRecordDesiredKeys;
+@property (nonatomic, copy, nullable) NSArray<CKRecordFieldKey> *rootRecordDesiredKeys;
 
 /*! @abstract Called once for each share URL that the server processed
  *
  *  @discussion Each @c CKOperation instance has a private serial queue. This queue is used for all callback block invocations.
- *  This block may share mutable state with other blocks assigned to this operation, but any such mutable state
- *  should not be concurrently used outside of blocks assigned to this operation.
  */
-@property (nullable, copy, nonatomic) void (^perShareMetadataBlock)(NSURL *shareURL, CKShareMetadata * _Nullable shareMetadata, NSError * _Nullable error)
-CK_SWIFT_DEPRECATED("Use perShareMetadataResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), tvos(10.0, 15.0), watchos(3.0, 8.0));
+@property (nonatomic, copy, nullable) void (^perShareMetadataBlock)(NSURL *shareURL, CKShareMetadata * _Nullable shareMetadata, NSError * _Nullable error);
 
 /*! @abstract This block is called when the operation completes.
  *
  *  @discussion The @code -[NSOperation completionBlock] @endcode will also be called if both are set.
- *  If the error is @c CKErrorPartialFailure, the error's userInfo dictionary contains a dictionary of shareURLs to errors keyed off of @c CKPartialErrorsByItemIDKey.  These errors are repeats of those sent back in previous @c perShareMetadataBlock invocations
  *  Each @c CKOperation instance has a private serial queue. This queue is used for all callback block invocations.
- *  This block may share mutable state with other blocks assigned to this operation, but any such mutable state
- *  should not be concurrently used outside of blocks assigned to this operation.
  */
-@property (nullable, copy, nonatomic) void (^fetchShareMetadataCompletionBlock)(NSError * _Nullable operationError)
-CK_SWIFT_DEPRECATED("Use fetchShareMetadataResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), tvos(10.0, 15.0), watchos(3.0, 8.0));
+@property (nonatomic, copy, nullable) void (^fetchShareMetadataCompletionBlock)(NSError * _Nullable operationError);
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

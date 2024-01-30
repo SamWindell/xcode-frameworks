@@ -32,6 +32,10 @@
 #include <OpenScripting/OpenScripting.h>
 #endif
 
+#ifndef __PRINT__
+#include <Print/Print.h>
+#endif
+
 #ifndef __COMMONPANELS__
 #include <CommonPanels/CommonPanels.h>
 #endif
@@ -46,6 +50,10 @@
 
 #ifndef __HELP__
 #include <Help/Help.h>
+#endif
+
+#ifndef __IMAGECAPTURE__
+#include <ImageCapture/ImageCapture.h>
 #endif
 
 #endif /* __CARBON__ */

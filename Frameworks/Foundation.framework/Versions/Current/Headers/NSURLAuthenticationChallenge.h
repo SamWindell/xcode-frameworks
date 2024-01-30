@@ -13,7 +13,7 @@
 @class NSURLResponse;
 @class NSError;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /*!  
     @protocol NSURLAuthenticationChallengeSender 
@@ -25,7 +25,6 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
     in the challenge.
 */
 
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 @protocol NSURLAuthenticationChallengeSender <NSObject>
 
@@ -65,7 +64,7 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
     provides all the information about the challenge, and has a method
     to indicate when it's done.
 */
-NS_SWIFT_SENDABLE
+
 API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 @interface NSURLAuthenticationChallenge : NSObject <NSSecureCoding>
 {
@@ -147,4 +146,4 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

@@ -8,7 +8,7 @@
 
 @class NSArray<ObjectType>, NSBundle, NSData, NSDictionary<KeyType, ObjectType>, NSMutableArray, NSMutableDictionary, NSMutableSet, NSScriptClassDescription, NSScriptCommandDescription;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 @interface NSScriptSuiteRegistry : NSObject {
     @private
@@ -83,4 +83,4 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

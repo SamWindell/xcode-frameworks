@@ -6,7 +6,7 @@
 
 @class NSString, NSData, NSSet<ObjectType>;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Describes the action an NSCoder should take when it encounters decode failures (e.g. corrupt data) for non-TopLevel decodes.
@@ -20,11 +20,13 @@ typedef NS_ENUM(NSInteger, NSDecodingFailurePolicy) {
 } API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
 
 @interface NSCoder : NSObject
+
 - (void)encodeValueOfObjCType:(const char *)type at:(const void *)addr;
 - (void)encodeDataObject:(NSData *)data;
 - (nullable NSData *)decodeDataObject;
 - (void)decodeValueOfObjCType:(const char *)type at:(void *)data size:(NSUInteger)size API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0));
 - (NSInteger)versionForClassName:(NSString *)className;
+
 @end
 
 @interface NSCoder (NSExtendedCoder)
@@ -222,4 +224,4 @@ FOUNDATION_EXPORT NSObject * _Nullable NXReadNSObjectFromCoder(NSCoder *decoder)
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

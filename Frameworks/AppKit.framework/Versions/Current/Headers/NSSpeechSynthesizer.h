@@ -1,7 +1,7 @@
 /*
 	NSSpeechSynthesizer.h
 	Application Kit
-	Copyright (c) 2003-2023, Apple Inc.
+	Copyright (c) 2003-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -11,12 +11,10 @@
 #import <Foundation/NSDictionary.h>
 #import <Foundation/NSRange.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSString, NSURL, NSError;
-
-API_DEPRECATED_BEGIN("Use AVSpeechSynthesizer in AVFoundation instead", macos(10.3, 14.0))
 @protocol NSSpeechSynthesizerDelegate;
 
 typedef NSString * NSSpeechSynthesizerVoiceName NS_TYPED_ENUM;
@@ -45,7 +43,6 @@ typedef NSString * NSVoiceGenderName NS_TYPED_ENUM;
 APPKIT_EXTERN NSVoiceGenderName const NSVoiceGenderNeuter;
 APPKIT_EXTERN NSVoiceGenderName const NSVoiceGenderMale;
 APPKIT_EXTERN NSVoiceGenderName const NSVoiceGenderFemale;
-APPKIT_EXTERN NSVoiceGenderName const NSVoiceGenderNeutral API_AVAILABLE(macos(12.3));
 
 // Synthesizer Properties (including object type)
 typedef NSString * NSSpeechPropertyKey NS_TYPED_ENUM;
@@ -113,11 +110,11 @@ typedef NS_ENUM(NSUInteger, NSSpeechBoundary) {
 
 @protocol NSSpeechSynthesizerDelegate <NSObject>
 @optional
-- (void)speechSynthesizer:(NSSpeechSynthesizer *)sender didFinishSpeaking:(BOOL)finishedSpeaking NS_SWIFT_UI_ACTOR;
-- (void)speechSynthesizer:(NSSpeechSynthesizer *)sender willSpeakWord:(NSRange)characterRange ofString:(NSString *)string NS_SWIFT_UI_ACTOR;
-- (void)speechSynthesizer:(NSSpeechSynthesizer *)sender willSpeakPhoneme:(short)phonemeOpcode NS_SWIFT_UI_ACTOR;
-- (void)speechSynthesizer:(NSSpeechSynthesizer *)sender didEncounterErrorAtIndex:(NSUInteger)characterIndex ofString:(NSString *)string message:(NSString *)message NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.5));
-- (void)speechSynthesizer:(NSSpeechSynthesizer *)sender didEncounterSyncMessage:(NSString *)message NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.5));
+- (void)speechSynthesizer:(NSSpeechSynthesizer *)sender didFinishSpeaking:(BOOL)finishedSpeaking;
+- (void)speechSynthesizer:(NSSpeechSynthesizer *)sender willSpeakWord:(NSRange)characterRange ofString:(NSString *)string;
+- (void)speechSynthesizer:(NSSpeechSynthesizer *)sender willSpeakPhoneme:(short)phonemeOpcode;
+- (void)speechSynthesizer:(NSSpeechSynthesizer *)sender didEncounterErrorAtIndex:(NSUInteger)characterIndex ofString:(NSString *)string message:(NSString *)message API_AVAILABLE(macos(10.5));
+- (void)speechSynthesizer:(NSSpeechSynthesizer *)sender didEncounterSyncMessage:(NSString *)message API_AVAILABLE(macos(10.5));
 @end
 
 typedef NSString * NSSpeechMode NS_TYPED_ENUM;
@@ -161,9 +158,8 @@ typedef NSString * NSSpeechCommandDelimiterKey NS_TYPED_ENUM;
 APPKIT_EXTERN NSSpeechCommandDelimiterKey const NSSpeechCommandPrefix API_AVAILABLE(macos(10.5));  // NSString
 APPKIT_EXTERN NSSpeechCommandDelimiterKey const NSSpeechCommandSuffix API_AVAILABLE(macos(10.5));  // NSString
 
-API_DEPRECATED_END
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 
 
 

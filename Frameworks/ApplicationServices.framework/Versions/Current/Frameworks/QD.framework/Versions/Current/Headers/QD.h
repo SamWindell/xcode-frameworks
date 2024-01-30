@@ -5,7 +5,7 @@
  
      Version:    Quickdraw-291~1
  
-     Copyright:  ï¿½ 1999-2008 by Apple, Inc., all rights reserved.
+     Copyright:  © 1999-2008 by Apple, Inc., all rights reserved.
  
      Bugs?:      For bug reports, consult the following page on
                  the World Wide Web:
@@ -34,10 +34,6 @@
 #endif
 
 
-#ifndef __QD_AVAILIBILITY__
-#include <QD/QDAvailability.h>
-#endif
-
 #ifndef __QUICKDRAW__
 #include <QD/Quickdraw.h>
 #endif
@@ -47,7 +43,23 @@
 #endif
 
 #ifndef __ATSUNICODE__
-#include <ATSUI/ATSUnicode.h>
+#include <QD/ATSUnicode.h>
+#endif
+
+#ifndef __ATSUNICODETYPES__
+#include <QD/ATSUnicodeTypes.h>
+#endif
+
+#ifndef __ATSUNICODEGLYPHS__
+#include <QD/ATSUnicodeGlyphs.h>
+#endif
+
+#ifndef __ATSUNICODEFLATTENING__
+#include <QD/ATSUnicodeFlattening.h>
+#endif
+
+#ifndef __ATSUNICODEDIRECTACCESS__
+#include <QD/ATSUnicodeDirectAccess.h>
 #endif
 
 

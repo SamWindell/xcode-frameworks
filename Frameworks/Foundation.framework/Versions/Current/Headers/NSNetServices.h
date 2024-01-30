@@ -10,7 +10,7 @@
 @class NSArray<ObjectType>, NSData, NSDictionary<KeyType, ObjectType>, NSInputStream, NSNumber, NSOutputStream, NSRunLoop, NSString;
 @protocol NSNetServiceDelegate, NSNetServiceBrowserDelegate;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Error constants
 
@@ -19,7 +19,7 @@ FOUNDATION_EXPORT NSErrorDomain const NSNetServicesErrorDomain API_AVAILABLE(mac
 
 typedef NS_ENUM(NSInteger, NSNetServicesError) {
     
-/* An unknown error occurred during resolution or publication.
+/* An unknown error occured during resolution or publication.
 */
     NSNetServicesUnknownError = -72000L,
     
@@ -56,7 +56,7 @@ typedef NS_ENUM(NSInteger, NSNetServicesError) {
  * NSBonjourServices and NSLocalNetworkUsageDescription are required in Info.plist
  */
     NSNetServicesMissingRequiredConfigurationError API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos) = -72008L,
-} API_AVAILABLE(macos(10.2), ios(2.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+};
 
 
 typedef NS_OPTIONS(NSUInteger, NSNetServiceOptions) {
@@ -78,13 +78,13 @@ typedef NS_OPTIONS(NSUInteger, NSNetServiceOptions) {
      * -netService:didAcceptConnectionWithInputStream:outputStream: delegate method.
      */
     NSNetServiceListenForConnections API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0)) = 1UL << 1
-} API_AVAILABLE(macos(10.2), ios(2.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+};
 
 
 
 #pragma mark -
 
-API_DEPRECATED("Use nw_connection_t or nw_listener_t in Network framework instead", macos(10.2, API_TO_BE_DEPRECATED), ios(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED)) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.2), ios(2.0), tvos(9.0)) API_UNAVAILABLE(watchos)
 @interface NSNetService : NSObject {
 @private
     id _netService;
@@ -197,7 +197,7 @@ If publish: is called on an NSNetService instance initialized with this method, 
 
 #pragma mark -
 
-API_DEPRECATED("Use nw_browser_t in Network framework instead", macos(10.2, API_TO_BE_DEPRECATED), ios(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED)) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.2), ios(2.0), tvos(9.0)) API_UNAVAILABLE(watchos)
 @interface NSNetServiceBrowser : NSObject {
 @private
     id _netServiceBrowser;
@@ -327,4 +327,4 @@ API_AVAILABLE(macos(10.2), ios(2.0), tvos(9.0)) API_UNAVAILABLE(watchos)
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

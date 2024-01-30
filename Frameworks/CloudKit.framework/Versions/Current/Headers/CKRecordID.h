@@ -7,15 +7,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import <CloudKit/CKDefines.h>
-
 @class CKRecordZoneID;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
-CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
-NS_SWIFT_SENDABLE
 @interface CKRecordID : NSObject <NSSecureCoding, NSCopying>
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -28,9 +24,9 @@ NS_SWIFT_SENDABLE
 
 - (instancetype)initWithRecordName:(NSString *)recordName zoneID:(CKRecordZoneID *)zoneID NS_DESIGNATED_INITIALIZER;
 
-@property (readonly, copy, nonatomic) NSString *recordName;
-@property (readonly, copy, nonatomic) CKRecordZoneID *zoneID;
+@property (nonatomic, readonly, copy) NSString *recordName;
+@property (nonatomic, readonly, copy) CKRecordZoneID *zoneID;
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

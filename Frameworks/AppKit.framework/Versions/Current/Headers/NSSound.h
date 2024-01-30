@@ -1,7 +1,7 @@
 /*
     NSSound.h
     Application Kit
-    Copyright (c) 1997-2023, Apple Inc.
+    Copyright (c) 1997-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -11,7 +11,7 @@
 #import <Foundation/NSBundle.h>
 #import <Foundation/NSDate.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSData, NSURL;
@@ -104,7 +104,7 @@ typedef NSString * NSSoundPlaybackDeviceIdentifier NS_SWIFT_BRIDGED_TYPEDEF;
 @protocol NSSoundDelegate <NSObject>
 @optional
 
-- (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)flag NS_SWIFT_UI_ACTOR;
+- (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)flag;
 
 @end
 
@@ -117,5 +117,5 @@ typedef NSString * NSSoundPlaybackDeviceIdentifier NS_SWIFT_BRIDGED_TYPEDEF;
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 

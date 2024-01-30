@@ -48,7 +48,3 @@
 #import <Metal/MTLVisibleFunctionTable.h>
 #import <Metal/MTLBinaryArchive.h>
 #import <Metal/MTLIntersectionFunctionTable.h>
-#import <Metal/MTLFunctionStitching.h>
-#import <Metal/MTLIOCommandQueue.h>
-#import <Metal/MTLIOCommandBuffer.h>
-#import <Metal/MTLIOCompressor.h>

@@ -7,7 +7,7 @@
 
 #import <Foundation/NSObject.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /*!
     @enum NSURLCacheStoragePolicy
@@ -50,7 +50,6 @@ typedef NS_ENUM(NSUInteger, NSURLCacheStoragePolicy)
     It is used to maintain characteristics and attributes of a cached 
     object. 
 */
-NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 @interface NSCachedURLResponse : NSObject <NSSecureCoding, NSCopying>
 {
@@ -115,7 +114,7 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 
 @class NSURLRequest;
 @class NSURLCacheInternal;
-NS_SWIFT_SENDABLE
+
 API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 @interface NSURLCache : NSObject
 {
@@ -164,7 +163,7 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
     @result an initialized NSURLCache, with the given capacity, backed
     by disk.
 */
-- (instancetype)initWithMemoryCapacity:(NSUInteger)memoryCapacity diskCapacity:(NSUInteger)diskCapacity diskPath:(nullable NSString *)path API_DEPRECATED_WITH_REPLACEMENT("initWithMemoryCapacity:diskCapacity:directoryURL:", macos(10.2, API_TO_BE_DEPRECATED), ios(2.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED));
+- (instancetype)initWithMemoryCapacity:(NSUInteger)memoryCapacity diskCapacity:(NSUInteger)diskCapacity diskPath:(nullable NSString *)path API_DEPRECATED_WITH_REPLACEMENT("initWithMemoryCapacity:diskCapacity:directoryURL:", macos(10.2,API_TO_BE_DEPRECATED), ios(2.0,API_TO_BE_DEPRECATED), watchos(2.0,API_TO_BE_DEPRECATED), tvos(9.0,API_TO_BE_DEPRECATED));
 
 /*!
     @method initWithMemoryCapacity:diskCapacity:directoryURL:
@@ -256,8 +255,8 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 
 @interface NSURLCache (NSURLSessionTaskAdditions)
 - (void)storeCachedResponse:(NSCachedURLResponse *)cachedResponse forDataTask:(NSURLSessionDataTask *)dataTask API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
-- (void)getCachedResponseForDataTask:(NSURLSessionDataTask *)dataTask completionHandler:(void (NS_SWIFT_SENDABLE ^) (NSCachedURLResponse * _Nullable cachedResponse))completionHandler API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
+- (void)getCachedResponseForDataTask:(NSURLSessionDataTask *)dataTask completionHandler:(void (^) (NSCachedURLResponse * _Nullable cachedResponse))completionHandler API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
 - (void)removeCachedResponseForDataTask:(NSURLSessionDataTask *)dataTask API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

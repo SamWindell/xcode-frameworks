@@ -12,11 +12,10 @@
 
 @class NSString, NSURL, NSError, NSUUID, NSLock, NSNumber;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /* Because NSBundle caches allocated instances, subclasses should be prepared
    to receive an already initialized object back from [super initWithPath:] */
-NS_SWIFT_SENDABLE
 @interface NSBundle : NSObject
 
 /* Methods for creating or retrieving bundle instances. */
@@ -87,11 +86,8 @@ NS_SWIFT_SENDABLE
 - (NSArray<NSString *> *)pathsForResourcesOfType:(nullable NSString *)ext inDirectory:(nullable NSString *)subpath;
 - (NSArray<NSString *> *)pathsForResourcesOfType:(nullable NSString *)ext inDirectory:(nullable NSString *)subpath forLocalization:(nullable NSString *)localizationName;
 
-/* Methods for retrieving localized strings. */
+/* Method for retrieving localized strings. */
 - (NSString *)localizedStringForKey:(NSString *)key value:(nullable NSString *)value table:(nullable NSString *)tableName NS_FORMAT_ARGUMENT(1);
-#if !0
-- (NSAttributedString *)localizedAttributedStringForKey:(NSString *)key value:(nullable NSString *)value table:(nullable NSString *)tableName NS_FORMAT_ARGUMENT(1) NS_REFINED_FOR_SWIFT API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0));
-#endif 
 
 /* Methods for obtaining various information about a bundle. */
 @property (nullable, readonly, copy) NSString *bundleIdentifier;
@@ -132,15 +128,6 @@ enum {
 #define NSLocalizedStringWithDefaultValue(key, tbl, bundle, val, comment) \
 	    [bundle localizedStringForKey:(key) value:(val) table:(tbl)]
 
-#define NSLocalizedAttributedString(key, comment) \
-	    [NSBundle.mainBundle localizedAttributedStringForKey:(key) value:@"" table:nil]
-#define NSLocalizedAttributedStringFromTable(key, tbl, comment) \
-	    [NSBundle.mainBundle localizedAttributedStringForKey:(key) value:@"" table:(tbl)]
-#define NSLocalizedAttributedStringFromTableInBundle(key, tbl, bundle, comment) \
-	    [bundle localizedAttributedStringForKey:(key) value:@"" table:(tbl)]
-#define NSLocalizedAttributedStringWithDefaultValue(key, tbl, bundle, val, comment) \
-	    [bundle localizedAttributedStringForKey:(key) value:(val) table:(tbl)]
-
 @interface NSString (NSBundleExtensionMethods)
 
 /* For strings with length variations, such as from a stringsdict file, this method returns the variant at the given width. If there is no variant at the given width, the one for the next smaller width is returned. And if there are none smaller, the smallest available is returned. For strings without variations, this method returns self. The unit that width is expressed in is decided by the application or framework. But it is intended to be some measurement indicative of the context a string would fit best to avoid truncation and wasted space.
@@ -152,8 +139,6 @@ enum {
 FOUNDATION_EXPORT NSNotificationName const NSBundleDidLoadNotification;
 FOUNDATION_EXPORT NSString * const NSLoadedClasses;	// notification key
 
-
-#if !0
 
 /*
  The NSBundleResourceRequest class is used to interact with the on demand resource loading system.
@@ -208,14 +193,14 @@ API_AVAILABLE(ios(9.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos)
  
  If you want to access the resources again, create a new NSBundleResourceRequest object.
  */
-- (void)beginAccessingResourcesWithCompletionHandler:(void (NS_SWIFT_SENDABLE ^)(NSError * _Nullable error))completionHandler;
+- (void)beginAccessingResourcesWithCompletionHandler:(void (^)(NSError * _Nullable error))completionHandler;
 
 /*
  Inform the system that you wish to begin accessing the resources that are part of this request, but do not attempt to download any content over the network. The completion handler will be invoked with a YES argument if the resources are available.
  
  If the resources were available, then you must invoke the -endAccessingResources method once you are done accessing them. If the resources were not available, then you may invoke the -beginAccessingResourcesWithCompletionHandler: method to initiate a download of the resources.
 */
-- (void)conditionallyBeginAccessingResourcesWithCompletionHandler:(void (NS_SWIFT_SENDABLE ^)(BOOL resourcesAvailable))completionHandler;
+- (void)conditionallyBeginAccessingResourcesWithCompletionHandler:(void (^)(BOOL resourcesAvailable))completionHandler;
 
 /*
  Informs the system that you are finished with the resources that were part of the tag set in this request. Call this after you no longer need the resources to be available on disk. It is important to invoke this method to make room for newly requested resources. This method may only be invoked if you have received a callback from -beginAccessingResourcesWithCompletionHandler:. To cancel an in-progress request, invoke cancel on the -progress property.
@@ -255,6 +240,4 @@ FOUNDATION_EXPORT NSNotificationName const NSBundleResourceRequestLowDiskSpaceNo
  */
 FOUNDATION_EXPORT double const NSBundleResourceRequestLoadingPriorityUrgent API_AVAILABLE(ios(9.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos);
 
-#endif 
-
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

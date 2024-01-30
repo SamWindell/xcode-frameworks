@@ -1,9 +1,16 @@
 --- !tapi-tbd
 tbd-version:     4
 targets:         [ x86_64-macos, arm64-macos, arm64e-macos ]
+uuids:
+  - target:          x86_64-macos
+    value:           82E12FE0-B46B-3A4D-BAEE-40FDBBA8533F
+  - target:          arm64-macos
+    value:           00000000-0000-0000-0000-000000000000
+  - target:          arm64e-macos
+    value:           9873076D-8A81-3731-A4D7-0D172108D4E0
 install-name:    '/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/Resources/libFontValidation.dylib'
 exports:
-  - targets:         [ x86_64-macos, arm64-macos, arm64e-macos ]
+  - targets:         [ x86_64-macos, arm64e-macos, arm64-macos ]
     symbols:         [ _ATSFontTestCopyAvailableTests, _ATSFontTestCreateReport, 
                        _kATSFontTestArrayKey, _kATSFontTestConsistencyTest, _kATSFontTestCoreTest, 
                        _kATSFontTestCreateReportTypeKey, _kATSFontTestDescriptionKey, 

@@ -6,9 +6,9 @@
 
 @class NSString, NSDictionary;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
-typedef NSString * NSDistributedNotificationCenterType NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSString * NSDistributedNotificationCenterType NS_EXTENSIBLE_STRING_ENUM;
 
 FOUNDATION_EXPORT NSDistributedNotificationCenterType const NSLocalNotificationCenterType;
 // Distributes notifications to all tasks on the sender's machine.
@@ -65,5 +65,5 @@ static const NSDistributedNotificationOptions NSNotificationPostToAllSessions = 
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 

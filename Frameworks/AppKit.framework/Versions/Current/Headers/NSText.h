@@ -2,7 +2,7 @@
 /*
 	NSText.h
 	Application Kit
-	Copyright (c) 1994-2023, Apple Inc.
+	Copyright (c) 1994-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -13,13 +13,11 @@
 @class NSColor, NSFont, NSNotification;
 @protocol NSTextDelegate;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 #if !TARGET_OS_IPHONE
 
-#if !__NSTEXT_SHARED_SECTION__
-#define __NSTEXT_SHARED_SECTION__ 1
-#pragma mark NSTextAlignment
+/* Values for NSTextAlignment */
 typedef NS_ENUM(NSInteger, NSTextAlignment) {
     NSTextAlignmentLeft      = 0,    // Visually left aligned
 #if TARGET_ABI_USES_IOS_VALUES
@@ -33,14 +31,12 @@ typedef NS_ENUM(NSInteger, NSTextAlignment) {
     NSTextAlignmentNatural   = 4     // Indicates the default alignment for script
 } API_AVAILABLE(macos(10.0), ios(6.0), watchos(2.0), tvos(9.0));
 
-#pragma mark NSWritingDirection
+/* Values for NSWritingDirection */
 typedef NS_ENUM(NSInteger, NSWritingDirection) {
     NSWritingDirectionNatural       = -1,   // Determines direction using the Unicode Bidi Algorithm rules P2 and P3
     NSWritingDirectionLeftToRight   = 0,    // Left to right writing direction
     NSWritingDirectionRightToLeft   = 1     // Right to left writing direction
 } API_AVAILABLE(macos(10.0), ios(6.0), watchos(2.0), tvos(9.0));
-#endif // __NSTEXT_SHARED_SECTION__
-
 #endif // !TARGET_OS_IPHONE
 
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
@@ -176,11 +172,11 @@ enum {
 
 @protocol NSTextDelegate <NSObject>
 @optional
-- (BOOL)textShouldBeginEditing:(NSText *)textObject NS_SWIFT_UI_ACTOR;        // YES means do it
-- (BOOL)textShouldEndEditing:(NSText *)textObject NS_SWIFT_UI_ACTOR;          // YES means do it
-- (void)textDidBeginEditing:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
-- (void)textDidEndEditing:(NSNotification *)notification NS_SWIFT_UI_ACTOR;
-- (void)textDidChange:(NSNotification *)notification NS_SWIFT_UI_ACTOR;       // Any keyDown or paste which changes the contents causes this
+- (BOOL)textShouldBeginEditing:(NSText *)textObject;        // YES means do it
+- (BOOL)textShouldEndEditing:(NSText *)textObject;          // YES means do it
+- (void)textDidBeginEditing:(NSNotification *)notification;
+- (void)textDidEndEditing:(NSNotification *)notification;
+- (void)textDidChange:(NSNotification *)notification;       // Any keyDown or paste which changes the contents causes this
 @end
 
 /* Additional values to be added to NSWritingDirectionLeftToRight or NSWritingDirectionRightToLeft, when used with NSWritingDirectionAttributeName */
@@ -195,7 +191,7 @@ static const NSTextAlignment NSCenterTextAlignment API_DEPRECATED_WITH_REPLACEME
 static const NSTextAlignment NSJustifiedTextAlignment API_DEPRECATED_WITH_REPLACEMENT("NSTextAlignmentJustified", macos(10.0,10.12))  = NSTextAlignmentJustified;
 static const NSTextAlignment NSNaturalTextAlignment API_DEPRECATED_WITH_REPLACEMENT("NSTextAlignmentNatural", macos(10.0,10.12))  = NSTextAlignmentNatural;
 #endif // !TARGET_OS_IPHONE
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 #else
 #import <UIFoundation/NSText.h>
 #endif

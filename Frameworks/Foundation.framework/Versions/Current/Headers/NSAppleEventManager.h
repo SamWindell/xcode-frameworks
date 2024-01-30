@@ -4,19 +4,21 @@
 */
 
 #import <Foundation/NSObject.h>
-#import <CoreServices/CoreServices.h>
+#if !TARGET_OS_MACCATALYST
+#import <ApplicationServices/ApplicationServices.h>
+#endif
 #import <Foundation/NSNotification.h>
 
 @class NSAppleEventDescriptor;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef const struct __NSAppleEventManagerSuspension* NSAppleEventManagerSuspensionID;
 
 extern const double NSAppleEventTimeOutDefault;
 extern const double NSAppleEventTimeOutNone;
 
-extern NSNotificationName const NSAppleEventManagerWillProcessFirstEventNotification;
+extern NSNotificationName NSAppleEventManagerWillProcessFirstEventNotification;
 
 @interface NSAppleEventManager : NSObject {
     @private
@@ -60,4 +62,4 @@ extern NSNotificationName const NSAppleEventManagerWillProcessFirstEventNotifica
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

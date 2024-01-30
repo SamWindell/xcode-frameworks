@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, NSEnergyFormatterUnit) {
     NSEnergyFormatterUnitJoule = 11,
@@ -14,8 +14,12 @@ typedef NS_ENUM(NSInteger, NSEnergyFormatterUnit) {
 } API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
 
 API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0))
-@interface NSEnergyFormatter : NSFormatter
-
+@interface NSEnergyFormatter : NSFormatter {
+@private
+    void *_formatter;
+    BOOL _isForFoodEnergyUse;
+    void *_reserved[2];
+}
 @property (null_resettable, copy) NSNumberFormatter *numberFormatter;    // default is NSNumberFormatter with NSNumberFormatterDecimalStyle
 @property NSFormattingUnitStyle unitStyle;              // default is NSFormattingUnitStyleMedium
 @property (getter = isForFoodEnergyUse) BOOL forFoodEnergyUse; // default is NO; if it is set to YES, NSEnergyFormatterUnitKilocalorie may be “C” instead of “kcal"
@@ -36,4 +40,4 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0))
 - (BOOL)getObjectValue:(out id _Nullable * _Nullable)obj forString:(NSString *)string errorDescription:(out NSString * _Nullable * _Nullable)error;
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

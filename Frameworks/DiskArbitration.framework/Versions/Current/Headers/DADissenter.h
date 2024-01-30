@@ -78,8 +78,7 @@ typedef const struct CF_BRIDGED_TYPE( id ) __DADissenter * DADissenterRef;
  * @result     A reference to a new DADissenter.
  */
 
-extern DADissenterRef DADissenterCreate( CFAllocatorRef __nullable allocator, DAReturn status, CFStringRef __nullable string ) API_AVAILABLE(macos(10.4));
-
+extern DADissenterRef DADissenterCreate( CFAllocatorRef __nullable allocator, DAReturn status, CFStringRef __nullable string );
 
 /*!
  * @function   DADissenterGetStatus
@@ -88,8 +87,7 @@ extern DADissenterRef DADissenterCreate( CFAllocatorRef __nullable allocator, DA
  * @result     The return code.  A BSD return code, if applicable, is encoded with unix_err().
  */
 
-extern DAReturn DADissenterGetStatus( DADissenterRef dissenter ) API_AVAILABLE(macos(10.4));
-
+extern DAReturn DADissenterGetStatus( DADissenterRef dissenter );
 
 /*!
  * @function   DADissenterGetStatusString
@@ -98,8 +96,7 @@ extern DAReturn DADissenterGetStatus( DADissenterRef dissenter ) API_AVAILABLE(m
  * @result     The return code string.
  */
 
-extern CFStringRef __nullable DADissenterGetStatusString( DADissenterRef dissenter ) API_AVAILABLE(macos(10.4));
-
+extern CFStringRef __nullable DADissenterGetStatusString( DADissenterRef dissenter );
 
 #endif /* !__DISKARBITRATIOND__ */
 

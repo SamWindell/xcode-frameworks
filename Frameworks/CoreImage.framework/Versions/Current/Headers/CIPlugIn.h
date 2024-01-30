@@ -6,16 +6,12 @@
 //  Copyright (c) 2004 Apple Computer. All rights reserved.
 //
 
-#ifndef CIPLUGIN_H
-#define CIPLUGIN_H
-
-#ifdef __OBJC__
 
 #import <Foundation/Foundation.h>
-#import <CoreImage/CIPlugInInterface.h>
 
 #if TARGET_OS_OSX
 
+#import <CoreImage/CIPlugInInterface.h>
 #import <CoreImage/CoreImageDefines.h>
 
 
@@ -57,7 +53,3 @@ NS_CLASS_AVAILABLE_MAC(10_4)
 @end
 
 #endif
-
-#endif /* __OBJC__ */
-
-#endif /* CIPLUGIN_H */

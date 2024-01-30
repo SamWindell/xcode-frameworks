@@ -1,7 +1,7 @@
 /*
 	NSDatePicker.h
 	Application Kit
-	Copyright (c) 2004-2023, Apple Inc.
+	Copyright (c) 2004-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -9,7 +9,7 @@
 #import <AppKit/NSDatePickerCell.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSCalendar, NSLocale, NSTimeZone;
@@ -58,7 +58,7 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @property (nullable, copy) NSDate *maxDate;
 
-#pragma mark *** Calendar Overlay Support ***
+#pragma mark *** Calender Overlay Support ***
 
 @property BOOL presentsCalendarOverlay API_AVAILABLE(macos(10.15.4));
 
@@ -69,5 +69,5 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 

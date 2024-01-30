@@ -9,7 +9,7 @@
 
 @class CKNotification, CKServerChangeToken;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /*! @class CKFetchNotificationChangesOperation
  *
@@ -25,24 +25,22 @@ API_DEPRECATED("Instead of iterating notifications to enumerate changed record z
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPreviousServerChangeToken:(nullable CKServerChangeToken *)previousServerChangeToken;
 
-@property (nullable, copy, nonatomic) CKServerChangeToken *previousServerChangeToken;
+@property (nonatomic, copy, nullable) CKServerChangeToken *previousServerChangeToken;
 
-@property (assign, nonatomic) NSUInteger resultsLimit;
+@property (nonatomic, assign) NSUInteger resultsLimit;
 
 /*! @abstract If true, then the server wasn't able to return all the changes in this response.
  *
  *  @discussion Will be set before @c fetchNotificationChangesCompletionBlock is called.
  *  Another @c CKFetchNotificationChangesOperation operation should be run with the updated @c serverChangeToken token from this operation.
  */
-@property (readonly, assign, nonatomic) BOOL moreComing;
+@property (nonatomic, readonly, assign) BOOL moreComing;
 
 /*! @abstract Called once for each updated notification fetch from the server
  *
  *  @discussion Each @c CKOperation instance has a private serial queue. This queue is used for all callback block invocations.
- *  This block may share mutable state with other blocks assigned to this operation, but any such mutable state
- *  should not be concurrently used outside of blocks assigned to this operation.
  */
-@property (nullable, copy, nonatomic) void (^notificationChangedBlock)(CKNotification *notification);
+@property (nonatomic, copy, nullable) void (^notificationChangedBlock)(CKNotification *notification);
 
 /*! @abstract This block is called when the operation completes.
  *
@@ -50,11 +48,9 @@ API_DEPRECATED("Instead of iterating notifications to enumerate changed record z
  *  Note that a fetch can fail partway. If that happens, an updated change token may be returned in the completion block so that already fetched notifications don't need to be re-downloaded on a subsequent operation.
  *  If the server returns a @c CKErrorChangeTokenExpired error, the @c previousServerChangeToken value was too old and the client should toss its local cache and re-fetch notification changes starting with a nil @c previousServerChangeToken.
  *  Each @c CKOperation instance has a private serial queue. This queue is used for all callback block invocations.
- *  This block may share mutable state with other blocks assigned to this operation, but any such mutable state
- *  should not be concurrently used outside of blocks assigned to this operation.
  */
-@property (nullable, copy, nonatomic) void (^fetchNotificationChangesCompletionBlock)(CKServerChangeToken * _Nullable serverChangeToken, NSError * _Nullable operationError);
+@property (nonatomic, copy, nullable) void (^fetchNotificationChangesCompletionBlock)(CKServerChangeToken * _Nullable serverChangeToken, NSError * _Nullable operationError);
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

@@ -5,7 +5,6 @@
 #import <Foundation/NSObject.h>
 #import <Foundation/NSError.h>
 
-
 /* NSError codes in NSCocoaErrorDomain. Note that other frameworks (such as AppKit and CoreData) also provide additional NSCocoaErrorDomain error codes.
 */
 NS_ERROR_ENUM(NSCocoaErrorDomain) {
@@ -72,7 +71,6 @@ NS_ERROR_ENUM(NSCocoaErrorDomain) {
     NSXPCConnectionInterrupted API_AVAILABLE(macos(10.8), ios(6.0), watchos(2.0), tvos(9.0)) = 4097,
     NSXPCConnectionInvalid API_AVAILABLE(macos(10.8), ios(6.0), watchos(2.0), tvos(9.0)) = 4099,
     NSXPCConnectionReplyInvalid API_AVAILABLE(macos(10.8), ios(6.0), watchos(2.0), tvos(9.0)) = 4101,
-    NSXPCConnectionCodeSigningRequirementFailure API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0), watchos(9.0)) = 4102,
     
     NSXPCConnectionErrorMinimum API_AVAILABLE(macos(10.8), ios(6.0), watchos(2.0), tvos(9.0)) = 4096,
     NSXPCConnectionErrorMaximum API_AVAILABLE(macos(10.8), ios(6.0), watchos(2.0), tvos(9.0)) = 4224,

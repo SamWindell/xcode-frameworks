@@ -3,32 +3,33 @@
  Copyright (c) 2014 Apple, Inc.
  All rights reserved. */
 
-#ifndef COREIMAGE_H
-#define COREIMAGE_H
+#ifdef __OBJC__
 
-#include <CoreImage/CoreImageDefines.h>
+#import <CoreImage/CoreImageDefines.h>
+#import <Foundation/Foundation.h>
 
-#include <CoreImage/CIVector.h>
-#include <CoreImage/CIColor.h>
-#include <CoreImage/CIImage.h>
-#include <CoreImage/CIContext.h>
-#include <CoreImage/CIFilter.h>
-#include <CoreImage/CIKernel.h>
-#include <CoreImage/CIDetector.h>
-#include <CoreImage/CIFeature.h>
-#include <CoreImage/CIImageProvider.h>
-#include <CoreImage/CIImageProcessor.h>
-#include <CoreImage/CIImageAccumulator.h>
-#include <CoreImage/CIFilterConstructor.h>
-#include <CoreImage/CIFilterShape.h>
-#include <CoreImage/CISampler.h>
-#include <CoreImage/CIRAWFilter.h>
-#include <CoreImage/CIRAWFilter_Deprecated.h>
-#include <CoreImage/CIRenderDestination.h>
-#include <CoreImage/CIBarcodeDescriptor.h>
-#include <CoreImage/CIFilterGenerator.h>
-#include <CoreImage/CIPlugIn.h>
+#define UNIFIED_CORE_IMAGE 1
 
-#include <CoreImage/CIKernelMetalLib.h>
+#import <CoreImage/CIVector.h>
+#import <CoreImage/CIColor.h>
+#import <CoreImage/CIImage.h>
+#import <CoreImage/CIContext.h>
+#import <CoreImage/CIFilter.h>
+#import <CoreImage/CIKernel.h>
+#import <CoreImage/CIDetector.h>
+#import <CoreImage/CIFeature.h>
+#import <CoreImage/CIImageProvider.h>
+#import <CoreImage/CIImageProcessor.h>
+#import <CoreImage/CIImageAccumulator.h>
+#import <CoreImage/CIFilterConstructor.h>
+#import <CoreImage/CIFilterShape.h>
+#import <CoreImage/CISampler.h>
+#import <CoreImage/CIRAWFilter.h>
+#import <CoreImage/CIRenderDestination.h>
+#import <CoreImage/CIBarcodeDescriptor.h>
+#import <CoreImage/CIFilterGenerator.h>
+#import <CoreImage/CIPlugIn.h>
 
-#endif /* COREIMAGE_H */
+#endif /* __OBJC__ */
+
+#import <CoreImage/CIKernelMetalLib.h>

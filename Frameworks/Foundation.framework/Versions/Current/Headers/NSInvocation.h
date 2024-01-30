@@ -3,10 +3,11 @@
 */
 
 #import <Foundation/NSObject.h>
+#include <stdbool.h>
 
 @class NSMethodSignature;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_UNAVAILABLE("NSInvocation and related APIs not available")
 @interface NSInvocation : NSObject
@@ -29,7 +30,7 @@ NS_SWIFT_UNAVAILABLE("NSInvocation and related APIs not available")
 
 - (void)invoke;
 - (void)invokeWithTarget:(id)target;
-- (void)invokeUsingIMP:(IMP)imp;
+
 @end
 
 
@@ -77,4 +78,4 @@ typedef struct {
 #endif
 #endif
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

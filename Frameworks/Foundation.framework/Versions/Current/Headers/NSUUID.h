@@ -3,16 +3,13 @@
 */
 
 #import <Foundation/NSObject.h>
-#if !0
 #include <CoreFoundation/CFUUID.h>
-#endif
 #include <uuid/uuid.h>
 
 /* Note: NSUUID is not toll-free bridged with CFUUID. Use UUID strings to convert between CFUUID and NSUUID, if needed. NSUUIDs are not guaranteed to be comparable by pointer value (as CFUUIDRef is); use isEqual: to compare two NSUUIDs. */
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
-NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
 API_AVAILABLE(macos(10.8), ios(6.0), watchos(2.0), tvos(9.0))
 @interface NSUUID : NSObject <NSCopying, NSSecureCoding>
 
@@ -31,12 +28,9 @@ API_AVAILABLE(macos(10.8), ios(6.0), watchos(2.0), tvos(9.0))
 /* Get the individual bytes of the receiver */
 - (void)getUUIDBytes:(uuid_t _Nonnull)uuid;
 
-/* Compare the receiver to another NSUUID in constant time */
-- (NSComparisonResult)compare:(NSUUID *)otherUUID API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0));
-
 /* Return a string description of the UUID, such as "E621E1F8-C36C-495A-93FC-0C247A3E6E5F" */
 @property (readonly, copy) NSString *UUIDString;
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

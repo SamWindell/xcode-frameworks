@@ -2,7 +2,7 @@
 /*
         NSShadow.h
         Application Kit
-	Copyright (c) 2002-2023, Apple Inc.
+	Copyright (c) 2002-2019, Apple Inc.
         All rights reserved.
 */
 
@@ -12,7 +12,7 @@
 #import <Foundation/NSGeometry.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 #if !TARGET_OS_IPHONE
 
 @class NSColor;
@@ -34,7 +34,7 @@ API_AVAILABLE(macos(10.0), ios(6.0), watchos(2.0), tvos(9.0)) @interface NSShado
 
 #endif // !TARGET_OS_IPHONE
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
 #else
 #import <UIFoundation/NSShadow.h>
 #endif

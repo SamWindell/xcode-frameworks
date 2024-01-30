@@ -5,25 +5,22 @@
 //  Copyright (c) 2012 Apple Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <TargetConditionals.h>
 
+#import <GameController/GameController.h>
 #import <GameController/GCExtern.h>
-#import <GameController/GCDevice.h>
-#import <GameController/GCControllerInput.h>
-#import <GameController/GCPhysicalInputProfile.h>
-#import <GameController/GCControllerElement.h>
 #import <GameController/GCColor.h>
 
+#if TARGET_OS_OSX
 #import <IOKit/hid/IOHIDBase.h>
+#endif
 
 @class GCMotion;
 @class CHHapticEngine;
 @class GCDeviceHaptics;
 @class GCDeviceLight;
 @class GCDeviceBattery;
-@class GCGamepad;
-@class GCMicroGamepad;
-@class GCExtendedGamepad;
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -72,28 +69,6 @@ GCController *controller = note.object;
 */
 GAMECONTROLLER_EXTERN NSString *const GCControllerDidBecomeCurrentNotification API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
 GAMECONTROLLER_EXTERN NSString *const GCControllerDidStopBeingCurrentNotification API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
-
-/**
- Use this constant with NSNotificationCenter to listen to controller user customization events.
-
- When a user customizes the button mappings or other settings of a controller this notification will be
- posted. This is a good time to swap out UI to match the new user settings. Users can modify game
- controller settings through the Settings app on iOS, tvOS, and macOS.
-
- The 'object' property of the notification will contain the GCController that was customized.
- For example:
- 
- - (void)controllerDidConnect:(NSNotification *)note {
- 
- GCController *controller = note.object;
- 
- ....
- }
- 
- @see NSNotificationCenter
- @see GCController.controllers
- */
-GAMECONTROLLER_EXTERN NSString *const GCControllerUserCustomizationsDidChangeNotification API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0));
 
 /**
  This is the player index that a connected controller will have if it has never been assigned a player index on the current system.
@@ -191,26 +166,12 @@ API_AVAILABLE(macos(10.9), ios(7.0), tvos(7.0))
 @property (nonatomic) GCControllerPlayerIndex playerIndex;
 
 /**
- Gets the input profile for the controller.
- */
-@property (nonatomic, strong, readonly) GCControllerLiveInput *input API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0));
-
-/**
  Gets the battery information if controller supports one
  
  This property is useful when you try to notify your user to change or charge controller before it runs out of battery life
  or simply display the current battery level and status.
  */
 @property (nonatomic, copy, readonly, nullable) GCDeviceBattery *battery API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
-
-/**
- Gets the physical input profile for the controller.
-
- @note This is equivalent to the controller's microGamepad, or extendedGamepad instance.
- @see microGamepad
- @see extendedGamepad
-*/
-@property (nonatomic, strong, readonly) GCPhysicalInputProfile *physicalInputProfile API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
 
 /**
  Gets the profile for the controller that suits current application.
@@ -335,12 +296,14 @@ API_AVAILABLE(macos(10.9), ios(7.0), tvos(7.0))
  */
 + (GCController *)controllerWithExtendedGamepad API_AVAILABLE(macos(10.15), ios(13.0), tvos(13.0));
 
+#if TARGET_OS_OSX
 /**
  Returns YES if the given HID device is supported by the Game Controller framework, and will have an associated GCController instance.
  
  @note This is not cheap, be sure to cache the result
  */
 + (BOOL)supportsHIDDevice:(IOHIDDeviceRef)device API_AVAILABLE(macos(11.0)) API_UNAVAILABLE(ios, tvos);
+#endif
 
 @end
 

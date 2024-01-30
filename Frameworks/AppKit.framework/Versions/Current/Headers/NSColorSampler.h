@@ -1,14 +1,14 @@
 /*
  NSColorSampler.h
  Application Kit
- Copyright (c) 2018-2023, Apple Inc.
+ Copyright (c) 2018-2019, Apple Inc.
  All rights reserved.
  */
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSColor;
@@ -26,9 +26,9 @@ NS_CLASS_AVAILABLE_MAC(10_15)
  *
  * The calling NSColorSampler instance is retained until the sampling session is completed.
  */
-- (void)showSamplerWithSelectionHandler:(void (^)(NSColor * _Nullable selectedColor))selectionHandler NS_SWIFT_ASYNC_NAME(sample());
+- (void)showSamplerWithSelectionHandler:(void (^)(NSColor * _Nullable selectedColor))selectionHandler;
 
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

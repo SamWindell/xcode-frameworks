@@ -1,7 +1,7 @@
 /*
  NSMenu.h
  Application Kit
- Copyright (c) 1996-2023, Apple Inc.
+ Copyright (c) 1996-2019, Apple Inc.
  All rights reserved.
 */
 
@@ -11,43 +11,8 @@
 #import <AppKit/AppKitDefines.h>
 #import <AppKit/NSMenuItem.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
-
-/// When set as a value on `NSMenu.presentationStyle`, determines how
-/// the given menu is presented.
-typedef NS_ENUM(NSInteger, NSMenuPresentationStyle) {
-    /// The default presentation style. Typically means the menu will
-    /// be presented as either a popup or pulldown menu, based on the
-    /// context.
-    NSMenuPresentationStyleRegular = 0,
-    
-    /// The menu marked as palette is to be displayed in place of the
-    /// menu item presenting it, with its items aligned horizontally.
-    NSMenuPresentationStylePalette = 1
-} API_AVAILABLE(macos(14.0)) NS_SWIFT_NAME(NSMenu.PresentationStyle);
-
-/// When set as a value on `NSMenu.selectionMode`, determines how the
-/// menu manages selection states of the menu items that belong to
-/// the same selection group.
-///
-/// This does not apply to menu items that have distinct
-/// target/action values.
-typedef NS_ENUM(NSInteger, NSMenuSelectionMode) {
-    /// The menu will determine the appropriate selection mode based
-    /// on the context and its contents.
-    NSMenuSelectionModeAutomatic = 0,
-    
-    /// The user will be allowed to select at most one menu item in
-    /// the same selection group at a time. A change in selection
-    /// will deselect any previously selected item.
-    NSMenuSelectionModeSelectOne = 1,
-    
-    /// The user can select multiple items in the menu. A change in
-    /// selection will not automatically deselect any previously
-    /// selected item in the same selection group.
-    NSMenuSelectionModeSelectAny = 2,
-} API_AVAILABLE(macos(14.0)) NS_SWIFT_NAME(NSMenu.SelectionMode);
 
 @class NSEvent, NSView, NSFont;
 @class NSMenu;
@@ -192,62 +157,12 @@ typedef NS_ENUM(NSInteger, NSMenuSelectionMode) {
 
 @end
 
-@interface NSMenu (NSPaletteMenus)
-
-/// Creates a palette menu displaying user-selectable color
-/// tags using the provided array of colors and optional titles.
-/// @return An autoconfigured palette menu.
-+ (instancetype)paletteMenuWithColors:(NSArray<NSColor *> *)colors
-                               titles:(NSArray<NSString *> *)itemTitles
-                     selectionHandler:(nullable void (^)(NSMenu *))onSelectionChange
-API_AVAILABLE(macos(14.0)) NS_REFINED_FOR_SWIFT;
-
-/// Creates an palette menu displaying user-selectable color tags
-/// using the provided template image, tinted using the specified
-/// array of colors.
-///
-/// Optionally allows observing changes to the selection state in
-/// the compact menu. The block is invoked after the selection
-/// has been updated. Currently selected items can be retrieved
-/// from the `selectedItems` property.
-///
-/// @return An autoconfigured palette menu.
-+ (instancetype)paletteMenuWithColors:(NSArray<NSColor *> *)colors
-                               titles:(NSArray<NSString *> *)itemTitles
-                        templateImage:(NSImage *)image
-                     selectionHandler:(nullable void (^)(NSMenu *))onSelectionChange
-API_AVAILABLE(macos(14.0)) NS_REFINED_FOR_SWIFT;
-
-/// The presentation style of the menu.
-///
-/// @note This property is not respected if the menu is the main
-/// menu of the app.
-@property NSMenuPresentationStyle presentationStyle API_AVAILABLE(macos(14.0));
-
-/// The selection mode of the menu.
-///
-/// Note the selection mode only has effect on menu items that
-/// belong to the same selection group. A selection group consists
-/// of the items with the same target/action.
-@property NSMenuSelectionMode selectionMode API_AVAILABLE(macos(14.0));
-
-/// The menu items that are selected.
-///
-/// An item is selected when its state is `NSControl.StateValue.on`.
-///
-/// @note This property is settable. Setting `selectedItems` will
-/// select any items that are contained in the provided array, and
-/// deselect any previously selected items that are not in the array.
-@property (copy) NSArray<NSMenuItem *> *selectedItems API_AVAILABLE(macos(14.0));
-
-@end
-
 @interface NSMenu (NSSubmenuAction)
 - (void)submenuAction:(nullable id)sender;
 @end
 
 @protocol NSMenuItemValidation <NSObject>
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem NS_SWIFT_UI_ACTOR;
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
 @end
 
 #if __swift__ < 40200
@@ -258,25 +173,25 @@ API_AVAILABLE(macos(14.0)) NS_REFINED_FOR_SWIFT;
 
 @protocol NSMenuDelegate <NSObject>
 @optional
-- (void)menuNeedsUpdate:(NSMenu*)menu NS_SWIFT_UI_ACTOR;
+- (void)menuNeedsUpdate:(NSMenu*)menu;
 
-- (NSInteger)numberOfItemsInMenu:(NSMenu*)menu NS_SWIFT_UI_ACTOR;
-- (BOOL)menu:(NSMenu*)menu updateItem:(NSMenuItem*)item atIndex:(NSInteger)index shouldCancel:(BOOL)shouldCancel NS_SWIFT_UI_ACTOR;
+- (NSInteger)numberOfItemsInMenu:(NSMenu*)menu;
+- (BOOL)menu:(NSMenu*)menu updateItem:(NSMenuItem*)item atIndex:(NSInteger)index shouldCancel:(BOOL)shouldCancel;
     // implement either the first one or the next two to populate the menu
-- (BOOL)menuHasKeyEquivalent:(NSMenu*)menu forEvent:(NSEvent*)event target:(_Nullable id* _Nonnull)target action:(_Nullable SEL* _Nonnull)action NS_SWIFT_UI_ACTOR;
+- (BOOL)menuHasKeyEquivalent:(NSMenu*)menu forEvent:(NSEvent*)event target:(_Nullable id* _Nonnull)target action:(_Nullable SEL* _Nonnull)action;
     // bypasses populating the menu for checking for key equivalents. set target and action on return
 
 /* indicates that the menu is being opened (displayed) or closed (hidden).  Do not modify the structure of the menu or the menu items from within these callbacks. */
-- (void)menuWillOpen:(NSMenu *)menu API_AVAILABLE(macos(10.5)) NS_SWIFT_UI_ACTOR;
-- (void)menuDidClose:(NSMenu *)menu API_AVAILABLE(macos(10.5)) NS_SWIFT_UI_ACTOR;
+- (void)menuWillOpen:(NSMenu *)menu API_AVAILABLE(macos(10.5));
+- (void)menuDidClose:(NSMenu *)menu API_AVAILABLE(macos(10.5));
 
 /* Indicates that menu is about to highlight item.  Only one item per menu can be highlighted at a time.  If item is nil, it means all items in the menu are about to be unhighlighted. */
-- (void)menu:(NSMenu *)menu willHighlightItem:(nullable NSMenuItem *)item API_AVAILABLE(macos(10.5)) NS_SWIFT_UI_ACTOR;
+- (void)menu:(NSMenu *)menu willHighlightItem:(nullable NSMenuItem *)item API_AVAILABLE(macos(10.5));
 
 
 /* Given a menu that is about to be opened on the given screen, return a rect, in screen coordinates, within which the menu will be positioned.  If you return NSZeroRect, or if the delegate does not implement this method, the menu will be confined to the bounds appropriate for the given screen.  The returned rect may not be honored in all cases, such as if it would force the menu to be too small.
 */
-- (NSRect)confinementRectForMenu:(NSMenu *)menu onScreen:(nullable NSScreen *)screen API_AVAILABLE(macos(10.6)) NS_SWIFT_UI_ACTOR;
+- (NSRect)confinementRectForMenu:(NSMenu *)menu onScreen:(nullable NSScreen *)screen API_AVAILABLE(macos(10.6));
 
 @end
 
@@ -339,4 +254,4 @@ APPKIT_EXTERN NSNotificationName NSMenuDidEndTrackingNotification;
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

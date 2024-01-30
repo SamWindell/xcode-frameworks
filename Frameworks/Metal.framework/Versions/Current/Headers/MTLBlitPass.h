@@ -10,10 +10,12 @@
 
 #import <Metal/MTLTypes.h>
 
-#import <Metal/MTLCounters.h>
-
 NS_ASSUME_NONNULL_BEGIN
 @protocol MTLDevice;
+
+@protocol MTLCounterSampleBuffer;
+#define MTLCounterDontSample ((NSUInteger)-1)
+#define MTLMaxBlitPassSampleBuffers 4
 
 MTL_EXPORT API_AVAILABLE(macos(11.0), ios(14.0))
 @interface MTLBlitPassSampleBufferAttachmentDescriptor : NSObject<NSCopying>
@@ -52,7 +54,7 @@ MTL_EXPORT API_AVAILABLE(macos(11.0), ios(14.0))
 /* Individual attachment state access */
 - (MTLBlitPassSampleBufferAttachmentDescriptor *)objectAtIndexedSubscript:(NSUInteger)attachmentIndex;
 
-/* This always uses 'copy' semantics.  It is safe to set the attachment state at any legal index to nil, which resets that attachment descriptor state to default values. */
+/* This always uses 'copy' semantics.  It is safe to set the attachment state at any legal index to nil, which resets that attachment descriptor state to default vaules. */
 - (void)setObject:(nullable MTLBlitPassSampleBufferAttachmentDescriptor *)attachment atIndexedSubscript:(NSUInteger)attachmentIndex;
 
 @end

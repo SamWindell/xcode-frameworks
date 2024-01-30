@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 #ifndef CK_EXTERN
 #ifdef __cplusplus
@@ -29,28 +29,4 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 #endif
 #endif
 
-#ifndef CK_SWIFT_AVAILABILITY
-    #if defined(__swift__) && !defined(CK_BUILDING_CK)
-        #define CK_SWIFT_AVAILABILITY(...) API_AVAILABLE(__VA_ARGS__)
-        #define CK_SWIFT_DEPRECATED(...) API_DEPRECATED(__VA_ARGS__)
-    #else
-        #define CK_SWIFT_AVAILABILITY(...)
-        #define CK_SWIFT_DEPRECATED(...)
-    #endif
-#endif
-
-#ifndef CK_SUBCLASSING_RESTRICTED
-    #define CK_SUBCLASSING_RESTRICTED __attribute__((__objc_subclassing_restricted__))
-#endif
-
-
-#ifndef CK_SUBCLASSING_DEPRECATED
-    #define CK_SUBCLASSING_DEPRECATED // we can't actually emit a warning, but heed this annotation anyway!
-#endif // CK_SUBCLASSING_DEPRECATED
-
-
-#ifndef CK_UNAVAILABLE
-    #define CK_UNAVAILABLE(msg) __attribute__((unavailable(msg)))
-#endif
-
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

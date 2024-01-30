@@ -57,8 +57,7 @@ typedef const struct CF_BRIDGED_TYPE(id) __CTLine * CTLineRef;
                 default typographic bounds.
 
     @constant   kCTLineBoundsUseOpticalBounds
-                Pass this option to use optical bounds, as determined by
-                CTFontGetOpticalBoundsForGlyphs. This option overrides
+                Pass this option to use optical bounds. This option overrides
                 kCTLineBoundsUseGlyphPathBounds.
                 
     @constant   kCTLineBoundsIncludeLanguageExtents

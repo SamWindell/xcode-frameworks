@@ -75,9 +75,6 @@ class IOHIDKeyboardDevice;
 class IOHIDPointingDevice;
 class IOHIDEvent;
 class IOFixedPoint64;
-struct _evScreen;
-
-typedef volatile _evScreen EVScreen;
 
 #if defined(KERNEL) && !defined(KERNEL_PRIVATE)
 class __deprecated_msg("Use DriverKit") IOHIDSystem : public IOService
@@ -111,7 +108,8 @@ private:
                         // FIXME: why is this ivar lleqSize an ivar? {Dan]
 
 	// Screens list
-	EVScreen * evScreen;	// array of screens known to driver
+	vm_size_t           evScreenSize;	// Byte size of evScreen array
+	void                *evScreen;	// array of screens known to driver
 	int             screens;	// running total of allocated screens
 	UInt32          cursorScreens;	// bit mask of screens with cursor present
     UInt32          cursorPinScreen;// a screen to pin against
@@ -131,7 +129,6 @@ private:
 //	int	clickState;	// Current click state
 
 	bool evOpenCalled;	// Has the driver been opened?
-    int  evOpenedByPID;
 	bool evInitialized;	// Has the first-open-only initialization run?
 	bool eventsOpen;	// Boolean: has evmmap been called yet?
 	bool cursorStarted;	// periodic events running?
@@ -515,7 +512,6 @@ void updateEventFlags(unsigned flags, OSObject * sender);
 
 static	IOReturn	doEvClose (IOHIDSystem *self);
         IOReturn	evCloseGated (void);
-        IOReturn    evOpenGated(void);
 
 static	IOReturn	doUnregisterScreen (IOHIDSystem *self, void * arg0);
         IOReturn	unregisterScreenGated (int index);

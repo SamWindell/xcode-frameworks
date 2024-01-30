@@ -1,7 +1,7 @@
 /*
 	NSDocumentController.h
 	Application Kit
-	Copyright (c) 1997-2023, Apple Inc.
+	Copyright (c) 1997-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -12,12 +12,11 @@
 #import <Foundation/NSArray.h>
 #import <Foundation/NSDate.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSDocument, NSError, NSMenuItem, NSMutableDictionary, NSOpenPanel, NSURL, NSWindow;
 
-NS_SWIFT_UI_ACTOR
 @interface NSDocumentController : NSObject<NSCoding, NSMenuItemValidation, NSUserInterfaceValidations>
 
 #pragma mark *** The Shared Document Controller ***
@@ -302,4 +301,4 @@ For backward binary compatibility with Mac OS 10.4 and earlier, the default impl
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

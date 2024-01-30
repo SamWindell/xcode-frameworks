@@ -4,10 +4,11 @@
 
 #import <Foundation/NSObject.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
-
 API_DEPRECATED("Building Garbage Collected apps is no longer supported.", macos(10.5, 10.10)) API_UNAVAILABLE(ios, watchos, tvos)
 NS_AUTOMATED_REFCOUNT_UNAVAILABLE
+
+NS_ASSUME_NONNULL_BEGIN
+
 NS_SWIFT_UNAVAILABLE("Garbage Collection is not supported")
 @interface NSGarbageCollector : NSObject
 
@@ -29,4 +30,4 @@ NS_SWIFT_UNAVAILABLE("Garbage Collection is not supported")
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

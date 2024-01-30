@@ -1,7 +1,7 @@
 /*
 	NSToolbarItem.h
 	Application Kit
-	Copyright (c) 2000-2023, Apple Inc.
+	Copyright (c) 2000-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -20,7 +20,7 @@
 @class UIImage;
 #endif
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 @class NSMenuItem, NSView, NSImage, CKShare;
 
@@ -30,7 +30,7 @@ static const NSToolbarItemVisibilityPriority NSToolbarItemVisibilityPriorityLow 
 static const NSToolbarItemVisibilityPriority NSToolbarItemVisibilityPriorityHigh API_AVAILABLE(ios(13.0)) = 1000;
 static const NSToolbarItemVisibilityPriority NSToolbarItemVisibilityPriorityUser API_AVAILABLE(ios(13.0)) = 2000;
 
-API_AVAILABLE(ios(13.0)) NS_SWIFT_UI_ACTOR
+API_AVAILABLE(ios(13.0))
 @interface NSToolbarItem : NSObject <NSCopying>
 
 /* Initialize the toolbar item with an identifier which is a development language string used by the toolbar and its delegate for identification purposes.  */
@@ -47,11 +47,6 @@ API_AVAILABLE(ios(13.0)) NS_SWIFT_UI_ACTOR
 
 /* Use this to set the item's label that appears when the item is in the customization palette.  All Items must have a palette label, and for most things it is reasonable to set them to the same string as the label used in the toolbar. */
 @property (copy) NSString *paletteLabel;
-
-/**
- An array of all alternate labels this item may display. The item will use the size of the longest label to prevent resizing when the label is changed.
- */
-@property (copy) NSSet<NSString *> *possibleLabels API_AVAILABLE(macos(13.0));
 
 /* Use this to set a tooltip to be used when the item is displayed in the toolbar.  (forwards to -view if it responds) */
 @property (nullable, copy) NSString *toolTip;
@@ -92,14 +87,8 @@ Whether or not the item behaves as a navigation item (i.e. back/forward) in the 
  */
 @property (getter=isNavigational) BOOL navigational API_AVAILABLE(macos(11.0), ios(14.0));
 
-/* Use setView: if you want your toolbar item to use something other than the standard.  Note that, by default, many of the set/get methods will be implemented by calls forwarded to the view you set, if it responds to it. */
+/* Use setView: if you want your toolbar item to use something other than the standard.  Note that, by default, many of the set/get methods will be implemented by calls forwarded to the view you set, if it responds to it.  Also, your view must be archivable (in order for the toolbar to make copies of your item to hand off to the config palette). */
 @property (nullable, strong) NSView *view API_UNAVAILABLE(ios);
-
-/**
- An item is visible if it is present in the NSToolbar and not in the overflow menu.
- This property is key value observable.
- */
-@property (readonly, getter=isVisible) BOOL visible API_AVAILABLE(macos(12.0), ios(16.0));
 
 /*
  Unless you have already set your own custom view, you should not call these methods.
@@ -107,8 +96,8 @@ Whether or not the item behaves as a navigation item (i.e. back/forward) in the 
  If you do not set a min/max size, the view's size properties will be calculated using constraints. Apps linked before 10.14 will use the view's current size.
  In general, apps should rely on the automatic measurements and constraints to define min/max sizes rather than setting these properties since this will account for localizations.
  */
-@property NSSize minSize API_DEPRECATED("This property is no longer recommended. Instead, let the system automatically measure the size of the view using constraints.", macos(10.0, 12.0)) API_UNAVAILABLE(ios);
-@property NSSize maxSize API_DEPRECATED("This property is no longer recommended. Instead, let the system automatically measure the size of the view using constraints.", macos(10.0, 12.0)) API_UNAVAILABLE(ios);
+@property NSSize minSize API_DEPRECATED("This property is no longer recommended. Instead, let the system automatically measure the size of the view using constraints.", macos(10.0, API_TO_BE_DEPRECATED)) API_UNAVAILABLE(ios);
+@property NSSize maxSize API_DEPRECATED("This property is no longer recommended. Instead, let the system automatically measure the size of the view using constraints.", macos(10.0, API_TO_BE_DEPRECATED)) API_UNAVAILABLE(ios);
 
 /* When a toolbar does not have enough space to fit all its items, it must push some into the overflow menu.  Items with the highest visibility priority level are choosen last for the overflow menu.  The default visibilityPriority value is NSToolbarItemVisibilityPriorityStandard.  To suggest that an item always remain visible, give it a value greater than NSToolbarItemVisibilityPriorityStandard, but less than NSToolbarItemVisibilityPriorityUser.   In 10.7, users can no longer modify the toolbar item visibility priority. */
 @property NSToolbarItemVisibilityPriority visibilityPriority;
@@ -120,7 +109,7 @@ Whether or not the item behaves as a navigation item (i.e. back/forward) in the 
 - (void)validate API_AVAILABLE(ios(13.0));
 
 
-/* This property only affects automatic validation performed by NSToolbar. Explicit validation requests, such as the `-[NSToolbar validateVisibleItems]` method, will invoke the `-validate` method even if `autovalidates` is `NO`. */
+/* By default NSToolbar automatically invokes its items validate method on a regular basis.  To be in complete control of when the -validate method is invoked, you can disable automatic validation on a per-item basis.  In particular, if your validation code is slow, you may want to do this for performance reasons. */
 @property BOOL autovalidates API_AVAILABLE(ios(13.0));
 
 
@@ -142,7 +131,7 @@ Whether or not the item behaves as a navigation item (i.e. back/forward) in the 
 @protocol NSToolbarItemValidation <NSObject>
 
 /* NSToolbarItemValidation extends the standard validation idea by introducing this new method which is sent to validators for each visible standard NSToolbarItem with a valid target/action pair.  Note: This message is sent from NSToolbarItem's validate method, however validate will not send this message for items that have custom views. */
-- (BOOL)validateToolbarItem:(NSToolbarItem *)item NS_SWIFT_UI_ACTOR;
+- (BOOL)validateToolbarItem:(NSToolbarItem *)item;
 
 @end
 
@@ -155,50 +144,28 @@ Whether or not the item behaves as a navigation item (i.e. back/forward) in the 
 @protocol NSCloudSharingValidation <NSObject>
 
 /* NSToolbarItems created with NSToolbarCloudSharingItemIdentifier use this method for further validation after sending `-validateToolbarItem:` or `-validateUserInterfaceItem:`. The validator for the item's action should return the current CKShare corresponding to the selected item, if any. The state of the item will be changed reflect the state of the CKShare. */
-- (nullable CKShare *)cloudShareForUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item NS_SWIFT_UI_ACTOR;
+- (nullable CKShare *)cloudShareForUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item;
 
 @end
 
 #endif
 
-/*
- These are the standard toolbar item identifiers that AppKit will automatically create when they appear in the default or allowed item sets. As such, the delegate method -toolbar:itemForItemIdentifier:willBeInsertedIntoToolbar: will not be called for these items.
- */
+/* standard toolbar item identifiers */
 
-/* A space item of a standard fixed size. */
+APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarSeparatorItemIdentifier API_DEPRECATED("This item is no longer recommended and will be ignored on 10.7 and later.", macos(10.0, 11.0)) API_UNAVAILABLE(ios);
 APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarSpaceItemIdentifier API_AVAILABLE(ios(13.0));
-
-/* A space item of flexible width. */
 APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarFlexibleSpaceItemIdentifier API_AVAILABLE(ios(13.0));
 
-/* A standard item that is configured to show the color panel when invoked. */
-APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarShowColorsItemIdentifier API_AVAILABLE(ios(13.0));
-
-/* A standard item that is configured to show the font panel when invoked. */
-APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarShowFontsItemIdentifier API_AVAILABLE(ios(13.0));
-
-/* A standard item that is configured to send -printDocument: to the firstResponder when invoked */
-APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarPrintItemIdentifier API_AVAILABLE(ios(13.0));
-
-/* A standard item that is configured to send -toggleSidebar: to the firstResponder when invoked. */
-APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarToggleSidebarItemIdentifier API_AVAILABLE(macos(10.11), ios(13.0));
-
-/* A standard item that is configured to send -toggleInspector: to the firstResponder when invoked. */
-APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarToggleInspectorItemIdentifier API_AVAILABLE(macos(14.0), ios(17.0));
-
-/* A standard item for cloud sharing via NSSharingServiceNameCloudSharing. It validates itself and modifies its appearance by using the NSCloudSharingValidation protocol. It sends -performCloudSharing: to the firstResponder. */
-APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarCloudSharingItemIdentifier API_AVAILABLE(macos(10.12));
-
-/* Creates a new NSTrackingSeparatorToolbarItem and automatically configures it to track the divider of the sidebar if one is discovered. */
-APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarSidebarTrackingSeparatorItemIdentifier API_AVAILABLE(macos(11.0)) API_UNAVAILABLE(ios);
-
-/* Creates a new NSTrackingSeparatorToolbarItem and automatically configures it to track the divider of the inspector if one is discovered. */
-APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarInspectorTrackingSeparatorItemIdentifier API_AVAILABLE(macos(14.0)) API_UNAVAILABLE(ios);
+APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarShowColorsItemIdentifier API_AVAILABLE(ios(13.0));        // Shows the color panel.
+APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarShowFontsItemIdentifier API_AVAILABLE(ios(13.0));         // Shows the font panel.
+APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarCustomizeToolbarItemIdentifier API_DEPRECATED("This item is no longer recommended and will be ignored on 10.7 and later.", macos(10.0, 11.0)) API_UNAVAILABLE(ios);
+APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarPrintItemIdentifier API_AVAILABLE(ios(13.0));             // Sends printDocument: to firstResponder, but you can change this in toolbarWillAddItem: if you need to do so.
+APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarToggleSidebarItemIdentifier API_AVAILABLE(macos(10.11), ios(13.0));  // A standard toolbar item identifier for sidebars. It sends -toggleSidebar: to the firstResponder.
+APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarCloudSharingItemIdentifier API_AVAILABLE(macos(10.12)); // A standard toolbar item identifier for cloud sharing via NSSharingServiceNameCloudSharing. It validates itself and modifies its appearance by using the NSCloudSharingValidation protocol. It sends -performCloudSharing: to the firstResponder.
 
 /*
- Deprecated Item Identifiers
- */
-APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarSeparatorItemIdentifier API_DEPRECATED("This item is no longer recommended and will be ignored on 10.7 and later.", macos(10.0, 11.0)) API_UNAVAILABLE(ios);
-APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarCustomizeToolbarItemIdentifier API_DEPRECATED("This item is no longer recommended and will be ignored on 10.7 and later.", macos(10.0, 11.0)) API_UNAVAILABLE(ios);
+Creates a new NSTrackingSeparatorToolbarItem and automatically configures it to track the divider of the sidebar if one is discovered.
+*/
+APPKIT_EXTERN NSToolbarItemIdentifier NSToolbarSidebarTrackingSeparatorItemIdentifier API_AVAILABLE(macos(11.0)) API_UNAVAILABLE(ios);
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

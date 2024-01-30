@@ -1,7 +1,7 @@
 /*
 	NSFilePromiseProvider.h
 	Application Kit
-	Copyright (c) 2015-2023, Apple Inc.
+	Copyright (c) 2015-2019, Apple Inc.
 	All rights reserved.
 */
 
@@ -11,7 +11,7 @@
 #import <AppKit/AppKitDefines.h>
 #import <AppKit/NSPasteboard.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @protocol NSFilePromiseProviderDelegate;
@@ -37,17 +37,17 @@ API_AVAILABLE(macos(10.12))
 @protocol NSFilePromiseProviderDelegate <NSObject>
 @required
 /* Return the base filename (not a full path) for this promise item. Do not start writing the file yet. */
-- (NSString *)filePromiseProvider:(NSFilePromiseProvider*)filePromiseProvider fileNameForType:(NSString *)fileType NS_SWIFT_UI_ACTOR;
+- (NSString *)filePromiseProvider:(NSFilePromiseProvider*)filePromiseProvider fileNameForType:(NSString *)fileType;
 
 
 /* Write the contents of this promise item to the provided URL and call completionHandler when done. NSFilePromiseReceiver automatically wraps this message with NSFileCoordinator when the promise destination is an NSFilePromiseReceiver. Always use the supplied URL. Note: This request shall occur on the NSOperationQueue supplied by -promiseOperationQueue.
  */
-- (void)filePromiseProvider:(NSFilePromiseProvider*)filePromiseProvider writePromiseToURL:(NSURL *)url completionHandler:(void (^)(NSError * _Nullable errorOrNil))completionHandler NS_SWIFT_NONISOLATED;
+- (void)filePromiseProvider:(NSFilePromiseProvider*)filePromiseProvider writePromiseToURL:(NSURL *)url completionHandler:(void (^)(NSError * _Nullable errorOrNil))completionHandler;
 
 @optional
 /* The operation queue that the write request will be issued from. If this method is not implemented, the mainOperationQueue is used. */
-- (NSOperationQueue *)operationQueueForFilePromiseProvider:(NSFilePromiseProvider*)filePromiseProvider NS_SWIFT_UI_ACTOR;
+- (NSOperationQueue *)operationQueueForFilePromiseProvider:(NSFilePromiseProvider*)filePromiseProvider;
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

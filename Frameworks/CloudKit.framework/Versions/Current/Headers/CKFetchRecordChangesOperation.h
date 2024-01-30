@@ -6,11 +6,10 @@
 //
 
 #import <CloudKit/CKDatabaseOperation.h>
-
-#import <CloudKit/CKRecord.h>
 #import <CloudKit/CKServerChangeToken.h>
+#import <CloudKit/CKRecord.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 
 /*! @class CKFetchRecordChangesOperation
  *
@@ -30,36 +29,30 @@ API_DEPRECATED_WITH_REPLACEMENT("CKFetchRecordZoneChangesOperation", macos(10.10
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithRecordZoneID:(CKRecordZoneID *)recordZoneID previousServerChangeToken:(nullable CKServerChangeToken *)previousServerChangeToken;
 
-@property (nullable, copy, nonatomic) CKRecordZoneID *recordZoneID;
-@property (nullable, copy, nonatomic) CKServerChangeToken *previousServerChangeToken;
+@property (nonatomic, copy, nullable) CKRecordZoneID *recordZoneID;
+@property (nonatomic, copy, nullable) CKServerChangeToken *previousServerChangeToken;
 
-@property (assign, nonatomic) NSUInteger resultsLimit;
+@property (nonatomic, assign) NSUInteger resultsLimit;
 
 /*! @abstract Declares which user-defined keys should be fetched and added to the resulting CKRecords.
  *
  *  @discussion If nil, declares the entire record should be downloaded. If set to an empty array, declares that no user fields should be downloaded.
  *  Defaults to @c nil.
  */
-@property (nullable, copy, nonatomic) NSArray<CKRecordFieldKey> *desiredKeys;
+@property (nonatomic, copy, nullable) NSArray<CKRecordFieldKey> *desiredKeys;
 
-/*! @discussion Each @c CKOperation instance has a private serial queue. This queue is used for all callback block invocations.
- *  This block may share mutable state with other blocks assigned to this operation, but any such mutable state
- *  should not be concurrently used outside of blocks assigned to this operation.
- */
-@property (nullable, copy, nonatomic) void (^recordChangedBlock)(CKRecord *record);
+//! @discussion Each @c CKOperation instance has a private serial queue. This queue is used for all callback block invocations.
+@property (nonatomic, copy, nullable) void (^recordChangedBlock)(CKRecord *record);
 
-/*! @discussion Each @c CKOperation instance has a private serial queue. This queue is used for all callback block invocations.
- *  This block may share mutable state with other blocks assigned to this operation, but any such mutable state
- *  should not be concurrently used outside of blocks assigned to this operation.
- */
-@property (nullable, copy, nonatomic) void (^recordWithIDWasDeletedBlock)(CKRecordID *recordID);
+//! @discussion Each @c CKOperation instance has a private serial queue. This queue is used for all callback block invocations.
+@property (nonatomic, copy, nullable) void (^recordWithIDWasDeletedBlock)(CKRecordID *recordID);
 
 /*! @abstract If true, then the server wasn't able to return all the changes in this response.
  *
  *  @discussion Will be set before fetchRecordChangesCompletionBlock is called.
  *  Another CKFetchRecordChangesOperation operation should be run with the updated serverChangeToken token from this operation.
  */
-@property (readonly, assign, nonatomic) BOOL moreComing;
+@property (nonatomic, readonly, assign) BOOL moreComing;
 
 /*! @abstract This block is called when the operation completes.
  *
@@ -68,11 +61,9 @@ API_DEPRECATED_WITH_REPLACEMENT("CKFetchRecordZoneChangesOperation", macos(10.10
  *  The @c clientChangeTokenData from the most recent @c CKModifyRecordsOperation is also returned, or nil if none was provided.
  *  If the server returns a @c CKErrorChangeTokenExpired error, the @c previousServerChangeToken value was too old and the client should toss its local cache and re-fetch the changes in this record zone starting with a nil @c previousServerChangeToken.
  *  Each @c CKOperation instance has a private serial queue. This queue is used for all callback block invocations.
- *  This block may share mutable state with other blocks assigned to this operation, but any such mutable state
- *  should not be concurrently used outside of blocks assigned to this operation.
  */
-@property (nullable, copy, nonatomic) void (^fetchRecordChangesCompletionBlock)(CKServerChangeToken * _Nullable serverChangeToken, NSData * _Nullable clientChangeTokenData, NSError * _Nullable operationError);
+@property (nonatomic, copy, nullable) void (^fetchRecordChangesCompletionBlock)(CKServerChangeToken * _Nullable serverChangeToken, NSData * _Nullable clientChangeTokenData, NSError * _Nullable operationError);
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

@@ -1,14 +1,14 @@
 /*
         NSStoryboardSegue.h
         Application Kit
-        Copyright (c) 2013-2023, Apple Inc.
+        Copyright (c) 2013-2019, Apple Inc.
         All rights reserved.
 */
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKitDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 typedef NSString * NSStoryboardSegueIdentifier NS_SWIFT_BRIDGED_TYPEDEF;
@@ -42,17 +42,17 @@ API_AVAILABLE(macos(10.10))
 
 /* Subclasses should override this to do any necessary work preparing for the destination ViewController or WindowController.
  */
-- (void)prepareForSegue:(NSStoryboardSegue *)segue sender:(nullable id)sender NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.10));
+- (void)prepareForSegue:(NSStoryboardSegue *)segue sender:(nullable id)sender API_AVAILABLE(macos(10.10));
 
 /* Performs the identified Segue created from this WindowController. Throws exception if identifier is nil or not associated with the receiver.
  */
-- (void)performSegueWithIdentifier:(NSStoryboardSegueIdentifier)identifier sender:(nullable id)sender NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.10));
+- (void)performSegueWithIdentifier:(NSStoryboardSegueIdentifier)identifier sender:(nullable id)sender API_AVAILABLE(macos(10.10));
 
 /* Invoked immediately prior to initiating a segue. Return NO to prevent the segue from firing. The default implementations in NSViewController and NSWindowController return YES. This method is invoked when -performSegueWithIdentifier:sender: is used.
  */
-- (BOOL)shouldPerformSegueWithIdentifier:(NSStoryboardSegueIdentifier)identifier sender:(nullable id)sender NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.10));
+- (BOOL)shouldPerformSegueWithIdentifier:(NSStoryboardSegueIdentifier)identifier sender:(nullable id)sender API_AVAILABLE(macos(10.10));
 
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END

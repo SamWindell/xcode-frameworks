@@ -1,7 +1,7 @@
 /*
     NSPersistentContainer.h
     Core Data
-    Copyright (c) 2016-2023, Apple Inc.
+    Copyright (c) 2016-2020, Apple Inc.
     All rights reserved.
 */
 
@@ -18,7 +18,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 // An instance of NSPersistentContainer includes all objects needed to represent a functioning Core Data stack, and provides convenience methods and properties for common patterns.
-API_AVAILABLE(macosx(10.12),ios(10.0),tvos(10.0),watchos(3.0)) NS_SWIFT_SENDABLE
+API_AVAILABLE(macosx(10.12),ios(10.0),tvos(10.0),watchos(3.0))
 @interface NSPersistentContainer : NSObject {
 }
 
@@ -39,7 +39,7 @@ API_AVAILABLE(macosx(10.12),ios(10.0),tvos(10.0),watchos(3.0)) NS_SWIFT_SENDABLE
 - (instancetype)initWithName:(NSString *)name managedObjectModel:(NSManagedObjectModel *)model NS_DESIGNATED_INITIALIZER;
 
 // Load stores from the storeDescriptions property that have not already been successfully added to the container. The completion handler is called once for each store that succeeds or fails.
-- (void)loadPersistentStoresWithCompletionHandler:(void (^)(NSPersistentStoreDescription *, NSError * _Nullable))block NS_SWIFT_DISABLE_ASYNC;
+- (void)loadPersistentStoresWithCompletionHandler:(void (^)(NSPersistentStoreDescription *, NSError * _Nullable))block;
 
 - (NSManagedObjectContext *)newBackgroundContext NS_RETURNS_RETAINED;
 - (void)performBackgroundTask:(void (^)(NSManagedObjectContext *))block;

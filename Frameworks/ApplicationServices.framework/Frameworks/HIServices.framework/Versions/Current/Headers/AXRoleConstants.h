@@ -359,8 +359,7 @@
 
 #define kAXTextFieldRole 				CFSTR("AXTextField")
 #define	kAXTextAreaRole					CFSTR("AXTextArea")
-#define kAXStaticTextRole               CFSTR("AXStaticText")
-#define kAXHeadingRole                  CFSTR("AXHeading")
+#define kAXStaticTextRole 				CFSTR("AXStaticText")
 
 #define kAXMenuBarRole					CFSTR("AXMenuBar")
 #define kAXMenuBarItemRole				CFSTR("AXMenuBarItem")

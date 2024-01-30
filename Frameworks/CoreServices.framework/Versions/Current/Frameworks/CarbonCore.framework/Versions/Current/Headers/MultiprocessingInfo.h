@@ -31,8 +31,9 @@
 #include <CarbonCore/Multiprocessing.h>
 #endif
 
+
+
 #include <Availability.h>
-#include <os/availability.h>
 
 #if PRAGMA_ONCE
 #pragma once
@@ -309,7 +310,7 @@ enum {
   kMPCriticalRegionInfoVersion  = 1L | (kOpaqueCriticalRegionID << 16),
   kMPNotificationInfoVersion    = 1L | (kOpaqueNotificationID << 16),
   kMPAddressSpaceInfoVersion    = 1L | (kOpaqueAddressSpaceID << 16)
-}  API_DEPRECATED( "Deprecated", macos(10.0,10.7));
+};
 
 
 struct MPQueueInfo {

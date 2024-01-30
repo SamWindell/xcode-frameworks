@@ -1,7 +1,7 @@
 /*
     NSTableRowView.h
     Application Kit
-    Copyright (c) 2008-2023, Apple Inc.
+    Copyright (c) 2008-2019, Apple Inc.
     All rights reserved.
 */
 
@@ -13,7 +13,7 @@
 
 /* View Based TableView: The NSTableRowView is the view shown for a row in the table. It is responsible for drawing things associated with the row, including the selection highlight, and group row look. Properties can be changed on a row-by-row basis by using the table delegate method -tableView:didAddRowView:forRow:. Modifications of the properties are NOT reflected by the NSTableView instance; the NSTableRowView is simply a representation of the state. In other words, setting rowView.selected will NOT change the -selectedRowIndexes in NSTableView.
  */
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+NS_ASSUME_NONNULL_BEGIN
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSLayoutConstraint;
@@ -40,7 +40,7 @@ API_AVAILABLE(macos(10.7))
 /* Next and previous row selection state. Allows subclassers to draw selection differently based on the previous next row being selected. State is automatically updated by NSTableView, however, the changing of the state does not invalidate the row view. If a row view depends on this state, it should override the particular setter and call [self setNeedsDisplay:YES] before or after calling super.
  */
 @property(getter=isPreviousRowSelected) BOOL previousRowSelected API_AVAILABLE(macos(10.10));
-@property(getter=isNextRowSelected) BOOL nextRowSelected API_AVAILABLE(macos(10.10));
+@property(getter=isNextRowSelected) BOOL nextRowSelected;
 
 /* Floating is a temporary attribute that is set when a particular group row is actually floating above other rows. The state may change dynamically based on the position of the group row. Drawing may be different for rows that are currently 'floating'. The TableView's delegate must implement tableView:isGroupRow: (or outlineView:isGroupItem:) to enable floating group rows.
  */
@@ -109,4 +109,4 @@ API_AVAILABLE(macos(10.7))
 @end
 
 API_UNAVAILABLE_END
-NS_HEADER_AUDIT_END(nullability, sendability)
+NS_ASSUME_NONNULL_END
